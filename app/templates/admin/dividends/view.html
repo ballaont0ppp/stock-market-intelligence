@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+
+{% block title %}Dividend Details{% endblock %}
+{% block page_title %}Dividend Details{% endblock %}
+
+{% block page_content %}
+<div class="container-fluid">
+    <!-- Back Button -->
+    <div class="mb-3">
+        <a href="{{ url_for('admin.dividends') }}" class="btn btn-secondary">
+            <i class="lucide-arrow-left"></i> Back to Dividends
+        </a>
+    </div>
+
+    <!-- Dividend Information -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Dividend Information</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <tr>
+                            <th width="40%">Dividend ID:</th>
+                            <td>{{ dividend.dividend_id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Company:</th>
+                            <td>
+                                <strong>{{ dividend.company.symbol }}</strong><br>
+                                <small class="text-muted">{{ dividend.company.company_name }}</small>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Amount Per Share:</th>
+                            <td><strong>${{ "%.4f"|format(dividend.dividend_per_share) }}</strong></td>
+                        </tr>
+                        <tr>
+                            <th>Dividend Type:</th>
+                            <td>
+                                <span class="badge bg-{{ 'primary' if dividend.dividend_type == 'REGULAR' else 'info' }}">
+                                    {{ dividend.dividend_type }}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Ex-Dividend Date:</th>
+                            <td>{{ dividend.ex_dividend_date.strftime('%Y-%m-%d') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Record Date:</th>
+                            <td>{{ dividend.record_date.strftime('%Y-%m-%d') }}</td>
+                        </tr>
+                        <tr>
+                            <th>Payment Date:</th>
+                            <td>{{ dividend.payment_date.strftime('%Y-%m-%d') }}</td>
+                        </tr>
+                        {% if dividend.announcement_date %}
+                        <tr>
+                            <th>Announcement Date:</th>
+                            <td>{{ dividend.announcement_date.strftime('%Y-%m-%d') }}</td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <th>Created:</th>
+                            <td>{{ dividend.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        </tr>
+                    </table>
+
+                    {% set today = now().date() %}
+                    {% if dividend.payment_date >= today and not dividend.payments %}
+                    <div class="mt-3">
+                        <a href="{{ url_for('admin.edit_dividend', dividend_id=dividend.dividend_id) }}" 
+                           class="btn btn-primary">
+                            <i class="lucide-edit"></i> Edit Dividend
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Payment Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-6 mb-3">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h6 class="text-muted mb-2">Total Payments</h6>
+                                    <h3 class="mb-0">{{ total_payments }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 mb-3">
+                            <div class="card bg-light">
+                                <div class="card-body">
+                                    <h6 class="text-muted mb-2">Total Amount</h6>
+                                    <h3 class="mb-0">${{ "%.2f"|format(total_amount) }}</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% set today = now().date() %}
+                    <div class="mt-3">
+                        <strong>Status:</strong>
+                        {% if dividend.payment_date < today %}
+                            <span class="badge bg-secondary">Paid</span>
+                        {% elif dividend.payment_date == today %}
+                            <span class="badge bg-warning">Processing Today</span>
+                        {% else %}
+                            <span class="badge bg-success">Scheduled</span>
+                        {% endif %}
+                    </div>
+
+                    {% if dividend.payment_date > today %}
+                    <div class="alert alert-info mt-3 mb-0">
+                        <i class="lucide-info"></i>
+                        This dividend will be automatically processed on {{ dividend.payment_date.strftime('%Y-%m-%d') }} at 4:00 PM EST.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment History -->
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Payment History</h5>
+        </div>
+        <div class="card-body">
+            {% if payments %}
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Payment ID</th>
+                            <th>User ID</th>
+                            <th>Shares Owned</th>
+                            <th>Amount Paid</th>
+                            <th>Transaction ID</th>
+                            <th>Paid At</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for payment in payments %}
+                        <tr>
+                            <td>{{ payment.payment_id }}</td>
+                            <td>
+                                <a href="{{ url_for('admin.index') }}">
+                                    {{ payment.user_id }}
+                                </a>
+                            </td>
+                            <td>{{ payment.shares_owned }}</td>
+                            <td>${{ "%.2f"|format(payment.amount_paid) }}</td>
+                            <td>{{ payment.transaction_id }}</td>
+                            <td>{{ payment.paid_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            {% if pagination.pages > 1 %}
+            <nav aria-label="Payment pagination">
+                <ul class="pagination justify-content-center mt-4">
+                    <li class="page-item {% if not pagination.has_prev %}disabled{% endif %}">
+                        <a class="page-link" href="{{ url_for('admin.view_dividend', dividend_id=dividend.dividend_id, page=pagination.prev_num) }}">
+                            Previous
+                        </a>
+                    </li>
+                    
+                    {% for page_num in pagination.iter_pages(left_edge=1, right_edge=1, left_current=2, right_current=2) %}
+                        {% if page_num %}
+                            <li class="page-item {% if page_num == pagination.page %}active{% endif %}">
+                                <a class="page-link" href="{{ url_for('admin.view_dividend', dividend_id=dividend.dividend_id, page=page_num) }}">
+                                    {{ page_num }}
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled"><span class="page-link">...</span></li>
+                        {% endif %}
+                    {% endfor %}
+                    
+                    <li class="page-item {% if not pagination.has_next %}disabled{% endif %}">
+                        <a class="page-link" href="{{ url_for('admin.view_dividend', dividend_id=dividend.dividend_id, page=pagination.next_num) }}">
+                            Next
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            {% endif %}
+
+            {% else %}
+            <div class="text-center py-5">
+                <i class="lucide-inbox" style="font-size: 48px; color: #ccc;"></i>
+                <p class="text-muted mt-3">No payments have been made yet</p>
+                {% set today = now().date() %}
+                {% if dividend.payment_date > today %}
+                <p class="text-muted">Payments will be processed on {{ dividend.payment_date.strftime('%Y-%m-%d') }}</p>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

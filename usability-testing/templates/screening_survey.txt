@@ -1,0 +1,73 @@
+USABILITY TESTING SCREENING SURVEY
+Stock Portfolio Management Platform
+
+Thank you for your interest in participating in our usability study!
+
+Please answer the following questions to help us select participants:
+
+1. What is your age range?
+   [ ] 18-25
+   [ ] 26-35
+   [ ] 36-45
+   [ ] 46-55
+   [ ] 56-65
+   [ ] 65+
+
+2. Do you have experience with stock trading?
+   [ ] No experience
+   [ ] Some experience (1-2 years)
+   [ ] Experienced (3+ years)
+
+3. How would you rate your technical proficiency with computers and web applications?
+   [ ] Low (basic computer skills, rarely use web apps)
+   [ ] Medium (comfortable with web apps, use them regularly)
+   [ ] High (tech-savvy, very comfortable with technology)
+
+4. Have you used online trading platforms before?
+   [ ] Yes
+   [ ] No
+
+5. If yes, which platforms have you used? (Select all that apply)
+   [ ] Robinhood
+   [ ] E*TRADE
+   [ ] TD Ameritrade
+   [ ] Fidelity
+   [ ] Charles Schwab
+   [ ] Webull
+   [ ] Interactive Brokers
+   [ ] Other: _______________
+
+6. How often do you trade stocks?
+   [ ] Never
+   [ ] Rarely (a few times a year)
+   [ ] Occasionally (monthly)
+   [ ] Frequently (weekly)
+   [ ] Daily
+
+7. Are you available for a 60-minute usability testing session?
+   [ ] Yes
+   [ ] No
+
+8. Preferred testing format:
+   [ ] In-person
+   [ ] Remote (Zoom/Teams)
+   [ ] Either is fine
+
+9. Preferred day/time: (Select all that apply)
+   [ ] Weekday mornings (9am-12pm)
+   [ ] Weekday afternoons (12pm-5pm)
+   [ ] Weekday evenings (5pm-8pm)
+   [ ] Weekend mornings
+   [ ] Weekend afternoons
+
+10. Email address for follow-up:
+    _________________________________
+
+11. Phone number (optional):
+    _________________________________
+
+12. Any additional comments or questions?
+    _________________________________
+    _________________________________
+
+Thank you! We will contact you within 3-5 business days if you are selected.

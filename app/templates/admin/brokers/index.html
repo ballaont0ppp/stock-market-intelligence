@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Broker Management{% endblock %}
+{% block page_title %}Broker Management{% endblock %}
+{% block page_content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Broker Management</h2>
+        <a href="{{ url_for('admin.create_broker') }}" class="btn btn-primary">
+            <i class="lucide-plus me-2"></i>Add Broker
+        </a>
+    </div>
+    <div class="card">
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Broker Name</th>
+                        <th>License Number</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Assigned Users</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for broker in brokers %}
+                    <tr>
+                        <td><strong>{{ broker.broker_name }}</strong></td>
+                        <td>{{ broker.license_number or '-' }}</td>
+                        <td>{{ broker.email }}</td>
+                        <td>{{ broker.phone or '-' }}</td>
+                        <td>{{ broker.assigned_users_count }}</td>
+                        <td>
+                            <span class="badge bg-{{ 'success' if broker.is_active else 'secondary' }}">
+                                {{ 'Active' if broker.is_active else 'Inactive' }}
+                            </span>
+                        </td>
+                        <td>
+                            <a href="{{ url_for('admin.edit_broker', broker_id=broker.broker_id) }}" class="btn btn-sm btn-primary">
+                                <i class="lucide-edit"></i>
+                            </a>
+                            {% if broker.is_active %}
+                            <form method="POST" action="{{ url_for('admin.deactivate_broker', broker_id=broker.broker_id) }}" 
+                                  style="display:inline;" onsubmit="return confirm('Deactivate this broker?');">
+                                <button type="submit" class="btn btn-sm btn-warning">
+                                    <i class="lucide-x"></i>
+                                </button>
+                            </form>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

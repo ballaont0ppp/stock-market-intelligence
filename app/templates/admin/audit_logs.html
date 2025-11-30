@@ -1,0 +1,187 @@
+{% extends "base.html" %}
+
+{% block title %}Audit Logs - Admin{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>Audit Logs</h1>
+    <p class="text-muted">Track all administrative actions and changes</p>
+</div>
+
+<!-- Filters -->
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="GET" action="{{ url_for('admin.audit_logs') }}" class="row g-3">
+            <div class="col-md-3">
+                <label for="admin_id" class="form-label">Admin User</label>
+                <select name="admin_id" id="admin_id" class="form-select">
+                    <option value="">All Admins</option>
+                    {% for admin in admins %}
+                    <option value="{{ admin.user_id }}" {% if filters.get('admin_id') == admin.user_id %}selected{% endif %}>
+                        {{ admin.email }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="col-md-2">
+                <label for="action_type" class="form-label">Action Type</label>
+                <select name="action_type" id="action_type" class="form-select">
+                    <option value="">All Actions</option>
+                    <option value="CREATE" {% if filters.get('action_type') == 'CREATE' %}selected{% endif %}>Create</option>
+                    <option value="UPDATE" {% if filters.get('action_type') == 'UPDATE' %}selected{% endif %}>Update</option>
+                    <option value="DELETE" {% if filters.get('action_type') == 'DELETE' %}selected{% endif %}>Delete</option>
+                    <option value="SUSPEND" {% if filters.get('action_type') == 'SUSPEND' %}selected{% endif %}>Suspend</option>
+                    <option value="ACTIVATE" {% if filters.get('action_type') == 'ACTIVATE' %}selected{% endif %}>Activate</option>
+                    <option value="ADJUST_BALANCE" {% if filters.get('action_type') == 'ADJUST_BALANCE' %}selected{% endif %}>Adjust Balance</option>
+                </select>
+            </div>
+            
+            <div class="col-md-2">
+                <label for="entity_type" class="form-label">Entity Type</label>
+                <select name="entity_type" id="entity_type" class="form-select">
+                    <option value="">All Entities</option>
+                    <option value="USER" {% if filters.get('entity_type') == 'USER' %}selected{% endif %}>User</option>
+                    <option value="COMPANY" {% if filters.get('entity_type') == 'COMPANY' %}selected{% endif %}>Company</option>
+                    <option value="BROKER" {% if filters.get('entity_type') == 'BROKER' %}selected{% endif %}>Broker</option>
+                    <option value="DIVIDEND" {% if filters.get('entity_type') == 'DIVIDEND' %}selected{% endif %}>Dividend</option>
+                    <option value="WALLET" {% if filters.get('entity_type') == 'WALLET' %}selected{% endif %}>Wallet</option>
+                </select>
+            </div>
+            
+            <div class="col-md-2">
+                <label for="date_from" class="form-label">From Date</label>
+                <input type="date" name="date_from" id="date_from" class="form-control" 
+                       value="{{ filters.get('date_from').strftime('%Y-%m-%d') if filters.get('date_from') else '' }}">
+            </div>
+            
+            <div class="col-md-2">
+                <label for="date_to" class="form-label">To Date</label>
+                <input type="date" name="date_to" id="date_to" class="form-control"
+                       value="{{ filters.get('date_to').strftime('%Y-%m-%d') if filters.get('date_to') else '' }}">
+            </div>
+            
+            <div class="col-md-1 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100">Filter</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Audit Logs Table -->
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Timestamp</th>
+                        <th>Admin</th>
+                        <th>Action</th>
+                        <th>Entity</th>
+                        <th>Description</th>
+                        <th>IP Address</th>
+                        <th>Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if audit_logs %}
+                        {% for log in audit_logs %}
+                        <tr>
+                            <td>{{ log.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                            <td>
+                                {% if log.admin %}
+                                    {{ log.admin.email }}
+                                {% else %}
+                                    <span class="text-muted">System</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <span class="badge 
+                                    {% if log.action_type == 'CREATE' %}bg-success
+                                    {% elif log.action_type == 'UPDATE' %}bg-info
+                                    {% elif log.action_type == 'DELETE' %}bg-danger
+                                    {% elif log.action_type == 'SUSPEND' %}bg-warning
+                                    {% elif log.action_type == 'ACTIVATE' %}bg-success
+                                    {% elif log.action_type == 'ADJUST_BALANCE' %}bg-primary
+                                    {% else %}bg-secondary{% endif %}">
+                                    {{ log.action_type }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge bg-secondary">{{ log.entity_type }}</span>
+                                {% if log.entity_id %}
+                                    <small class="text-muted">#{{ log.entity_id }}</small>
+                                {% endif %}
+                            </td>
+                            <td>{{ log.description or '-' }}</td>
+                            <td><small class="text-muted">{{ log.ip_address or '-' }}</small></td>
+                            <td>
+                                {% if log.changes %}
+                                <button type="button" class="btn btn-sm btn-outline-secondary" 
+                                        data-bs-toggle="modal" data-bs-target="#changesModal{{ log.audit_id }}">
+                                    View Changes
+                                </button>
+                                
+                                <!-- Changes Modal -->
+                                <div class="modal fade" id="changesModal{{ log.audit_id }}" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Changes Details</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <pre class="bg-light p-3 rounded">{{ log.changes | tojson(indent=2) }}</pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% else %}
+                                -
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="7" class="text-center text-muted py-4">
+                                No audit logs found
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+        
+        <!-- Pagination -->
+        {% if pages > 1 %}
+        <nav aria-label="Audit logs pagination" class="mt-4">
+            <ul class="pagination justify-content-center">
+                <li class="page-item {% if not has_prev %}disabled{% endif %}">
+                    <a class="page-link" href="{{ url_for('admin.audit_logs', page=page-1, **filters) }}">Previous</a>
+                </li>
+                
+                {% for p in range(1, pages + 1) %}
+                    {% if p == page %}
+                        <li class="page-item active"><span class="page-link">{{ p }}</span></li>
+                    {% elif p == 1 or p == pages or (p >= page - 2 and p <= page + 2) %}
+                        <li class="page-item"><a class="page-link" href="{{ url_for('admin.audit_logs', page=p, **filters) }}">{{ p }}</a></li>
+                    {% elif p == page - 3 or p == page + 3 %}
+                        <li class="page-item disabled"><span class="page-link">...</span></li>
+                    {% endif %}
+                {% endfor %}
+                
+                <li class="page-item {% if not has_next %}disabled{% endif %}">
+                    <a class="page-link" href="{{ url_for('admin.audit_logs', page=page+1, **filters) }}">Next</a>
+                </li>
+            </ul>
+        </nav>
+        {% endif %}
+        
+        <div class="text-center text-muted mt-3">
+            <small>Showing {{ audit_logs|length }} of {{ total }} audit logs</small>
+        </div>
+    </div>
+</div>
+{% endblock %}

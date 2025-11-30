@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}Buy Stocks - Stock Portfolio Platform{% endblock %}
+
+{% block page_content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h4 class="mb-0"><i class="bi bi-cart-plus"></i> Buy Stocks</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('orders.buy') }}" id="buyOrderForm">
+                        {{ form.hidden_tag() }}
+                        
+                        <div class="mb-3">
+                            {{ form.symbol.label(class="form-label") }}
+                            {{ form.symbol(class="form-control stock-symbol-input") }}
+                            {% if form.symbol.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.symbol.errors %}
+                                {{ error }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <small class="form-text text-muted">Enter the stock symbol (e.g., AAPL, GOOGL, MSFT)</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form.quantity.label(class="form-label") }}
+                            {{ form.quantity(class="form-control", id="quantity") }}
+                            {% if form.quantity.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.quantity.errors %}
+                                {{ error }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <small class="form-text text-muted">Number of shares to purchase</small>
+                        </div>
+                        
+                        <!-- Price Preview -->
+                        <div id="pricePreview" class="alert alert-info d-none">
+                            <h5>Order Preview</h5>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p class="mb-1"><strong>Symbol:</strong> <span id="previewSymbol">-</span></p>
+                                    <p class="mb-1"><strong>Price per share:</strong> $<span id="previewPrice">0.00</span></p>
+                                    <p class="mb-1"><strong>Quantity:</strong> <span id="previewQuantity">0</span></p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="mb-1"><strong>Subtotal:</strong> $<span id="previewSubtotal">0.00</span></p>
+                                    <p class="mb-1"><strong>Commission (0.1%):</strong> $<span id="previewCommission">0.00</span></p>
+                                    <p class="mb-1"><strong class="text-success">Total Cost:</strong> <strong class="text-success">$<span id="previewTotal">0.00</span></strong></p>
+                                </div>
+                            </div>
+                            <div id="pricePreviewError" class="alert alert-danger mt-2 d-none"></div>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            {{ form.submit(class="btn btn-success btn-lg") }}
+                            <a href="{{ url_for('orders.index') }}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Wallet Balance Info -->
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">Wallet Balance</h5>
+                    <p class="h4 text-success mb-0">
+                        ${{ "%.2f"|format(current_user.wallet.balance) if current_user.wallet else "0.00" }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Real-time price preview
+let pricePreviewTimeout;
+
+function updatePricePreview() {
+    const symbol = document.getElementById('symbol').value.trim().toUpperCase();
+    const quantity = parseInt(document.getElementById('quantity').value) || 0;
+    
+    if (!symbol || quantity <= 0) {
+        document.getElementById('pricePreview').classList.add('d-none');
+        return;
+    }
+    
+    // Show loading state
+    document.getElementById('pricePreview').classList.remove('d-none');
+    document.getElementById('pricePreviewError').classList.add('d-none');
+    
+    // Fetch price preview
+    fetch(`{{ url_for('orders.price_preview') }}?symbol=${symbol}&quantity=${quantity}&type=BUY`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById('pricePreviewError').textContent = data.error;
+                document.getElementById('pricePreviewError').classList.remove('d-none');
+            } else {
+                document.getElementById('previewSymbol').textContent = data.symbol;
+                document.getElementById('previewPrice').textContent = data.price_per_share.toFixed(2);
+                document.getElementById('previewQuantity').textContent = data.quantity;
+                document.getElementById('previewSubtotal').textContent = data.subtotal.toFixed(2);
+                document.getElementById('previewCommission').textContent = data.commission.toFixed(2);
+                document.getElementById('previewTotal').textContent = data.total.toFixed(2);
+            }
+        })
+        .catch(error => {
+            document.getElementById('pricePreviewError').textContent = 'Failed to fetch price preview';
+            document.getElementById('pricePreviewError').classList.remove('d-none');
+        });
+}
+
+// Debounced price preview update
+function debouncedPricePreview() {
+    clearTimeout(pricePreviewTimeout);
+    pricePreviewTimeout = setTimeout(updatePricePreview, 500);
+}
+
+// Attach event listeners
+document.getElementById('symbol').addEventListener('input', debouncedPricePreview);
+document.getElementById('quantity').addEventListener('input', debouncedPricePreview);
+</script>
+{% endblock %}

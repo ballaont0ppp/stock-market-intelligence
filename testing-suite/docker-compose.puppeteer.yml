@@ -1,0 +1,210 @@
+version: '3.8'
+
+services:
+  # Test runner service with Puppeteer support
+  test-runner:
+    build: .
+    container_name: test-runner
+    depends_on:
+      - postgres
+      - mysql
+      - mongodb
+      - redis
+      - selenium-hub
+      - puppeteer-chrome  # Add Puppeteer browser container
+    environment:
+      - NODE_ENV=test
+      - DATABASE_URL=postgresql://testuser:testpass@postgres:5432/testdb
+      - MYSQL_URL=mysql://testuser:testpass@mysql:3306/testdb
+      - MONGO_URL=mongodb://mongodb:27017/testdb
+      - REDIS_URL=redis://redis:6379
+      - SELENIUM_URL=http://selenium-hub:4444/wd/hub
+      - PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
+      - PUPPETEER_SKIP_DOWNLOAD=false
+      - PUPPETEER_HEADLESS=true
+      - TEST_URL=http://puppeteer-chrome:3000
+      - HEADLESS=true
+    volumes:
+      - ./results:/app/results
+      - ./reports:/app/reports
+      - /dev/shm:/dev/shm  # Required for Puppeteer in containers
+    networks:
+      - test-network
+    command: >
+      sh -c "
+        echo 'Installing Puppeteer browsers...' &&
+        npx puppeteer browsers install chrome &&
+        echo 'Starting test execution...' &&
+        node scripts/run-all-tests.js
+      "
+
+  # Standalone Puppeteer Chrome browser for testing
+  puppeteer-chrome:
+    image: browserless/chrome:latest
+    container_name: puppeteer-chrome
+    ports:
+      - "3000:3000"
+      - "3030:3030"
+    environment:
+      - MAX_CONCURRENT_SESSIONS=10
+      - CONNECTION_TIMEOUT=60000
+    volumes:
+      - /dev/shm:/dev/shm
+    networks:
+      - test-network
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000/json/version"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # PostgreSQL database for testing
+  postgres:
+    image: postgres:15-alpine
+    container_name: test-postgres
+    environment:
+      - POSTGRES_DB=testdb
+      - POSTGRES_USER=testuser
+      - POSTGRES_PASSWORD=testpass
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - test-network
+
+  # MySQL database for testing
+  mysql:
+    image: mysql:8.0
+    container_name: test-mysql
+    environment:
+      - MYSQL_DATABASE=testdb
+      - MYSQL_USER=testuser
+      - MYSQL_PASSWORD=testpass
+      - MYSQL_ROOT_PASSWORD=rootpass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - test-network
+
+  # MongoDB database for testing
+  mongodb:
+    image: mongo:6.0
+    container_name: test-mongodb
+    environment:
+      - MONGO_INITDB_DATABASE=testdb
+      - MONGO_INITDB_ROOT_USERNAME=testuser
+      - MONGO_INITDB_ROOT_PASSWORD=testpass
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - test-network
+
+  # Redis for caching and messaging
+  redis:
+    image: redis:7-alpine
+    container_name: test-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - test-network
+
+  # Selenium Hub for browser testing (additional support)
+  selenium-hub:
+    image: selenium/hub:4.7.2
+    container_name: selenium-hub
+    ports:
+      - "4442:4442"
+      - "4443:4443"
+      - "4444:4444"
+    networks:
+      - test-network
+
+  # Chrome node for Selenium
+  chrome:
+    image: selenium/node-chrome:4.7.2
+    container_name: selenium-chrome
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    networks:
+      - test-network
+
+  # Firefox node for Selenium
+  firefox:
+    image: selenium/node-firefox:4.7.2
+    container_name: selenium-firefox
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+    networks:
+      - test-network
+
+  # Mock external services
+  mock-api:
+    image: mendhak/http-https-echo:29
+    container_name: mock-api
+    ports:
+      - "8080:8080"
+    networks:
+      - test-network
+
+  # Test application (your actual app to test)
+  test-app:
+    image: node:18-alpine
+    container_name: test-app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./app:/app
+      - /app/node_modules
+    working_dir: /app
+    command: sh -c "npm install && npm start"
+    networks:
+      - test-network
+    depends_on:
+      - postgres
+      - mysql
+      - mongodb
+      - redis
+
+  # Test result dashboard
+  test-dashboard:
+    image: node:18-alpine
+    container_name: test-dashboard
+    depends_on:
+      - test-runner
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./results:/app/results
+      - ./reports:/app/reports
+    command: >
+      sh -c "
+        npm install -g http-server &&
+        http-server /app/reports -p 3000 --cors
+      "
+    networks:
+      - test-network
+
+networks:
+  test-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
+  mysql_data:
+  mongodb_data:
+  redis_data:

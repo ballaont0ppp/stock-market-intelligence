@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+
+{% block title %}Create Dividend{% endblock %}
+{% block page_title %}Create Dividend{% endblock %}
+
+{% block page_content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">Create New Dividend</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('admin.create_dividend') }}">
+                        {{ form.hidden_tag() }}
+                        
+                        <div class="mb-3">
+                            {{ form.company_symbol.label(class="form-label") }}
+                            {{ form.company_symbol(class="form-control" + (" is-invalid" if form.company_symbol.errors else "")) }}
+                            {% if form.company_symbol.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.company_symbol.errors[0] }}
+                                </div>
+                            {% endif %}
+                            <small class="form-text text-muted">Enter the stock symbol (e.g., AAPL, GOOGL)</small>
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.dividend_per_share.label(class="form-label") }}
+                            {{ form.dividend_per_share(class="form-control" + (" is-invalid" if form.dividend_per_share.errors else "")) }}
+                            {% if form.dividend_per_share.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.dividend_per_share.errors[0] }}
+                                </div>
+                            {% endif %}
+                            <small class="form-text text-muted">Amount paid per share (up to 4 decimal places)</small>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form.ex_dividend_date.label(class="form-label") }}
+                                {{ form.ex_dividend_date(class="form-control" + (" is-invalid" if form.ex_dividend_date.errors else "")) }}
+                                {% if form.ex_dividend_date.errors %}
+                                    <div class="invalid-feedback">
+                                        {{ form.ex_dividend_date.errors[0] }}
+                                    </div>
+                                {% endif %}
+                                <small class="form-text text-muted">Last date to buy stock to receive dividend</small>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                {{ form.record_date.label(class="form-label") }}
+                                {{ form.record_date(class="form-control" + (" is-invalid" if form.record_date.errors else "")) }}
+                                {% if form.record_date.errors %}
+                                    <div class="invalid-feedback">
+                                        {{ form.record_date.errors[0] }}
+                                    </div>
+                                {% endif %}
+                                <small class="form-text text-muted">Date to determine eligible shareholders</small>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                {{ form.payment_date.label(class="form-label") }}
+                                {{ form.payment_date(class="form-control" + (" is-invalid" if form.payment_date.errors else "")) }}
+                                {% if form.payment_date.errors %}
+                                    <div class="invalid-feedback">
+                                        {{ form.payment_date.errors[0] }}
+                                    </div>
+                                {% endif %}
+                                <small class="form-text text-muted">Date when dividend will be paid</small>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                {{ form.announcement_date.label(class="form-label") }}
+                                {{ form.announcement_date(class="form-control" + (" is-invalid" if form.announcement_date.errors else "")) }}
+                                {% if form.announcement_date.errors %}
+                                    <div class="invalid-feedback">
+                                        {{ form.announcement_date.errors[0] }}
+                                    </div>
+                                {% endif %}
+                                <small class="form-text text-muted">Optional: Date dividend was announced</small>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            {{ form.dividend_type.label(class="form-label") }}
+                            {{ form.dividend_type(class="form-select" + (" is-invalid" if form.dividend_type.errors else "")) }}
+                            {% if form.dividend_type.errors %}
+                                <div class="invalid-feedback">
+                                    {{ form.dividend_type.errors[0] }}
+                                </div>
+                            {% endif %}
+                            <small class="form-text text-muted">Regular dividends are recurring, special are one-time</small>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <i class="lucide-info"></i>
+                            <strong>Important:</strong> Dates must follow this order: Ex-Dividend Date &lt; Record Date &lt; Payment Date
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+                            <a href="{{ url_for('admin.dividends') }}" class="btn btn-secondary">
+                                <i class="lucide-arrow-left"></i> Cancel
+                            </a>
+                            {{ form.submit(class="btn btn-primary") }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

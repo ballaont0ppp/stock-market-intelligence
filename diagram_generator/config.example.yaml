@@ -1,0 +1,45 @@
+# Example configuration for diagram generation
+
+# List of diagram types to generate
+enabled_diagrams:
+  - architecture
+  - er_diagram
+  - class_diagram
+  - sequence_diagram
+  - component
+  - package
+
+# Detail level for each diagram type (minimal, normal, detailed)
+detail_levels:
+  architecture: normal
+  er_diagram: detailed
+  class_diagram: normal
+  sequence_diagram: normal
+  component: normal
+  package: minimal
+
+# File/directory exclusion patterns (glob patterns)
+exclusion_patterns:
+  - "*/venv/*"
+  - "*/env/*"
+  - "*/__pycache__/*"
+  - "*/node_modules/*"
+  - "*/.git/*"
+  - "*/migrations/*"
+  - "*/tests/*"
+  - "*/test_*"
+
+# Output directory for generated diagrams
+output_dir: "diagrams"
+
+# Source directory to analyze
+source_dir: "."
+
+# Whether to create backups before overwriting
+create_backups: true
+
+# Whether to preserve manual edits
+preserve_manual_edits: true
+
+# Maximum depth for directory traversal
+max_depth: 10

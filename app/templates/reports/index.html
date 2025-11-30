@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+
+{% block title %}Reports - Stock Portfolio Platform{% endblock %}
+
+{% block page_content %}
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="h3 mb-0">Reports</h1>
+            <p class="text-muted">Generate detailed reports about your trading activity and performance</p>
+        </div>
+    </div>
+
+    <!-- Report Type Selector -->
+    <div class="row">
+        <div class="col-12">
+            <ul class="nav nav-tabs mb-4" id="reportTabs" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="transaction-tab" data-bs-toggle="tab" data-bs-target="#transaction" type="button" role="tab">
+                        <i class="fas fa-exchange-alt me-2"></i>Transaction Report
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="billing-tab" data-bs-toggle="tab" data-bs-target="#billing" type="button" role="tab">
+                        <i class="fas fa-file-invoice-dollar me-2"></i>Billing Report
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="performance-tab" data-bs-toggle="tab" data-bs-target="#performance" type="button" role="tab">
+                        <i class="fas fa-chart-line me-2"></i>Performance Report
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="reportTabsContent">
+                <!-- Transaction Report Tab -->
+                <div class="tab-pane fade show active" id="transaction" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Transaction Report</h5>
+                            <p class="text-muted">View all your transactions within a specific date range</p>
+                            <form method="GET" action="{{ url_for('reports.transaction_report') }}">
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        {{ transaction_form.start_date.label(class="form-label") }}
+                                        {{ transaction_form.start_date(class="form-control") }}
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ transaction_form.end_date.label(class="form-label") }}
+                                        {{ transaction_form.end_date(class="form-control") }}
+                                    </div>
+                                    <div class="col-md-4 d-flex align-items-end">
+                                        {{ transaction_form.submit(class="btn btn-primary w-100") }}
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Billing Report Tab -->
+                <div class="tab-pane fade" id="billing" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Billing Report</h5>
+                            <p class="text-muted">View fees and charges for a specific month</p>
+                            <form method="GET" action="{{ url_for('reports.billing_report') }}">
+                                <div class="row g-3">
+                                    <div class="col-md-4">
+                                        {{ billing_form.month.label(class="form-label") }}
+                                        {{ billing_form.month(class="form-select") }}
+                                    </div>
+                                    <div class="col-md-4">
+                                        {{ billing_form.year.label(class="form-label") }}
+                                        {{ billing_form.year(class="form-control") }}
+                                    </div>
+                                    <div class="col-md-4 d-flex align-items-end">
+                                        {{ billing_form.submit(class="btn btn-primary w-100") }}
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Performance Report Tab -->
+                <div class="tab-pane fade" id="performance" role="tabpanel">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Performance Report</h5>
+                            <p class="text-muted">Analyze your portfolio performance over time</p>
+                            <form method="GET" action="{{ url_for('reports.performance_report') }}">
+                                <div class="row g-3">
+                                    <div class="col-md-6">
+                                        {{ performance_form.period.label(class="form-label") }}
+                                        {{ performance_form.period(class="form-select") }}
+                                    </div>
+                                    <div class="col-md-6 d-flex align-items-end">
+                                        {{ performance_form.submit(class="btn btn-primary w-100") }}
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Links -->
+    <div class="row mt-4">
+        <div class="col-md-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="card-title"><i class="fas fa-info-circle me-2"></i>Transaction Report</h6>
+                    <p class="card-text small text-muted">View detailed transaction history with summary statistics including total buys, sells, and commissions paid.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="card-title"><i class="fas fa-info-circle me-2"></i>Billing Report</h6>
+                    <p class="card-text small text-muted">Monthly breakdown of transaction counts, volumes, and fee analysis by transaction type.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="card-title"><i class="fas fa-info-circle me-2"></i>Performance Report</h6>
+                    <p class="card-text small text-muted">Comprehensive portfolio performance analysis with returns, win rate, and best/worst performers.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

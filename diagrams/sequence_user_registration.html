@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sequence User Registration - Stock Portfolio Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: white;
+            color: #111827;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            padding: 40px 60px;
+            border-bottom: 4px solid #1e40af;
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .company-name {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+        
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+        
+        .diagram-type {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 12px;
+            letter-spacing: 0.5px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px;
+        }
+        
+        .diagram-container {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 40px;
+            margin: 0;
+            overflow-x: auto;
+        }
+        
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 2px solid #e5e7eb;
+            text-align: center;
+            color: #6b7280;
+            font-size: 13px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .footer-left {
+            text-align: left;
+        }
+        
+        .footer-right {
+            text-align: right;
+        }
+        
+        .footer strong {
+            color: #2563eb;
+            font-weight: 600;
+        }
+        
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .header {
+                background: #2563eb;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .container {
+                padding: 40px 20px;
+            }
+            
+            .diagram-container {
+                border: 2px solid #e5e7eb;
+                page-break-inside: avoid;
+            }
+            
+            .footer {
+                page-break-before: avoid;
+            }
+        }
+        
+        @page {
+            margin: 0.5in;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="company-name">Stock Portfolio Platform</div>
+            <h1>Sequence User Registration</h1>
+            <span class="diagram-type">Sequence Diagram</span>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="diagram-container">
+            <pre class="mermaid">
+%%{init: {'theme':'neutral'}}%%
+sequenceDiagram
+    actor User
+    participant Browser
+    participant AuthRoute
+    participant RegistrationForm
+    participant AuthService
+    participant User as UserModel
+    participant Wallet as WalletModel
+    participant AuditService
+    participant Database
+    participant EmailService
+    
+    User->>Browser: Navigate to /auth/register
+    Browser->>AuthRoute: GET /auth/register
+    AuthRoute->>RegistrationForm: Create form
+    RegistrationForm-->>Browser: Render registration form
+    Browser-->>User: Display form
+    
+    User->>Browser: Fill form (username, email, password)
+    Browser->>AuthRoute: POST /auth/register
+    
+    AuthRoute->>RegistrationForm: Validate form data
+    
+    RegistrationForm->>RegistrationForm: Check CSRF token
+    RegistrationForm->>RegistrationForm: Validate email format
+    RegistrationForm->>RegistrationForm: Validate password strength
+    RegistrationForm->>RegistrationForm: Validate username length
+    
+    alt Validation Fails
+        RegistrationForm-->>AuthRoute: Validation errors
+        AuthRoute-->>Browser: Flash error messages
+        Browser-->>User: Show errors
+    else Validation Passes
+        RegistrationForm-->>AuthRoute: Valid data
+        
+        AuthRoute->>AuthService: register_user(username, email, password)
+        
+        %% Check for existing user
+        AuthService->>UserModel: query_by_email(email)
+        UserModel->>Database: SELECT * FROM users WHERE email = ?
+        Database-->>UserModel: Result
+        UserModel-->>AuthService: User or None
+        
+        alt User Already Exists
+            AuthService-->>AuthRoute: Raise UserExistsError
+            AuthRoute-->>Browser: Flash "Email already registered"
+            Browser-->>User: Show error
+        else New User
+            %% Begin Transaction
+            AuthService->>Database: BEGIN TRANSACTION
+            
+            %% Create User
+            AuthService->>AuthService: hash_password(password)
+            AuthService->>UserModel: create(username, email, password_hash)
+            UserModel->>Database: INSERT INTO users VALUES (...)
+            Database-->>UserModel: user_id
+            UserModel-->>AuthService: User object
+            
+            %% Create Wallet
+            AuthService->>WalletModel: create(user_id, initial_balance=0)
+            WalletModel->>Database: INSERT INTO wallets VALUES (user_id, 0, ...)
+            Database-->>WalletModel: wallet_id
+            WalletModel-->>AuthService: Wallet object
+            
+            %% Log Action
+            AuthService->>AuditService: log_action(user_id, 'USER_REGISTERED', ...)
+            AuditService->>Database: INSERT INTO audit_logs VALUES (...)
+            Database-->>AuditService: Success
+            
+            %% Commit Transaction
+            AuthService->>Database: COMMIT TRANSACTION
+            Database-->>AuthService: Success
+            
+            %% Send Welcome Email (Async)
+            AuthService->>EmailService: send_welcome_email(email, username)
+            EmailService-->>AuthService: Queued
+            
+            AuthService-->>AuthRoute: Registration successful
+            
+            %% Auto-login
+            AuthRoute->>AuthRoute: login_user(user)
+            AuthRoute->>AuthRoute: create_session(user_id)
+            
+            AuthRoute-->>Browser: Redirect to /dashboard
+            Browser-->>User: Welcome to dashboard
+        end
+    end
+            </pre>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <strong>Stock Portfolio Platform</strong><br>
+                    System Architecture Documentation
+                </div>
+                <div class="footer-right">
+                    Document: <strong>Sequence User Registration</strong><br>
+                    Page 1 of 1
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>

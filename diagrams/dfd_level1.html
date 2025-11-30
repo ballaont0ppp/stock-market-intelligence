@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dfd Level1 - Stock Portfolio Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: white;
+            color: #111827;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            padding: 40px 60px;
+            border-bottom: 4px solid #1e40af;
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .company-name {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+        
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+        
+        .diagram-type {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 12px;
+            letter-spacing: 0.5px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px;
+        }
+        
+        .diagram-container {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 40px;
+            margin: 0;
+            overflow-x: auto;
+        }
+        
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 2px solid #e5e7eb;
+            text-align: center;
+            color: #6b7280;
+            font-size: 13px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .footer-left {
+            text-align: left;
+        }
+        
+        .footer-right {
+            text-align: right;
+        }
+        
+        .footer strong {
+            color: #2563eb;
+            font-weight: 600;
+        }
+        
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .header {
+                background: #2563eb;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .container {
+                padding: 40px 20px;
+            }
+            
+            .diagram-container {
+                border: 2px solid #e5e7eb;
+                page-break-inside: avoid;
+            }
+            
+            .footer {
+                page-break-before: avoid;
+            }
+        }
+        
+        @page {
+            margin: 0.5in;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="company-name">Stock Portfolio Platform</div>
+            <h1>Dfd Level1</h1>
+            <span class="diagram-type">Data Flow Diagram</span>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="diagram-container">
+            <pre class="mermaid">
+graph TD
+    USER[User]
+    APIS[External APIs<br/>Yahoo Finance]
+    TWITTER[Twitter API]
+    DB[(Database)]
+    
+    USER -->|Stock Symbol| VALIDATE[1.0 Validate Input]
+    VALIDATE -->|Valid Request| FETCH[2.0 Fetch Stock Data]
+    FETCH -->|Historical Data| PREDICT[3.0 Generate Predictions]
+    TWITTER -->|Tweets| SENTIMENT[4.0 Analyze Sentiment]
+    SENTIMENT -->|Sentiment Score| PREDICT
+    PREDICT -->|Predictions| STORE[5.0 Store Results]
+    STORE -->|Save| DB
+    STORE -->|Results| FORMAT[6.0 Format Output]
+    FORMAT -->|Display| USER
+    DB -->|Retrieve| FETCH
+    RETRIEVE_DATA --> FETCH_REALTIME_DATA
+    RETRIEVE_DATA --> STORE_DATA
+    RETRIEVE_DATA --> RETRIEVE_PROCESSED_DATA
+    
+    FETCH_STOCK_DATA --> EXTERNAL_APIS
+    FETCH_REALTIME_DATA --> EXTERNAL_APIS
+    STORE_DATA --> DB
+    RETRIEVE_PROCESSED_DATA --> DB
+    
+    EXTERNAL_APIS -- "Stock Data" --> FETCH_STOCK_DATA
+    EXTERNAL_APIS -- "Real-time Data" --> FETCH_REALTIME_DATA
+    DB -- "Stored Data" --> STORE_DATA
+    DB -- "Processed Data" --> RETRIEVE_PROCESSED_DATA
+    
+    RETRIEVE_PROCESSED_DATA --> PROCESS_PREDICTIONS
+    PROCESS_PREDICTIONS --> ARIMA_MODEL
+    PROCESS_PREDICTIONS --> LSTM_MODEL
+    PROCESS_PREDICTIONS --> LINEAR_REGRESSION
+    PROCESS_PREDICTIONS --> COMBINE_RESULTS
+    
+    ARIMA_MODEL --> DB
+    LSTM_MODEL --> DB
+    LINEAR_REGRESSION --> DB
+    COMBINE_RESULTS --> DB
+    
+    DB -- "Historical Data" --> ARIMA_MODEL
+    DB -- "Sequential Data" --> LSTM_MODEL
+    DB -- "Feature Data" --> LINEAR_REGRESSION
+    DB -- "Model Results" --> COMBINE_RESULTS
+    
+    ARIMA_MODEL --> PROCESS_PREDICTIONS
+    LSTM_MODEL --> PROCESS_PREDICTIONS
+    LINEAR_REGRESSION --> PROCESS_PREDICTIONS
+    COMBINE_RESULTS --> PROCESS_PREDICTIONS
+    
+    PROCESS_PREDICTIONS --> ANALYZE_SENTIMENT
+    ANALYZE_SENTIMENT --> COLLECT_TWEETS
+    ANALYZE_SENTIMENT --> PROCESS_SENTIMENT
+    ANALYZE_SENTIMENT --> STORE_SENTIMENT
+    
+    COLLECT_TWEETS --> SOCIAL_MEDIA
+    PROCESS_SENTIMENT --> COLLECT_TWEETS
+    STORE_SENTIMENT --> DB
+    
+    SOCIAL_MEDIA -- "Tweets" --> COLLECT_TWEETS
+    COLLECT_TWEETS -- "Tweet Data" --> PROCESS_SENTIMENT
+    PROCESS_SENTIMENT -- "Cleaned Text" --> STORE_SENTIMENT
+    DB -- "Stored Scores" --> STORE_SENTIMENT
+    
+    STORE_SENTIMENT --> ANALYZE_SENTIMENT
+    ANALYZE_SENTIMENT --> GENERATE_RECOMMENDATION
+    GENERATE_RECOMMENDATION --> STORE_FINAL_RESULTS
+    STORE_FINAL_RESULTS --> DB
+    DB -- "Storage Confirmation" --> STORE_FINAL_RESULTS
+    
+    GENERATE_RECOMMENDATION --> FORMAT_OUTPUT
+    FORMAT_OUTPUT --> FORMAT_RESULTS
+    FORMAT_OUTPUT --> SEND_RESULTS
+    
+    FORMAT_RESULTS --> DB
+    SEND_RESULTS --> USER
+    
+    DB -- "Processed Data" --> FORMAT_RESULTS
+    FORMAT_RESULTS -- "Formatted Results" --> SEND_RESULTS
+    SEND_RESULTS -- "6.0 View Results" --> USER
+            </pre>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <strong>Stock Portfolio Platform</strong><br>
+                    System Architecture Documentation
+                </div>
+                <div class="footer-right">
+                    Document: <strong>Dfd Level1</strong><br>
+                    Page 1 of 1
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>

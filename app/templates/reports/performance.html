@@ -1,0 +1,238 @@
+{% extends "base.html" %}
+
+{% block title %}Performance Report - Stock Portfolio Platform{% endblock %}
+
+{% block page_content %}
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('reports.index') }}">Reports</a></li>
+                    <li class="breadcrumb-item active">Performance Report</li>
+                </ol>
+            </nav>
+            <h1 class="h3 mb-0">Performance Report</h1>
+        </div>
+    </div>
+
+    <!-- Report Form -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                {{ form.period.label(class="form-label") }}
+                                {{ form.period(class="form-select") }}
+                                {% if form.period.errors %}
+                                    <div class="text-danger small">{{ form.period.errors[0] }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-6 d-flex align-items-end">
+                                {{ form.submit(class="btn btn-primary w-100") }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if report %}
+    <!-- Performance Summary -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">Current Portfolio Value</h6>
+                    <h3 class="mb-0">${{ "%.2f"|format(report.current_portfolio_value) }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">Total Invested</h6>
+                    <h3 class="mb-0">${{ "%.2f"|format(report.total_invested) }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card {% if report.total_gain_loss >= 0 %}border-success{% else %}border-danger{% endif %}">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">Total Gain/Loss</h6>
+                    <h3 class="mb-0 {% if report.total_gain_loss >= 0 %}text-success{% else %}text-danger{% endif %}">
+                        ${{ "%.2f"|format(report.total_gain_loss) }}
+                    </h3>
+                    <small class="{% if report.total_return_pct >= 0 %}text-success{% else %}text-danger{% endif %}">
+                        {{ "%.2f"|format(report.total_return_pct) }}%
+                    </small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">Annualized Return</h6>
+                    <h3 class="mb-0 {% if report.annualized_return >= 0 %}text-success{% else %}text-danger{% endif %}">
+                        {{ "%.2f"|format(report.annualized_return) }}%
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Trading Statistics -->
+    <div class="row mb-4">
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">Win Rate</h6>
+                    <h3 class="mb-0">{{ "%.2f"|format(report.win_rate) }}%</h3>
+                    <small class="text-muted">{{ report.profitable_trades }} / {{ report.total_trades }} trades</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">Profitable Trades</h6>
+                    <h3 class="mb-0 text-success">{{ report.profitable_trades }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">Total Trades</h6>
+                    <h3 class="mb-0">{{ report.total_trades }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Best and Worst Performers -->
+    {% if report.best_performer or report.worst_performer %}
+    <div class="row mb-4">
+        {% if report.best_performer %}
+        <div class="col-md-6 mb-3">
+            <div class="card border-success">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0"><i class="fas fa-trophy me-2"></i>Best Performer</h5>
+                </div>
+                <div class="card-body">
+                    <h4>{{ report.best_performer.symbol }}</h4>
+                    <p class="mb-2">{{ report.best_performer.company_name }}</p>
+                    <div class="row">
+                        <div class="col-6">
+                            <small class="text-muted">Current Value</small>
+                            <p class="mb-0"><strong>${{ "%.2f"|format(report.best_performer.current_value) }}</strong></p>
+                        </div>
+                        <div class="col-6">
+                            <small class="text-muted">Gain/Loss</small>
+                            <p class="mb-0 text-success">
+                                <strong>${{ "%.2f"|format(report.best_performer.gain_loss) }}</strong>
+                                ({{ "%.2f"|format(report.best_performer.gain_loss_pct) }}%)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        
+        {% if report.worst_performer %}
+        <div class="col-md-6 mb-3">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0"><i class="fas fa-chart-line me-2"></i>Worst Performer</h5>
+                </div>
+                <div class="card-body">
+                    <h4>{{ report.worst_performer.symbol }}</h4>
+                    <p class="mb-2">{{ report.worst_performer.company_name }}</p>
+                    <div class="row">
+                        <div class="col-6">
+                            <small class="text-muted">Current Value</small>
+                            <p class="mb-0"><strong>${{ "%.2f"|format(report.worst_performer.current_value) }}</strong></p>
+                        </div>
+                        <div class="col-6">
+                            <small class="text-muted">Gain/Loss</small>
+                            <p class="mb-0 {% if report.worst_performer.gain_loss >= 0 %}text-success{% else %}text-danger{% endif %}">
+                                <strong>${{ "%.2f"|format(report.worst_performer.gain_loss) }}</strong>
+                                ({{ "%.2f"|format(report.worst_performer.gain_loss_pct) }}%)
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <!-- Export Button -->
+    <div class="row mb-3">
+        <div class="col-12">
+            <a href="{{ url_for('reports.export_performance_csv', period=form.period.data) }}" 
+               class="btn btn-success">
+                <i class="fas fa-download me-2"></i>Export to CSV
+            </a>
+        </div>
+    </div>
+
+    <!-- Holdings Performance -->
+    {% if report.holdings %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Holdings Performance</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Symbol</th>
+                                    <th>Company</th>
+                                    <th class="text-end">Quantity</th>
+                                    <th class="text-end">Avg Price</th>
+                                    <th class="text-end">Current Price</th>
+                                    <th class="text-end">Invested</th>
+                                    <th class="text-end">Current Value</th>
+                                    <th class="text-end">Gain/Loss</th>
+                                    <th class="text-end">Return %</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for holding in report.holdings %}
+                                <tr>
+                                    <td><strong>{{ holding.symbol }}</strong></td>
+                                    <td>{{ holding.company_name }}</td>
+                                    <td class="text-end">{{ holding.quantity }}</td>
+                                    <td class="text-end">${{ "%.2f"|format(holding.average_price) }}</td>
+                                    <td class="text-end">${{ "%.2f"|format(holding.current_price) }}</td>
+                                    <td class="text-end">${{ "%.2f"|format(holding.invested) }}</td>
+                                    <td class="text-end">${{ "%.2f"|format(holding.current_value) }}</td>
+                                    <td class="text-end {% if holding.gain_loss >= 0 %}text-success{% else %}text-danger{% endif %}">
+                                        ${{ "%.2f"|format(holding.gain_loss) }}
+                                    </td>
+                                    <td class="text-end {% if holding.gain_loss_pct >= 0 %}text-success{% else %}text-danger{% endif %}">
+                                        {{ "%.2f"|format(holding.gain_loss_pct) }}%
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,70 @@
+# Stock Portfolio Platform - Diagram Generation Configuration
+
+# Diagram types to generate
+enabled_diagrams:
+  - architecture      # Application architecture overview
+  - er_diagram        # Database schema (models)
+  - class_diagram     # Class relationships
+  - sequence_diagram  # Request flows
+  - component         # Module dependencies
+  - package           # Package structure
+
+# Detail level for each diagram type
+detail_levels:
+  architecture: detailed
+  er_diagram: detailed
+  class_diagram: normal
+  sequence_diagram: normal
+  component: normal
+  package: normal
+
+# Output directory for generated diagrams
+output_dir: "diagrams"
+
+# Source directory to analyze
+source_dir: "."
+
+# Exclusion patterns
+exclusion_patterns:
+  - "*/venv/*"
+  - "*/stock_market_venv/*"
+  - "*/__pycache__/*"
+  - "*/.git/*"
+  - "*/.github/*"
+  - "*/.pytest_cache/*"
+  - "*/.hypothesis/*"
+  - "*/migrations/*"
+  - "*/tests/*"
+  - "*/test_*.py"
+  - "*_test.py"
+  - "*/testing-suite/*"
+  - "*/performance-testing/*"
+  - "*/security-testing/*"
+  - "*/usability-testing/*"
+  - "*/compatibility-testing/*"
+  - "*/accessibility-testing/*"
+  - "*/acceptance-testing/*"
+  - "*/recovery-testing/*"
+  - "*/static/*"
+  - "*/templates/*"
+  - "*/htmlcov/*"
+  - "*/screenshots/*"
+  - "*/logs/*"
+  - "*/backups/*"
+  - "*/data/*"
+  - "*/results/*"
+  - "*/.benchmarks/*"
+  - "*/diagram_generator/*"
+  - "*.csv"
+  - "*.db"
+  - "*.log"
+  - "*.md"
+
+# Create backups before overwriting
+create_backups: true
+
+# Preserve manual edits
+preserve_manual_edits: true
+
+# Maximum depth for directory traversal
+max_depth: 10

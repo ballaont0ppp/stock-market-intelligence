@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Company Management{% endblock %}
+{% block page_title %}Company Management{% endblock %}
+
+{% block page_content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Company Management</h2>
+        <div>
+            <a href="{{ url_for('admin.create_company') }}" class="btn btn-primary">
+                <i class="lucide-plus me-2"></i>Add Company
+            </a>
+            <a href="{{ url_for('admin.import_companies') }}" class="btn btn-secondary">
+                <i class="lucide-upload me-2"></i>Import CSV
+            </a>
+        </div>
+    </div>
+
+    <!-- Filters -->
+    <div class="card mb-4">
+        <div class="card-body">
+            <form method="GET" class="row g-3">
+                <div class="col-md-4">
+                    <input type="text" class="form-control" name="search" value="{{ search }}" placeholder="Search symbol or name">
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" name="sector">
+                        <option value="">All Sectors</option>
+                        {% for s in sectors %}
+                        <option value="{{ s }}" {% if sector == s %}selected{% endif %}>{{ s }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-select" name="is_active">
+                        <option value="">All Status</option>
+                        <option value="true" {% if is_active_filter == 'true' %}selected{% endif %}>Active</option>
+                        <option value="false" {% if is_active_filter == 'false' %}selected{% endif %}>Inactive</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">Filter</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Companies Table -->
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Symbol</th>
+                            <th>Company Name</th>
+                            <th>Sector</th>
+                            <th>Market Cap</th>
+                            <th>Status</th>
+                            <th>Last Updated</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for company in companies %}
+                        <tr>
+                            <td><strong>{{ company.symbol }}</strong></td>
+                            <td>{{ company.company_name }}</td>
+                            <td>{{ company.sector or '-' }}</td>
+                            <td>{{ "${:,.0f}".format(company.market_cap) if company.market_cap else '-' }}</td>
+                            <td>
+                                <span class="badge bg-{{ 'success' if company.is_active else 'secondary' }}">
+                                    {{ 'Active' if company.is_active else 'Inactive' }}
+                                </span>
+                            </td>
+                            <td>{{ company.last_updated.strftime('%Y-%m-%d') if company.last_updated else '-' }}</td>
+                            <td>
+                                <a href="{{ url_for('admin.edit_company', company_id=company.company_id) }}" class="btn btn-sm btn-primary">
+                                    <i class="lucide-edit"></i>
+                                </a>
+                                {% if company.is_active %}
+                                <form method="POST" action="{{ url_for('admin.deactivate_company', company_id=company.company_id) }}" 
+                                      style="display:inline;" onsubmit="return confirm('Deactivate this company?');">
+                                    <button type="submit" class="btn btn-sm btn-warning">
+                                        <i class="lucide-x"></i>
+                                    </button>
+                                </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Pagination -->
+            {% if pages > 1 %}
+            <nav>
+                <ul class="pagination justify-content-center">
+                    {% if has_prev %}
+                    <li class="page-item"><a class="page-link" href="{{ url_for('admin.companies', page=page-1) }}">Previous</a></li>
+                    {% endif %}
+                    {% for p in range(1, pages + 1) %}
+                    <li class="page-item {% if p == page %}active{% endif %}">
+                        <a class="page-link" href="{{ url_for('admin.companies', page=p) }}">{{ p }}</a>
+                    </li>
+                    {% endfor %}
+                    {% if has_next %}
+                    <li class="page-item"><a class="page-link" href="{{ url_for('admin.companies', page=page+1) }}">Next</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+
+            <div class="text-muted text-center mt-3">
+                Showing {{ companies|length }} of {{ total }} companies
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

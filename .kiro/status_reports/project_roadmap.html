@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Project Roadmap &mdash; Stock Portfolio Management and Prediction Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-alt: #f6f8fa;
+      --fg: #24292f;
+      --muted: #57606a;
+      --border: #d0d7de;
+      --accent: #0969da;
+      --accent-soft: #ddf4ff;
+      --success: #1a7f37;
+      --warning: #9a6700;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--fg);
+      background: var(--bg);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    body {
+      padding: 24px;
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 24px 32px 32px;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: 26px;
+      font-weight: 600;
+    }
+
+    .meta {
+      font-size: 14px;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 2px 10px;
+      background: var(--bg-alt);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .badge-success {
+      border-color: rgba(46, 160, 67, 0.3);
+      background: rgba(46, 160, 67, 0.08);
+      color: var(--success);
+    }
+
+    .badge-progress {
+      border-color: rgba(9, 105, 218, 0.3);
+      background: var(--accent-soft);
+      color: var(--accent);
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-top: 24px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 4px;
+    }
+
+    h3 {
+      font-size: 16px;
+      margin-top: 18px;
+      margin-bottom: 6px;
+    }
+
+    p {
+      margin: 4px 0 10px;
+      line-height: 1.5;
+    }
+
+    ul {
+      margin: 4px 0 10px 20px;
+      padding: 0;
+    }
+
+    li {
+      margin: 2px 0;
+    }
+
+    .section {
+      margin-bottom: 16px;
+    }
+
+    .task-list {
+      padding: 12px 12px 8px;
+      background: var(--bg-alt);
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+
+    .task-list ol {
+      margin: 0 0 0 20px;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      font-size: 14px;
+    }
+
+    .task-item span.label {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      color: var(--muted);
+      min-width: 26px;
+    }
+
+    .task-item.completed {
+      color: var(--muted);
+      text-decoration: line-through;
+    }
+
+    .summary-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .summary-row strong {
+      margin-right: 4px;
+    }
+
+    .progress-bar-container {
+      margin-top: 8px;
+      width: 100%;
+      max-width: 360px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--bg-alt);
+      overflow: hidden;
+      height: 14px;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 20%;
+      background: linear-gradient(90deg, #2da44e, #2ea043);
+    }
+
+    .progress-label {
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .milestones ul {
+      list-style-type: disc;
+    }
+
+    .schedule-list {
+      font-size: 14px;
+    }
+
+    .schedule-list li strong {
+      font-weight: 600;
+    }
+
+    hr.page-break-target {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 24px 0 16px;
+    }
+
+    @media print {
+      body {
+        padding: 0;
+        background: #ffffff;
+      }
+
+      .page {
+        border: none;
+        margin: 0;
+        border-radius: 0;
+        padding: 20mm 18mm 18mm;
+      }
+
+      a[href]::after {
+        content: "";
+      }
+
+      header {
+        margin-top: 0;
+      }
+
+      /* Page breaks: keep each major section tidy */
+      .break-before-progress {
+        page-break-before: always;
+      }
+
+      .break-inside-avoid {
+        page-break-inside: avoid;
+      }
+
+      hr.page-break-target {
+        page-break-after: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="break-inside-avoid">
+      <h1>Project Roadmap</h1>
+      <div class="meta">
+        <div>
+          <strong>Project:</strong>
+          <span>Stock Portfolio Management and Prediction Platform</span>
+        </div>
+        <div>
+          <span class="badge badge-progress">Progress: 6 / 30 tasks (20%)</span>
+        </div>
+        <div>
+          <span class="badge">Last Updated: 2025-11-27 18:47:00 IST</span>
+        </div>
+      </div>
+      <div class="progress-bar-container" aria-label="Overall progress" role="img">
+        <div class="progress-bar-fill"></div>
+      </div>
+      <div class="progress-label">Overall completion: 20%</div>
+    </header>
+
+    <section class="section break-inside-avoid">
+      <h2>Semester Planning</h2>
+
+      <h3>End-Semester Goals (Tasks 1-15)</h3>
+
+      <div class="task-list">
+        <h4>Completed (6 / 15)</h4>
+        <ol>
+          <li class="task-item completed"><span class="label">1.</span> <span>Project setup and database foundation</span></li>
+          <li class="task-item completed"><span class="label">2.</span> <span>Authentication system implementation</span></li>
+          <li class="task-item completed"><span class="label">3.</span> <span>Portfolio management system</span></li>
+          <li class="task-item completed"><span class="label">4.</span> <span>Stock repository and data management</span></li>
+          <li class="task-item completed"><span class="label">5.</span> <span>Transaction engine for buy/sell orders</span></li>
+          <li class="task-item completed"><span class="label">6.</span> <span>ML prediction service integration</span></li>
+        </ol>
+      </div>
+
+      <div class="task-list" style="margin-top: 10px;">
+        <h4>Remaining (9 / 15)</h4>
+        <ol start="7">
+          <li class="task-item"><span class="label">7.</span> <span>Sentiment analysis engine</span></li>
+          <li class="task-item"><span class="label">8.</span> <span>Dividend management system</span></li>
+          <li class="task-item"><span class="label">9.</span> <span>Admin service and dashboard</span></li>
+          <li class="task-item"><span class="label">10.</span> <span>Background jobs and scheduling</span></li>
+          <li class="task-item"><span class="label">11.</span> <span>Notification system</span></li>
+          <li class="task-item"><span class="label">12.</span> <span>Reporting system</span></li>
+          <li class="task-item"><span class="label">13.</span> <span>Clean minimalist UI implementation</span></li>
+          <li class="task-item"><span class="label">14.</span> <span>Error handling and validation</span></li>
+          <li class="task-item"><span class="label">15.</span> <span>Security implementation</span></li>
+        </ol>
+      </div>
+
+      <p class="summary-row"><strong>End-Semester Target:</strong> Complete tasks 1-15 by end-semester.</p>
+    </section>
+
+    <hr class="page-break-target" />
+
+    <section class="section break-inside-avoid">
+      <h3>Final-Semester Goals (Tasks 16-30)</h3>
+
+      <div class="task-list">
+        <ol start="16">
+          <li class="task-item"><span class="label">16.</span> <span>Logging and monitoring</span></li>
+          <li class="task-item"><span class="label">17.</span> <span>Testing implementation</span></li>
+          <li class="task-item"><span class="label">18.</span> <span>Deployment preparation</span></li>
+          <li class="task-item"><span class="label">19.</span> <span>Final integration and testing</span></li>
+          <li class="task-item"><span class="label">20.</span> <span>Documentation and cleanup</span></li>
+          <li class="task-item"><span class="label">21.</span> <span>Comprehensive performance testing</span></li>
+          <li class="task-item"><span class="label">22.</span> <span>Comprehensive security testing</span></li>
+          <li class="task-item"><span class="label">23.</span> <span>Usability testing</span></li>
+          <li class="task-item"><span class="label">24.</span> <span>Compatibility testing</span></li>
+          <li class="task-item"><span class="label">25.</span> <span>Accessibility testing</span></li>
+          <li class="task-item"><span class="label">26.</span> <span>Regression testing suite</span></li>
+          <li class="task-item"><span class="label">27.</span> <span>Recovery and resilience testing</span></li>
+          <li class="task-item"><span class="label">28.</span> <span>Acceptance testing</span></li>
+          <li class="task-item"><span class="label">29.</span> <span>Test automation and CI/CD integration</span></li>
+          <li class="task-item"><span class="label">30.</span> <span>Testing documentation and knowledge transfer</span></li>
+        </ol>
+      </div>
+
+      <p class="summary-row"><strong>Final-Semester Target:</strong> Complete all tasks 16-30 by end of final year.</p>
+    </section>
+
+    <section class="section break-before-progress">
+      <h2>Progress Tracking</h2>
+
+      <h3>Current Status (Week 5)</h3>
+      <div class="section break-inside-avoid">
+        <ul>
+          <li>✅ <strong>Tasks Completed:</strong> 6 / 30 (20%)</li>
+          <li>🔄 <strong>Tasks In Progress:</strong> 0 / 30 (0%)</li>
+          <li>⏳ <strong>Tasks Remaining:</strong> 24 / 30 (80%)</li>
+        </ul>
+      </div>
+
+      <div class="section milestones break-inside-avoid">
+        <h3>Milestone Targets</h3>
+        <ul>
+          <li><strong>End-Semester:</strong> 15 / 30 tasks (50%) &mdash; <em>9 tasks remaining</em></li>
+          <li><strong>Final-Semester:</strong> 30 / 30 tasks (100%) &mdash; <em>All tasks complete</em></li>
+        </ul>
+      </div>
+
+      <div class="section break-inside-avoid">
+        <h3>Weekly Progress Plan</h3>
+        <ul class="schedule-list">
+          <li><strong>Weeks 6–7:</strong> Complete tasks 7–9 (Sentiment, Dividend, Admin)</li>
+          <li><strong>Weeks 8–9:</strong> Complete tasks 10–12 (Jobs, Notifications, Reports)</li>
+          <li><strong>Weeks 10–11:</strong> Complete tasks 13–15 (UI, Error Handling, Security)</li>
+          <li><strong>Weeks 12–13:</strong> Complete tasks 16–18 (Logging, Testing, Deployment)</li>
+          <li><strong>Weeks 14–15:</strong> Complete tasks 19–21 (Integration, Documentation, Performance)</li>
+          <li><strong>Weeks 16–17:</strong> Complete tasks 22–24 (Security, Usability, Compatibility)</li>
+          <li><strong>Weeks 18–19:</strong> Complete tasks 25–27 (Accessibility, Regression, Recovery)</li>
+          <li><strong>Weeks 20–21:</strong> Complete tasks 28–30 (Acceptance, Automation, Documentation)</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

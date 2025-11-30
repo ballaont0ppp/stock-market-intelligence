@@ -1,0 +1,182 @@
+{% extends "base.html" %}
+
+{% block title %}Transaction Report - Stock Portfolio Platform{% endblock %}
+
+{% block page_content %}
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('reports.index') }}">Reports</a></li>
+                    <li class="breadcrumb-item active">Transaction Report</li>
+                </ol>
+            </nav>
+            <h1 class="h3 mb-0">Transaction Report</h1>
+        </div>
+    </div>
+
+    <!-- Report Form -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                {{ form.start_date.label(class="form-label") }}
+                                {{ form.start_date(class="form-control") }}
+                                {% if form.start_date.errors %}
+                                    <div class="text-danger small">{{ form.start_date.errors[0] }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-4">
+                                {{ form.end_date.label(class="form-label") }}
+                                {{ form.end_date(class="form-control") }}
+                                {% if form.end_date.errors %}
+                                    <div class="text-danger small">{{ form.end_date.errors[0] }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-4 d-flex align-items-end">
+                                {{ form.submit(class="btn btn-primary w-100") }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if report %}
+    <!-- Summary Statistics -->
+    <div class="row mb-4">
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">Total Transactions</h6>
+                    <h3 class="mb-0">{{ report.summary.total_transactions }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">Total Buys</h6>
+                    <h3 class="mb-0 text-success">${{ "%.2f"|format(report.summary.total_buys) }}</h3>
+                    <small class="text-muted">{{ report.summary.buy_count }} orders</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">Total Sells</h6>
+                    <h3 class="mb-0 text-info">${{ "%.2f"|format(report.summary.total_sells) }}</h3>
+                    <small class="text-muted">{{ report.summary.sell_count }} orders</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">Total Commissions</h6>
+                    <h3 class="mb-0 text-danger">${{ "%.2f"|format(report.summary.total_commissions) }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">Total Deposits</h6>
+                    <h3 class="mb-0">${{ "%.2f"|format(report.summary.total_deposits) }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">Total Withdrawals</h6>
+                    <h3 class="mb-0">${{ "%.2f"|format(report.summary.total_withdrawals) }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="text-muted mb-2">Total Dividends</h6>
+                    <h3 class="mb-0 text-success">${{ "%.2f"|format(report.summary.total_dividends) }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Button -->
+    <div class="row mb-3">
+        <div class="col-12">
+            <a href="{{ url_for('reports.export_transaction_csv', start_date=form.start_date.data, end_date=form.end_date.data) }}" 
+               class="btn btn-success">
+                <i class="fas fa-download me-2"></i>Export to CSV
+            </a>
+        </div>
+    </div>
+
+    <!-- Transaction Details -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Transaction Details</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Symbol</th>
+                                    <th>Company</th>
+                                    <th class="text-end">Amount</th>
+                                    <th class="text-end">Balance After</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for txn in report.transactions %}
+                                <tr>
+                                    <td>{{ txn.date.strftime('%Y-%m-%d %H:%M') }}</td>
+                                    <td>
+                                        <span class="badge 
+                                            {% if txn.type == 'BUY' %}bg-success
+                                            {% elif txn.type == 'SELL' %}bg-info
+                                            {% elif txn.type == 'DEPOSIT' %}bg-primary
+                                            {% elif txn.type == 'WITHDRAWAL' %}bg-warning
+                                            {% elif txn.type == 'DIVIDEND' %}bg-success
+                                            {% elif txn.type == 'FEE' %}bg-danger
+                                            {% else %}bg-secondary{% endif %}">
+                                            {{ txn.type }}
+                                        </span>
+                                    </td>
+                                    <td>{{ txn.company_symbol or '-' }}</td>
+                                    <td>{{ txn.company_name or '-' }}</td>
+                                    <td class="text-end {% if txn.amount < 0 %}text-danger{% else %}text-success{% endif %}">
+                                        ${{ "%.2f"|format(txn.amount) }}
+                                    </td>
+                                    <td class="text-end">${{ "%.2f"|format(txn.balance_after) }}</td>
+                                    <td>{{ txn.description or '-' }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,4 @@
+# file: d:\sharedwme\usb files\stockmarketapp\diagram_generator\formatters\mermaid_formatter.py
+# hypothesis_version: 6.148.2
+
+['    }', ' FK', ' PK', '"', "'", '(', ')', '-->>', '->>', 'Empty diagram', 'MANY_TO_MANY', 'MANY_TO_ONE', 'ONE_TO_MANY', 'ONE_TO_ONE', 'TD', '[', '[<>{}]', ']', 'aggregation', 'attributes', 'classDiagram', 'composition', 'decision', 'end', 'erDiagram', 'flowchart', 'flowchart TD', 'gantt', 'graph', 'inheritance', 'methods', 'pie', 'sequenceDiagram', 'start', 'stateDiagram', 'stateDiagram-v2', '{', '||--o{', '||--||', '}', '}o--o{', '}o--||']

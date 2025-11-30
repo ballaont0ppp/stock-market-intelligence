@@ -1,0 +1,4 @@
+# file: d:\sharedwme\usb files\stockmarketapp\diagram_generator\core\config.py
+# hypothesis_version: 6.148.2
+
+['*/.git/*', '*/__pycache__/*', '*/env/*', '*/migrations/*', '*/node_modules/*', '*/test_*', '*/tests/*', '*/venv/*', '.', '.json', '.yaml', '.yml', 'create_backups', 'detail_levels', 'diagrams', 'enabled_diagrams', 'error', 'exclusion_patterns', 'max_depth', 'output_dir', 'path', 'r', 'source_dir']

@@ -1,0 +1,211 @@
+{% extends "base.html" %}
+
+{% block title %}Transaction History - Stock Portfolio Platform{% endblock %}
+
+{% block page_content %}
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="h3 mb-0">Transaction History</h1>
+                <a href="{{ url_for('orders.index') }}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Back to Orders
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Total Transactions</h6>
+                    <h3 class="card-title mb-0">{{ summary.total_transactions }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Total Buy Amount</h6>
+                    <h3 class="card-title mb-0 text-danger">${{ "%.2f"|format(summary.buy_total) }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Total Sell Amount</h6>
+                    <h3 class="card-title mb-0 text-success">${{ "%.2f"|format(summary.sell_total) }}</h3>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card">
+                <div class="card-body">
+                    <h6 class="card-subtitle mb-2 text-muted">Total Commissions</h6>
+                    <h3 class="card-title mb-0 text-warning">${{ "%.2f"|format(summary.fee_total) }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Filter Form -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Filter Transactions</h5>
+                    <form method="GET" action="{{ url_for('orders.transactions') }}" class="row g-3">
+                        <div class="col-md-3">
+                            <label for="transaction_type" class="form-label">Transaction Type</label>
+                            <select name="transaction_type" id="transaction_type" class="form-select">
+                                <option value="">All</option>
+                                <option value="BUY" {% if filters.transaction_type == 'BUY' %}selected{% endif %}>Buy</option>
+                                <option value="SELL" {% if filters.transaction_type == 'SELL' %}selected{% endif %}>Sell</option>
+                                <option value="DEPOSIT" {% if filters.transaction_type == 'DEPOSIT' %}selected{% endif %}>Deposit</option>
+                                <option value="WITHDRAWAL" {% if filters.transaction_type == 'WITHDRAWAL' %}selected{% endif %}>Withdrawal</option>
+                                <option value="DIVIDEND" {% if filters.transaction_type == 'DIVIDEND' %}selected{% endif %}>Dividend</option>
+                                <option value="FEE" {% if filters.transaction_type == 'FEE' %}selected{% endif %}>Fee</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <label for="symbol" class="form-label">Symbol</label>
+                            <input type="text" name="symbol" id="symbol" class="form-control" 
+                                   placeholder="e.g., AAPL" value="{{ filters.symbol or '' }}">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="date_from" class="form-label">From Date</label>
+                            <input type="date" name="date_from" id="date_from" class="form-control"
+                                   value="{{ filters.date_from.strftime('%Y-%m-%d') if filters.date_from else '' }}">
+                        </div>
+                        <div class="col-md-2">
+                            <label for="date_to" class="form-label">To Date</label>
+                            <input type="date" name="date_to" id="date_to" class="form-control"
+                                   value="{{ filters.date_to.strftime('%Y-%m-%d') if filters.date_to else '' }}">
+                        </div>
+                        <div class="col-md-3 d-flex align-items-end">
+                            <button type="submit" class="btn btn-primary me-2">
+                                <i class="bi bi-funnel"></i> Filter
+                            </button>
+                            <a href="{{ url_for('orders.transactions') }}" class="btn btn-secondary me-2">
+                                <i class="bi bi-x-circle"></i> Clear
+                            </a>
+                            <a href="{{ url_for('orders.export_transactions', **request.args) }}" class="btn btn-success">
+                                <i class="bi bi-download"></i> Export CSV
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Transactions Table -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Transactions ({{ total }} total)</h5>
+                    
+                    {% if transactions %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Type</th>
+                                    <th>Symbol</th>
+                                    <th>Amount</th>
+                                    <th>Balance Before</th>
+                                    <th>Balance After</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for transaction in transactions %}
+                                <tr>
+                                    <td>{{ transaction.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                                    <td>
+                                        {% if transaction.transaction_type == 'BUY' %}
+                                        <span class="badge bg-success">BUY</span>
+                                        {% elif transaction.transaction_type == 'SELL' %}
+                                        <span class="badge bg-danger">SELL</span>
+                                        {% elif transaction.transaction_type == 'DEPOSIT' %}
+                                        <span class="badge bg-primary">DEPOSIT</span>
+                                        {% elif transaction.transaction_type == 'WITHDRAWAL' %}
+                                        <span class="badge bg-warning">WITHDRAWAL</span>
+                                        {% elif transaction.transaction_type == 'DIVIDEND' %}
+                                        <span class="badge bg-info">DIVIDEND</span>
+                                        {% elif transaction.transaction_type == 'FEE' %}
+                                        <span class="badge bg-secondary">FEE</span>
+                                        {% else %}
+                                        <span class="badge bg-secondary">{{ transaction.transaction_type }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if transaction.company %}
+                                        <strong>{{ transaction.company.symbol }}</strong>
+                                        {% else %}
+                                        -
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <span class="{% if transaction.amount > 0 %}text-success{% else %}text-danger{% endif %}">
+                                            {% if transaction.amount > 0 %}+{% endif %}${{ "%.2f"|format(transaction.amount) }}
+                                        </span>
+                                    </td>
+                                    <td>${{ "%.2f"|format(transaction.balance_before) }}</td>
+                                    <td>${{ "%.2f"|format(transaction.balance_after) }}</td>
+                                    <td>
+                                        <small>{{ transaction.description or '-' }}</small>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <!-- Pagination -->
+                    {% if total_pages > 1 %}
+                    <nav aria-label="Transaction history pagination">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item {% if page == 1 %}disabled{% endif %}">
+                                <a class="page-link" href="{{ url_for('orders.transactions', page=page-1, **request.args) }}">Previous</a>
+                            </li>
+                            
+                            {% for p in range(1, total_pages + 1) %}
+                            {% if p == page %}
+                            <li class="page-item active">
+                                <span class="page-link">{{ p }}</span>
+                            </li>
+                            {% elif p <= 3 or p > total_pages - 3 or (p >= page - 1 and p <= page + 1) %}
+                            <li class="page-item">
+                                <a class="page-link" href="{{ url_for('orders.transactions', page=p, **request.args) }}">{{ p }}</a>
+                            </li>
+                            {% elif p == 4 or p == total_pages - 3 %}
+                            <li class="page-item disabled">
+                                <span class="page-link">...</span>
+                            </li>
+                            {% endif %}
+                            {% endfor %}
+                            
+                            <li class="page-item {% if page == total_pages %}disabled{% endif %}">
+                                <a class="page-link" href="{{ url_for('orders.transactions', page=page+1, **request.args) }}">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    {% endif %}
+                    
+                    {% else %}
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle"></i> No transactions found.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

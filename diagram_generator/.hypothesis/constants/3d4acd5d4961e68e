@@ -1,0 +1,4 @@
+# file: d:\sharedwme\usb files\stockmarketapp\diagram_generator\analyzers\route_analyzer.py
+# hypothesis_version: 6.148.2
+
+['"\'', '/', 'Client', 'DELETE', 'GET', 'PATCH', 'POST', 'PUT', 'Route Handler', 'actor', 'auth_required', 'authenticated', 'delete', 'get', 'login_required', 'methods', 'patch', 'post', 'put', 'requires_auth', 'roles', 'route', 'service']

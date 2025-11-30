@@ -1,0 +1,177 @@
+2025-11-15 07:15:40,371 - __main__ - INFO - Stock Market Prediction Web App initialized
+2025-11-15 07:15:40,372 - __main__ - INFO - Debug mode: True
+2025-11-15 07:15:40,372 - __main__ - INFO - LSTM available: True
+2025-11-15 07:15:40,372 - __main__ - INFO - Sentiment API status: {'api_available': False, 'api_error': None, 'textblob_available': True, 'credentials_configured': True, 'mode': 'Demo Mode'}
+2025-11-15 07:15:40,375 - __main__ - INFO - ============================================================
+2025-11-15 07:15:40,375 - __main__ - INFO - STOCK MARKET PREDICTION WEB APP STARTING
+2025-11-15 07:15:40,375 - __main__ - INFO - ============================================================
+2025-11-15 07:15:40,375 - __main__ - INFO - Debug Mode: True
+2025-11-15 07:15:40,376 - __main__ - INFO - LSTM Available: True
+2025-11-15 07:15:40,376 - __main__ - INFO - Sentiment API: {'api_available': False, 'api_error': None, 'textblob_available': True, 'credentials_configured': True, 'mode': 'Demo Mode'}
+2025-11-15 07:15:40,376 - __main__ - INFO - ============================================================
+2025-11-15 07:15:41,736 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.0.130:5000
+2025-11-15 07:15:41,736 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2025-11-15 07:15:41,771 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-11-15 07:15:52,841 - __main__ - INFO - Stock Market Prediction Web App initialized
+2025-11-15 07:15:52,841 - __main__ - INFO - Debug mode: True
+2025-11-15 07:15:52,841 - __main__ - INFO - LSTM available: True
+2025-11-15 07:15:52,842 - __main__ - INFO - Sentiment API status: {'api_available': False, 'api_error': None, 'textblob_available': True, 'credentials_configured': True, 'mode': 'Demo Mode'}
+2025-11-15 07:15:52,844 - __main__ - INFO - ============================================================
+2025-11-15 07:15:52,845 - __main__ - INFO - STOCK MARKET PREDICTION WEB APP STARTING
+2025-11-15 07:15:52,845 - __main__ - INFO - ============================================================
+2025-11-15 07:15:52,845 - __main__ - INFO - Debug Mode: True
+2025-11-15 07:15:52,846 - __main__ - INFO - LSTM Available: True
+2025-11-15 07:15:52,846 - __main__ - INFO - Sentiment API: {'api_available': False, 'api_error': None, 'textblob_available': True, 'credentials_configured': True, 'mode': 'Demo Mode'}
+2025-11-15 07:15:52,846 - __main__ - INFO - ============================================================
+2025-11-15 07:15:52,872 - werkzeug - WARNING -  * Debugger is active!
+2025-11-15 07:15:52,885 - werkzeug - INFO -  * Debugger PIN: 924-636-351
+2025-11-15 07:19:37,398 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\linear_regression_model.py', reloading
+2025-11-15 07:19:39,829 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-11-15 07:19:57,781 - __main__ - INFO - Stock Market Prediction Web App initialized
+2025-11-15 07:19:57,782 - __main__ - INFO - Debug mode: True
+2025-11-15 07:19:57,782 - __main__ - INFO - LSTM available: True
+2025-11-15 07:19:57,782 - __main__ - INFO - Sentiment API status: {'api_available': False, 'api_error': None, 'textblob_available': True, 'credentials_configured': True, 'mode': 'Demo Mode'}
+2025-11-15 07:19:57,786 - __main__ - INFO - ============================================================
+2025-11-15 07:19:57,786 - __main__ - INFO - STOCK MARKET PREDICTION WEB APP STARTING
+2025-11-15 07:19:57,787 - __main__ - INFO - ============================================================
+2025-11-15 07:19:57,787 - __main__ - INFO - Debug Mode: True
+2025-11-15 07:19:57,788 - __main__ - INFO - LSTM Available: True
+2025-11-15 07:19:57,788 - __main__ - INFO - Sentiment API: {'api_available': False, 'api_error': None, 'textblob_available': True, 'credentials_configured': True, 'mode': 'Demo Mode'}
+2025-11-15 07:19:57,789 - __main__ - INFO - ============================================================
+2025-11-15 07:19:57,821 - werkzeug - WARNING -  * Debugger is active!
+2025-11-15 07:19:57,840 - werkzeug - INFO -  * Debugger PIN: 924-636-351
+2025-11-15 07:20:38,725 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\lstm_model.py', reloading
+2025-11-15 07:20:40,695 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-11-15 07:20:57,933 - __main__ - INFO - Stock Market Prediction Web App initialized
+2025-11-15 07:20:57,933 - __main__ - INFO - Debug mode: True
+2025-11-15 07:20:57,934 - __main__ - INFO - LSTM available: True
+2025-11-15 07:20:57,934 - __main__ - INFO - Sentiment API status: {'api_available': False, 'api_error': None, 'textblob_available': True, 'credentials_configured': True, 'mode': 'Demo Mode'}
+2025-11-15 07:20:57,938 - __main__ - INFO - ============================================================
+2025-11-15 07:20:57,939 - __main__ - INFO - STOCK MARKET PREDICTION WEB APP STARTING
+2025-11-15 07:20:57,939 - __main__ - INFO - ============================================================
+2025-11-15 07:20:57,940 - __main__ - INFO - Debug Mode: True
+2025-11-15 07:20:57,941 - __main__ - INFO - LSTM Available: True
+2025-11-15 07:20:57,941 - __main__ - INFO - Sentiment API: {'api_available': False, 'api_error': None, 'textblob_available': True, 'credentials_configured': True, 'mode': 'Demo Mode'}
+2025-11-15 07:20:57,942 - __main__ - INFO - ============================================================
+2025-11-15 07:20:57,981 - werkzeug - WARNING -  * Debugger is active!
+2025-11-15 07:20:58,004 - werkzeug - INFO -  * Debugger PIN: 924-636-351
+2025-11-15 07:24:43,937 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\Tweet.py', reloading
+2025-11-15 07:24:43,939 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\constants.py', reloading
+2025-11-15 07:24:43,940 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\debug_test.py', reloading
+2025-11-15 07:24:43,942 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\demonstration.py', reloading
+2025-11-15 07:24:43,943 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\main.py', reloading
+2025-11-15 07:24:43,944 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\recommendation_system.py', reloading
+2025-11-15 07:24:43,945 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\run.py', reloading
+2025-11-15 07:24:43,946 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\simple_app.py', reloading
+2025-11-15 07:24:43,947 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\test_modules.py', reloading
+2025-11-15 07:24:43,948 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\test_stock_repository.py', reloading
+2025-11-15 07:24:43,961 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\config.py', reloading
+2025-11-15 07:24:43,964 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\forms\\__init__.py', reloading
+2025-11-15 07:24:43,965 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\forms\\auth_forms.py', reloading
+2025-11-15 07:24:43,967 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\forms\\order_forms.py', reloading
+2025-11-15 07:24:43,968 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\forms\\portfolio_forms.py', reloading
+2025-11-15 07:24:43,969 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\forms\\prediction_forms.py', reloading
+2025-11-15 07:24:43,971 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\jobs\\__init__.py', reloading
+2025-11-15 07:24:43,975 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\models\\__init__.py', reloading
+2025-11-15 07:24:43,976 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\models\\broker.py', reloading
+2025-11-15 07:24:43,979 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\models\\company.py', reloading
+2025-11-15 07:24:43,981 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\models\\dividend.py', reloading
+2025-11-15 07:24:43,982 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\models\\holding.py', reloading
+2025-11-15 07:24:43,984 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\models\\job_log.py', reloading
+2025-11-15 07:24:43,986 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\models\\notification.py', reloading
+2025-11-15 07:24:43,987 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\models\\order.py', reloading
+2025-11-15 07:24:43,989 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\models\\price_history.py', reloading
+2025-11-15 07:24:43,990 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\models\\sentiment_cache.py', reloading
+2025-11-15 07:24:43,991 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\models\\transaction.py', reloading
+2025-11-15 07:24:43,993 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\models\\user.py', reloading
+2025-11-15 07:24:43,994 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\models\\wallet.py', reloading
+2025-11-15 07:24:43,996 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\routes\\__init__.py', reloading
+2025-11-15 07:24:43,997 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\routes\\auth.py', reloading
+2025-11-15 07:24:43,999 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\routes\\orders.py', reloading
+2025-11-15 07:24:44,001 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\routes\\portfolio.py', reloading
+2025-11-15 07:24:44,003 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\services\\admin_service.py', reloading
+2025-11-15 07:24:44,004 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\services\\auth_service.py', reloading
+2025-11-15 07:24:44,006 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\services\\portfolio_service.py', reloading
+2025-11-15 07:24:44,008 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\services\\stock_repository.py', reloading
+2025-11-15 07:24:44,059 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\utils\\__init__.py', reloading
+2025-11-15 07:24:44,060 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\utils\\decorators.py', reloading
+2025-11-15 07:24:44,062 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\utils\\error_handlers.py', reloading
+2025-11-15 07:24:44,064 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\utils\\exceptions.py', reloading
+2025-11-15 07:24:44,066 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\utils\\logging_config.py', reloading
+2025-11-15 07:24:44,067 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\utils\\rate_limiter.py', reloading
+2025-11-15 07:24:44,069 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\utils\\visualization.py', reloading
+2025-11-15 07:24:44,082 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\ml_models\\__init__.py', reloading
+2025-11-15 07:24:44,084 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\ml_models\\arima_model.py', reloading
+2025-11-15 07:24:44,085 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\ml_models\\data_validation.py', reloading
+2025-11-15 07:24:44,087 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\ml_models\\linear_regression_model.py', reloading
+2025-11-15 07:24:44,089 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\ml_models\\lstm_model.py', reloading
+2025-11-15 07:24:44,090 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\ml_models\\stock_data_processor.py', reloading
+2025-11-15 07:24:44,093 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\scripts\\__init__.py', reloading
+2025-11-15 07:24:44,094 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\scripts\\init_db.py', reloading
+2025-11-15 07:24:44,095 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\scripts\\seed_data.py', reloading
+2025-11-15 07:24:44,097 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\scripts\\test_db_connection.py', reloading
+2025-11-15 07:24:44,160 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\stock_market_venv\\Scripts\\pwiz.py', reloading
+2025-11-15 07:24:44,166 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\tests\\__init__.py', reloading
+2025-11-15 07:24:44,168 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\tests\\conftest.py', reloading
+2025-11-15 07:24:45,589 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-11-15 07:24:56,957 - __main__ - INFO - Stock Market Prediction Web App initialized
+2025-11-15 07:24:56,957 - __main__ - INFO - Debug mode: True
+2025-11-15 07:24:56,957 - __main__ - INFO - LSTM available: True
+2025-11-15 07:24:56,958 - __main__ - INFO - Sentiment API status: {'api_available': False, 'api_error': None, 'textblob_available': True, 'credentials_configured': True, 'mode': 'Demo Mode'}
+2025-11-15 07:24:56,960 - __main__ - INFO - ============================================================
+2025-11-15 07:24:56,961 - __main__ - INFO - STOCK MARKET PREDICTION WEB APP STARTING
+2025-11-15 07:24:56,961 - __main__ - INFO - ============================================================
+2025-11-15 07:24:56,961 - __main__ - INFO - Debug Mode: True
+2025-11-15 07:24:56,961 - __main__ - INFO - LSTM Available: True
+2025-11-15 07:24:56,962 - __main__ - INFO - Sentiment API: {'api_available': False, 'api_error': None, 'textblob_available': True, 'credentials_configured': True, 'mode': 'Demo Mode'}
+2025-11-15 07:24:56,962 - __main__ - INFO - ============================================================
+2025-11-15 07:24:56,986 - werkzeug - WARNING -  * Debugger is active!
+2025-11-15 07:24:57,001 - werkzeug - INFO -  * Debugger PIN: 924-636-351
+2025-11-15 07:27:45,750 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\services\\sentiment_engine.py', reloading
+2025-11-15 07:27:46,953 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-11-15 07:27:57,711 - __main__ - INFO - Stock Market Prediction Web App initialized
+2025-11-15 07:27:57,711 - __main__ - INFO - Debug mode: True
+2025-11-15 07:27:57,712 - __main__ - INFO - LSTM available: True
+2025-11-15 07:27:57,712 - __main__ - INFO - Sentiment API status: {'api_available': False, 'api_error': None, 'textblob_available': True, 'credentials_configured': True, 'mode': 'Demo Mode'}
+2025-11-15 07:27:57,714 - __main__ - INFO - ============================================================
+2025-11-15 07:27:57,715 - __main__ - INFO - STOCK MARKET PREDICTION WEB APP STARTING
+2025-11-15 07:27:57,715 - __main__ - INFO - ============================================================
+2025-11-15 07:27:57,715 - __main__ - INFO - Debug Mode: True
+2025-11-15 07:27:57,715 - __main__ - INFO - LSTM Available: True
+2025-11-15 07:27:57,716 - __main__ - INFO - Sentiment API: {'api_available': False, 'api_error': None, 'textblob_available': True, 'credentials_configured': True, 'mode': 'Demo Mode'}
+2025-11-15 07:27:57,716 - __main__ - INFO - ============================================================
+2025-11-15 07:27:57,736 - werkzeug - WARNING -  * Debugger is active!
+2025-11-15 07:27:57,750 - werkzeug - INFO -  * Debugger PIN: 924-636-351
+2025-11-15 07:28:46,419 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\routes\\admin.py', reloading
+2025-11-15 07:28:47,989 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-11-15 07:28:58,501 - __main__ - INFO - Stock Market Prediction Web App initialized
+2025-11-15 07:28:58,502 - __main__ - INFO - Debug mode: True
+2025-11-15 07:28:58,502 - __main__ - INFO - LSTM available: True
+2025-11-15 07:28:58,502 - __main__ - INFO - Sentiment API status: {'api_available': False, 'api_error': None, 'textblob_available': True, 'credentials_configured': True, 'mode': 'Demo Mode'}
+2025-11-15 07:28:58,505 - __main__ - INFO - ============================================================
+2025-11-15 07:28:58,505 - __main__ - INFO - STOCK MARKET PREDICTION WEB APP STARTING
+2025-11-15 07:28:58,505 - __main__ - INFO - ============================================================
+2025-11-15 07:28:58,506 - __main__ - INFO - Debug Mode: True
+2025-11-15 07:28:58,506 - __main__ - INFO - LSTM Available: True
+2025-11-15 07:28:58,506 - __main__ - INFO - Sentiment API: {'api_available': False, 'api_error': None, 'textblob_available': True, 'credentials_configured': True, 'mode': 'Demo Mode'}
+2025-11-15 07:28:58,506 - __main__ - INFO - ============================================================
+2025-11-15 07:28:58,530 - werkzeug - WARNING -  * Debugger is active!
+2025-11-15 07:28:58,543 - werkzeug - INFO -  * Debugger PIN: 924-636-351
+2025-11-15 07:34:50,355 - werkzeug - INFO -  * Detected change in 'D:\\projIII\\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\\app\\services\\prediction_service.py', reloading
+2025-11-15 07:34:52,655 - werkzeug - INFO -  * Restarting with watchdog (windowsapi)
+2025-11-15 07:35:16,217 - __main__ - INFO - Stock Market Prediction Web App initialized
+2025-11-15 07:35:16,217 - __main__ - INFO - Debug mode: True
+2025-11-15 07:35:16,217 - __main__ - INFO - LSTM available: True
+2025-11-15 07:35:16,218 - __main__ - INFO - Sentiment API status: {'api_available': False, 'api_error': None, 'textblob_available': True, 'credentials_configured': True, 'mode': 'Demo Mode'}
+2025-11-15 07:35:16,220 - __main__ - INFO - ============================================================
+2025-11-15 07:35:16,221 - __main__ - INFO - STOCK MARKET PREDICTION WEB APP STARTING
+2025-11-15 07:35:16,221 - __main__ - INFO - ============================================================
+2025-11-15 07:35:16,222 - __main__ - INFO - Debug Mode: True
+2025-11-15 07:35:16,222 - __main__ - INFO - LSTM Available: True
+2025-11-15 07:35:16,222 - __main__ - INFO - Sentiment API: {'api_available': False, 'api_error': None, 'textblob_available': True, 'credentials_configured': True, 'mode': 'Demo Mode'}
+2025-11-15 07:35:16,223 - __main__ - INFO - ============================================================
+2025-11-15 07:35:16,257 - werkzeug - WARNING -  * Debugger is active!
+2025-11-15 07:35:16,279 - werkzeug - INFO -  * Debugger PIN: 924-636-351

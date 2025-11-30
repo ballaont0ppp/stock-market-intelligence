@@ -1,0 +1,4 @@
+# file: d:\sharedwme\usb files\stockmarketapp\diagram_generator\utils\change_detector.py
+# hypothesis_version: 6.148.2
+
+[0.5, ' file(s)', '*.py', ', ', '.', '.py', 'No changes detected', '_spec', '_test', 'added', 'api', 'changed', 'compose', 'config', 'controller', 'database', 'db', 'deleted', 'deployment', 'docker', 'endpoint', 'entity', 'file_hashes', 'fsm', 'job', 'known_files', 'last_updated', 'model', 'process', 'r', 'rb', 'route', 'schema', 'service', 'spec', 'state', 'statemachine', 'task', 'test', 'view', 'w', 'workflow']

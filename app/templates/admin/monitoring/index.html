@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+{% block title %}System Monitoring{% endblock %}
+{% block page_title %}System Monitoring{% endblock %}
+{% block page_content %}
+<div class="container-fluid">
+    <h2 class="mb-4">System Monitoring</h2>
+    
+    <!-- API Usage Stats -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">yfinance API Usage</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <tr>
+                            <th>Total Calls Today</th>
+                            <td>{{ api_stats.yfinance.total_calls_today }}</td>
+                        </tr>
+                        <tr>
+                            <th>Failed Calls</th>
+                            <td>{{ api_stats.yfinance.failed_calls }}</td>
+                        </tr>
+                        <tr>
+                            <th>Success Rate</th>
+                            <td>{{ "%.1f"|format(api_stats.yfinance.success_rate) }}%</td>
+                        </tr>
+                        <tr>
+                            <th>Avg Response Time</th>
+                            <td>{{ api_stats.yfinance.avg_response_time }}s</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">System Metrics</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-sm">
+                        <tr>
+                            <th>Total Users</th>
+                            <td>{{ metrics.users.total }}</td>
+                        </tr>
+                        <tr>
+                            <th>Active Users</th>
+                            <td>{{ metrics.users.active }}</td>
+                        </tr>
+                        <tr>
+                            <th>Transactions Today</th>
+                            <td>{{ metrics.transactions.today }}</td>
+                        </tr>
+                        <tr>
+                            <th>Total Portfolio Value</th>
+                            <td>${{ "%.2f"|format(metrics.portfolio.total_value) }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Job Logs -->
+    <div class="card">
+        <div class="card-header">
+            <h5 class="mb-0">Recent Job Executions</h5>
+        </div>
+        <div class="card-body">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Job Name</th>
+                        <th>Started</th>
+                        <th>Completed</th>
+                        <th>Status</th>
+                        <th>Processed</th>
+                        <th>Failed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in job_logs %}
+                    <tr>
+                        <td>{{ log.job_name }}</td>
+                        <td>{{ log.started_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        <td>{{ log.completed_at.strftime('%Y-%m-%d %H:%M:%S') if log.completed_at else '-' }}</td>
+                        <td>
+                            <span class="badge bg-{{ 'success' if log.status == 'SUCCESS' else 'warning' if log.status == 'PARTIAL' else 'danger' }}">
+                                {{ log.status }}
+                            </span>
+                        </td>
+                        <td>{{ log.stocks_processed or 0 }}</td>
+                        <td>{{ log.stocks_failed or 0 }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

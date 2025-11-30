@@ -1,0 +1,41 @@
+# Compatibility Testing Requirements
+
+# Selenium for browser automation
+selenium==4.15.2
+
+# WebDriver Manager for automatic driver management
+webdriver-manager==4.0.1
+
+# Pytest for test framework
+pytest==7.4.3
+pytest-html==4.1.1
+pytest-xdist==3.5.0
+
+# Browser testing
+playwright==1.40.0
+
+# Network throttling
+browsermob-proxy==0.8.0
+
+# Screenshot comparison
+Pillow==10.1.0
+pixelmatch==0.3.0
+
+# Reporting
+jinja2==3.1.2
+markdown==3.5.1
+
+# Utilities
+python-dotenv==1.0.0
+requests==2.31.0
+beautifulsoup4==4.12.2
+
+# Performance monitoring
+psutil==5.9.6
+
+# Data handling
+pandas==2.1.3
+openpyxl==3.1.2
+
+# Logging
+colorlog==6.8.0

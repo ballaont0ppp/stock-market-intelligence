@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Diagram Models - Stock Portfolio Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: white;
+            color: #111827;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            padding: 40px 60px;
+            border-bottom: 4px solid #1e40af;
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .company-name {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+        
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+        
+        .diagram-type {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 12px;
+            letter-spacing: 0.5px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px;
+        }
+        
+        .diagram-container {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 40px;
+            margin: 0;
+            overflow-x: auto;
+        }
+        
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 2px solid #e5e7eb;
+            text-align: center;
+            color: #6b7280;
+            font-size: 13px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .footer-left {
+            text-align: left;
+        }
+        
+        .footer-right {
+            text-align: right;
+        }
+        
+        .footer strong {
+            color: #2563eb;
+            font-weight: 600;
+        }
+        
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .header {
+                background: #2563eb;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .container {
+                padding: 40px 20px;
+            }
+            
+            .diagram-container {
+                border: 2px solid #e5e7eb;
+                page-break-inside: avoid;
+            }
+            
+            .footer {
+                page-break-before: avoid;
+            }
+        }
+        
+        @page {
+            margin: 0.5in;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="company-name">Stock Portfolio Platform</div>
+            <h1>Class Diagram Models</h1>
+            <span class="diagram-type">Class Diagram</span>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="diagram-container">
+            <pre class="mermaid">
+%%{init: {'theme':'neutral'}}%%
+classDiagram
+    class User {
+        +int user_id
+        +string username
+        +string email
+        +string password_hash
+        +string role
+        +decimal risk_tolerance
+        +string investment_goals
+        +datetime created_at
+        +datetime last_login
+        +check_password(password)
+        +set_password(password)
+        +is_admin()
+        +get_portfolio_value()
+    }
+    
+    class Company {
+        +int company_id
+        +string symbol
+        +string name
+        +string sector
+        +string exchange
+        +decimal current_price
+        +datetime last_updated
+        +update_price(price)
+        +get_price_history(days)
+        +calculate_returns()
+    }
+    
+    class Wallet {
+        +int wallet_id
+        +int user_id
+        +decimal balance
+        +decimal total_deposits
+        +decimal total_withdrawals
+        +datetime created_at
+        +deposit(amount)
+        +withdraw(amount)
+        +has_sufficient_funds(amount)
+        +get_transaction_history()
+    }
+    
+    class Holding {
+        +int holding_id
+        +int user_id
+        +int company_id
+        +int quantity
+        +decimal average_price
+        +decimal current_value
+        +decimal unrealized_gain_loss
+        +datetime purchase_date
+        +add_shares(quantity, price)
+        +remove_shares(quantity)
+        +calculate_gain_loss()
+        +update_current_value()
+    }
+    
+    class Order {
+        +int order_id
+        +int user_id
+        +int company_id
+        +string order_type
+        +int quantity
+        +decimal price
+        +decimal total_amount
+        +decimal commission
+        +string status
+        +datetime created_at
+        +execute()
+        +cancel()
+        +calculate_total()
+    }
+    
+    class Transaction {
+        +int transaction_id
+        +int user_id
+        +int wallet_id
+        +int company_id
+        +int order_id
+        +string transaction_type
+        +decimal amount
+        +decimal balance_after
+        +string description
+        +datetime created_at
+        +record()
+        +rollback()
+    }
+    
+    class Dividend {
+        +int dividend_id
+        +int company_id
+        +decimal amount_per_share
+        +date ex_dividend_date
+        +date payment_date
+        +string status
+        +process()
+        +calculate_user_payment(holdings)
+    }
+    
+    class Broker {
+        +int broker_id
+        +string name
+        +string code
+        +decimal commission_rate
+        +boolean is_active
+        +calculate_commission(amount)
+    }
+    
+    class Notification {
+        +int notification_id
+        +int user_id
+        +string type
+        +string title
+        +string message
+        +boolean is_read
+        +datetime created_at
+        +mark_as_read()
+        +send()
+    }
+    
+    class PriceHistory {
+        +int price_history_id
+        +int company_id
+        +decimal open_price
+        +decimal close_price
+        +decimal high_price
+        +decimal low_price
+        +bigint volume
+        +date price_date
+        +get_daily_return()
+        +get_volatility()
+    }
+    
+    class SentimentCache {
+        +int sentiment_id
+        +string symbol
+        +decimal sentiment_score
+        +int tweet_count
+        +datetime cached_at
+        +datetime expires_at
+        +is_expired()
+        +refresh()
+    }
+    
+    class AuditLog {
+        +int audit_log_id
+        +int user_id
+        +string action
+        +string entity_type
+        +int entity_id
+        +string old_values
+        +string new_values
+        +string ip_address
+        +datetime created_at
+        +log_action()
+    }
+    
+    class JobLog {
+        +int job_log_id
+        +string job_name
+        +string status
+        +string message
+        +datetime started_at
+        +datetime completed_at
+        +mark_started()
+        +mark_completed()
+        +mark_failed(error)
+    }
+    
+    %% Relationships
+    User "1" --> "1" Wallet : has
+    User "1" --> "*" Holding : owns
+    User "1" --> "*" Order : places
+    User "1" --> "*" Transaction : makes
+    User "1" --> "*" Notification : receives
+    User "1" --> "*" AuditLog : generates
+    
+    Company "1" --> "*" Holding : traded_in
+    Company "1" --> "*" Order : ordered_for
+    Company "1" --> "*" PriceHistory : has_prices
+    Company "1" --> "*" Dividend : pays
+    Company "*" --> "1" Broker : listed_with
+    
+    Wallet "1" --> "*" Transaction : records
+    Order "1" --> "0..1" Transaction : results_in
+    
+    %% Base Model
+    class BaseModel {
+        <<abstract>>
+        +datetime created_at
+        +datetime updated_at
+        +save()
+        +delete()
+        +to_dict()
+    }
+    
+    BaseModel <|-- User
+    BaseModel <|-- Company
+    BaseModel <|-- Wallet
+    BaseModel <|-- Holding
+    BaseModel <|-- Order
+    BaseModel <|-- Transaction
+    BaseModel <|-- Dividend
+    BaseModel <|-- Broker
+    BaseModel <|-- Notification
+    BaseModel <|-- PriceHistory
+    BaseModel <|-- SentimentCache
+    BaseModel <|-- AuditLog
+    BaseModel <|-- JobLog
+            </pre>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <strong>Stock Portfolio Platform</strong><br>
+                    System Architecture Documentation
+                </div>
+                <div class="footer-right">
+                    Document: <strong>Class Diagram Models</strong><br>
+                    Page 1 of 1
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>

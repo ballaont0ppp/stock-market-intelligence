@@ -1,0 +1,107 @@
+{
+  "timestamp": "2025-11-15T18:47:16.205Z",
+  "summary": {
+    "totalTests": 12,
+    "passedTests": 6,
+    "failedTests": 6,
+    "passRate": "50.0"
+  },
+  "details": [
+    {
+      "category": "Smoke Tests",
+      "script": "smoke/scripts/smoke.test.js",
+      "required": true,
+      "passed": true,
+      "executionTime": 4735,
+      "timestamp": "2025-11-15T18:46:55.394Z"
+    },
+    {
+      "category": "Unit Tests",
+      "script": "unit/scripts/calculator.test.js",
+      "required": true,
+      "passed": false,
+      "executionTime": 2383,
+      "timestamp": "2025-11-15T18:46:57.163Z"
+    },
+    {
+      "category": "Integration Tests",
+      "script": "integration/scripts/user-auth.integration.test.js",
+      "required": true,
+      "passed": true,
+      "executionTime": 1763,
+      "timestamp": "2025-11-15T18:46:58.844Z"
+    },
+    {
+      "category": "Performance Tests",
+      "script": "performance/scripts/api-load.test.js",
+      "required": false,
+      "passed": true,
+      "executionTime": 2404,
+      "timestamp": "2025-11-15T18:47:01.084Z"
+    },
+    {
+      "category": "Security Tests",
+      "script": "security/scripts/vulnerability.scan.js",
+      "required": false,
+      "passed": false,
+      "executionTime": 2861,
+      "timestamp": "2025-11-15T18:47:02.866Z"
+    },
+    {
+      "category": "E2E Tests",
+      "script": "e2e/scripts/user-journey.e2e.test.js",
+      "required": false,
+      "passed": true,
+      "executionTime": 1407,
+      "timestamp": "2025-11-15T18:47:04.727Z"
+    },
+    {
+      "category": "Regression Tests",
+      "script": "regression/scripts/api-regression.test.js",
+      "required": true,
+      "passed": false,
+      "executionTime": 5172,
+      "timestamp": "2025-11-15T18:47:07.122Z"
+    },
+    {
+      "category": "API Tests",
+      "script": "api/scripts/rest-api.test.js",
+      "required": true,
+      "passed": false,
+      "executionTime": 1851,
+      "timestamp": "2025-11-15T18:47:09.768Z"
+    },
+    {
+      "category": "Database Tests",
+      "script": "database/scripts/data-integrity.test.js",
+      "required": false,
+      "passed": false,
+      "executionTime": 1136,
+      "timestamp": "2025-11-15T18:47:12.646Z"
+    },
+    {
+      "category": "Configuration Tests",
+      "script": "config/scripts/environment-validation.test.js",
+      "required": true,
+      "passed": true,
+      "executionTime": 2341,
+      "timestamp": "2025-11-15T18:47:13.738Z"
+    },
+    {
+      "category": "Accessibility Tests",
+      "script": "accessibility/scripts/wcag-compliance.test.js",
+      "required": false,
+      "passed": true,
+      "executionTime": 2127,
+      "timestamp": "2025-11-15T18:47:14.963Z"
+    },
+    {
+      "category": "Chaos Engineering Tests",
+      "script": "chaos/scripts/failure-simulation.test.js",
+      "required": false,
+      "passed": false,
+      "executionTime": 5740,
+      "timestamp": "2025-11-15T18:47:16.188Z"
+    }
+  ]
+}

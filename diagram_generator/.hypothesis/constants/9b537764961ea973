@@ -1,0 +1,4 @@
+# file: d:\sharedwme\usb files\stockmarketapp\diagram_generator\analyzers\database_analyzer.py
+# hypothesis_version: 6.148.2
+
+['"\'', 'ARRAY', 'Base', 'BigInteger', 'Binary', 'Boolean', 'Column', 'Date', 'DateTime', 'DeclarativeBase', 'Enum', 'Float', 'Integer', 'JSON', 'LargeBinary', 'Model', 'Numeric', 'SmallInteger', 'String', 'Text', 'Time', 'UUID', 'Unknown', '[\'\\"](\\w+)[\'\\"]', '__tablename__', '_id', 'db.Model', 'id', 'nullable=False', 'relationship', 's', 'unique=True']

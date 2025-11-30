@@ -1,0 +1,38 @@
+# Comprehensive Configuration Example
+# Generate all diagram types with detailed information
+
+diagram_types:
+  - architecture
+  - er_diagram
+  - class_diagram
+  - sequence_diagram
+  - data_flow
+  - state_diagram
+  - use_case
+  - component
+  - deployment
+  - activity
+  - package
+  - test_coverage
+
+output_dir: ./docs/diagrams
+
+# Exclude test files and generated code
+exclude:
+  - "**/test_*.py"
+  - "**/*_test.py"
+  - "**/tests/**"
+  - "**/migrations/**"
+  - "**/__pycache__/**"
+  - "**/venv/**"
+  - "**/node_modules/**"
+  - "**/.git/**"
+
+# Generate detailed diagrams
+detail_level: detailed
+
+# Enable incremental updates
+incremental: true
+
+# Preserve manual edits
+preserve_manual_edits: true

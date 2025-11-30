@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Import Companies{% endblock %}
+{% block page_title %}Import Companies from CSV{% endblock %}
+{% block page_content %}
+<div class="container-fluid">
+    <h2 class="mb-4">Import Companies from CSV</h2>
+    <div class="card">
+        <div class="card-body">
+            <p>Upload a CSV file with the following columns: <code>symbol, company_name, sector, industry</code></p>
+            <form method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label">CSV File</label>
+                    <input type="file" class="form-control" name="csv_file" accept=".csv" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Import</button>
+                <a href="{{ url_for('admin.companies') }}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

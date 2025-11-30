@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Diagram Services - Stock Portfolio Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: white;
+            color: #111827;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            padding: 40px 60px;
+            border-bottom: 4px solid #1e40af;
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .company-name {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+        
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+        
+        .diagram-type {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 12px;
+            letter-spacing: 0.5px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px;
+        }
+        
+        .diagram-container {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 40px;
+            margin: 0;
+            overflow-x: auto;
+        }
+        
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 2px solid #e5e7eb;
+            text-align: center;
+            color: #6b7280;
+            font-size: 13px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .footer-left {
+            text-align: left;
+        }
+        
+        .footer-right {
+            text-align: right;
+        }
+        
+        .footer strong {
+            color: #2563eb;
+            font-weight: 600;
+        }
+        
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .header {
+                background: #2563eb;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .container {
+                padding: 40px 20px;
+            }
+            
+            .diagram-container {
+                border: 2px solid #e5e7eb;
+                page-break-inside: avoid;
+            }
+            
+            .footer {
+                page-break-before: avoid;
+            }
+        }
+        
+        @page {
+            margin: 0.5in;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="company-name">Stock Portfolio Platform</div>
+            <h1>Class Diagram Services</h1>
+            <span class="diagram-type">Class Diagram</span>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="diagram-container">
+            <pre class="mermaid">
+%%{init: {'theme':'neutral'}}%%
+classDiagram
+    class AuthService {
+        +register_user(username, email, password)
+        +login_user(email, password)
+        +logout_user()
+        +update_profile(user_id, data)
+        +change_password(user_id, old_pass, new_pass)
+        +validate_credentials(email, password)
+        +create_initial_wallet(user_id)
+    }
+    
+    class PortfolioService {
+        +get_portfolio_summary(user_id)
+        +get_holdings(user_id)
+        +get_portfolio_value(user_id)
+        +get_portfolio_performance(user_id, period)
+        +get_sector_allocation(user_id)
+        +calculate_returns(user_id)
+        +get_top_gainers(user_id)
+        +get_top_losers(user_id)
+    }
+    
+    class TransactionEngine {
+        +execute_buy_order(user_id, company_id, quantity, price)
+        +execute_sell_order(user_id, company_id, quantity, price)
+        +validate_order(order)
+        +calculate_commission(amount)
+        +update_wallet(user_id, amount, type)
+        +update_holdings(user_id, company_id, quantity, price, type)
+        +create_transaction_record(order)
+        +rollback_transaction(transaction_id)
+    }
+    
+    class PredictionService {
+        +predict_stock_price(symbol, days)
+        +get_arima_prediction(symbol, days)
+        +get_lstm_prediction(symbol, days)
+        +get_linear_regression_prediction(symbol, days)
+        +get_sentiment_analysis(symbol)
+        +combine_predictions(predictions)
+        +get_recommendation(symbol)
+    }
+    
+    class SentimentEngine {
+        +analyze_sentiment(symbol)
+        +fetch_tweets(symbol, count)
+        +calculate_sentiment_score(tweets)
+        +cache_sentiment(symbol, score)
+        +get_cached_sentiment(symbol)
+        +is_cache_valid(symbol)
+    }
+    
+    class StockRepository {
+        +get_stock_data(symbol)
+        +get_current_price(symbol)
+        +get_historical_prices(symbol, period)
+        +search_stocks(query)
+        +update_stock_prices()
+        +get_company_info(symbol)
+        +validate_symbol(symbol)
+    }
+    
+    class NotificationService {
+        +create_notification(user_id, type, title, message)
+        +send_order_notification(user_id, order)
+        +send_dividend_notification(user_id, dividend)
+        +send_price_alert(user_id, company, price)
+        +mark_as_read(notification_id)
+        +get_user_notifications(user_id)
+        +delete_notification(notification_id)
+    }
+    
+    class ReportService {
+        +generate_transaction_report(user_id, start_date, end_date)
+        +generate_performance_report(user_id, period)
+        +generate_billing_statement(user_id, month)
+        +export_to_csv(data)
+        +export_to_pdf(data)
+        +get_tax_report(user_id, year)
+    }
+    
+    class DividendManager {
+        +process_dividends()
+        +calculate_user_dividend(user_id, dividend)
+        +credit_dividend_to_wallet(user_id, amount)
+        +get_upcoming_dividends(user_id)
+        +get_dividend_history(user_id)
+        +create_dividend(company_id, amount, dates)
+    }
+    
+    class AdminService {
+        +get_all_users()
+        +get_user_details(user_id)
+        +update_user(user_id, data)
+        +delete_user(user_id)
+        +get_system_stats()
+        +get_transaction_monitoring()
+        +manage_companies()
+        +manage_brokers()
+        +manage_dividends()
+    }
+    
+    class AuditService {
+        +log_action(user_id, action, entity_type, entity_id, changes)
+        +get_audit_trail(user_id)
+        +get_entity_history(entity_type, entity_id)
+        +search_audit_logs(filters)
+    }
+    
+    %% Service Dependencies
+    AuthService ..> User : uses
+    AuthService ..> Wallet : creates
+    AuthService ..> AuditService : logs
+    
+    PortfolioService ..> User : queries
+    PortfolioService ..> Holding : aggregates
+    PortfolioService ..> Company : fetches
+    PortfolioService ..> StockRepository : uses
+    
+    TransactionEngine ..> Order : processes
+    TransactionEngine ..> Transaction : creates
+    TransactionEngine ..> Wallet : updates
+    TransactionEngine ..> Holding : updates
+    TransactionEngine ..> NotificationService : notifies
+    TransactionEngine ..> AuditService : logs
+    
+    PredictionService ..> StockRepository : fetches_data
+    PredictionService ..> SentimentEngine : uses
+    PredictionService ..> Company : analyzes
+    
+    SentimentEngine ..> SentimentCache : caches
+    SentimentEngine ..> Company : analyzes
+    
+    StockRepository ..> Company : manages
+    StockRepository ..> PriceHistory : stores
+    
+    NotificationService ..> Notification : creates
+    NotificationService ..> User : notifies
+    
+    ReportService ..> Transaction : queries
+    ReportService ..> Order : queries
+    ReportService ..> Holding : queries
+    
+    DividendManager ..> Dividend : processes
+    DividendManager ..> Holding : queries
+    DividendManager ..> Wallet : credits
+    DividendManager ..> NotificationService : notifies
+    
+    AdminService ..> User : manages
+    AdminService ..> Company : manages
+    AdminService ..> Broker : manages
+    AdminService ..> AuditService : uses
+    
+    %% External Dependencies
+    class ExternalAPI {
+        <<interface>>
+        +fetch_stock_data()
+        +fetch_tweets()
+    }
+    
+    StockRepository ..> ExternalAPI : uses
+    SentimentEngine ..> ExternalAPI : uses
+            </pre>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <strong>Stock Portfolio Platform</strong><br>
+                    System Architecture Documentation
+                </div>
+                <div class="footer-right">
+                    Document: <strong>Class Diagram Services</strong><br>
+                    Page 1 of 1
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>

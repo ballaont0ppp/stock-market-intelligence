@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Create Broker{% endblock %}
+{% block page_title %}Create Broker{% endblock %}
+{% block page_content %}
+<div class="container-fluid">
+    <h2 class="mb-4">Create Broker</h2>
+    <div class="card">
+        <div class="card-body">
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label">User *</label>
+                    <select class="form-select" name="user_id" required>
+                        <option value="">Select a user</option>
+                        {% for user in users %}
+                        <option value="{{ user.user_id }}">{{ user.email }} - {{ user.full_name or 'No name' }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Broker Name *</label>
+                    <input type="text" class="form-control" name="broker_name" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">License Number</label>
+                    <input type="text" class="form-control" name="license_number">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Phone</label>
+                    <input type="tel" class="form-control" name="phone">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email">
+                </div>
+                <button type="submit" class="btn btn-primary">Create Broker</button>
+                <a href="{{ url_for('admin.brokers') }}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

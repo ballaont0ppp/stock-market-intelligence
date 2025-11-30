@@ -1,0 +1,19 @@
+# Usability Testing Framework Requirements
+
+# Core dependencies (should already be installed with main app)
+# These are listed for reference only
+
+# Data analysis and reporting
+pandas>=2.0.0
+numpy>=1.24.0
+
+# No additional dependencies required
+# The framework uses only Python standard library for data collection
+
+# Optional: For advanced analysis
+# matplotlib>=3.7.0  # For generating charts
+# seaborn>=0.12.0    # For statistical visualizations
+
+# Note: The main application dependencies (Flask, SQLAlchemy, etc.)
+# should already be installed. This framework only requires Python 3.8+
+# and the standard library for basic functionality.

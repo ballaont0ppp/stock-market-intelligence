@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Project Plan &mdash; Stock Portfolio Management and Prediction Platform</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg-alt: #f6f8fa;
+      --fg: #24292f;
+      --muted: #57606a;
+      --border: #d0d7de;
+      --accent: #0969da;
+      --accent-soft: #ddf4ff;
+      --success: #1a7f37;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--fg);
+      background: var(--bg);
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    body {
+      padding: 24px;
+    }
+
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 24px 32px 32px;
+    }
+
+    header {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      margin: 0 0 8px;
+      font-size: 26px;
+      font-weight: 600;
+    }
+
+    .meta {
+      font-size: 14px;
+      color: var(--muted);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      padding: 2px 10px;
+      background: var(--bg-alt);
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    h2 {
+      font-size: 20px;
+      margin-top: 24px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 4px;
+    }
+
+    h3 {
+      font-size: 16px;
+      margin-top: 18px;
+      margin-bottom: 6px;
+    }
+
+    p {
+      margin: 4px 0 10px;
+      line-height: 1.5;
+    }
+
+    ul {
+      margin: 4px 0 10px 20px;
+      padding: 0;
+    }
+
+    li {
+      margin: 2px 0;
+    }
+
+    .section {
+      margin-bottom: 16px;
+    }
+
+    .gantt-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 12px;
+    }
+
+    .gantt-table th,
+    .gantt-table td {
+      border: 1px solid var(--border);
+      padding: 4px 6px;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .gantt-table th:first-child,
+    .gantt-table td:first-child {
+      text-align: left;
+      white-space: nowrap;
+    }
+
+    .gantt-label {
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .gantt-block {
+      display: inline-block;
+      width: 100%;
+      height: 14px;
+      background: linear-gradient(90deg, #2da44e, #2ea043);
+    }
+
+    .legend {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    .legend span.block {
+      display: inline-block;
+      width: 32px;
+      height: 10px;
+      margin-right: 4px;
+      background: linear-gradient(90deg, #2da44e, #2ea043);
+      border-radius: 999px;
+    }
+
+    .summary-box {
+      padding: 12px 14px;
+      background: var(--bg-alt);
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      font-size: 14px;
+    }
+
+    .summary-box strong {
+      font-weight: 600;
+    }
+
+    @media print {
+      body {
+        padding: 0;
+        background: #ffffff;
+      }
+
+      .page {
+        border: none;
+        margin: 0;
+        border-radius: 0;
+        padding: 20mm 18mm 18mm;
+      }
+
+      .section {
+        page-break-inside: avoid;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <h1>Project Plan</h1>
+      <div class="meta">
+        <div>
+          <strong>Project:</strong> <span>Stock Portfolio Management and Prediction Platform</span>
+        </div>
+        <div>
+          <span class="badge">Plan based on roadmap and draft report</span>
+        </div>
+      </div>
+    </header>
+
+    <section class="section">
+      <h2>1. Project Overview</h2>
+      <p><strong>Project Title:</strong> Stock Portfolio Management and Prediction Platform</p>
+      <p><strong>Purpose:</strong> Provide an end-to-end share-market management and prediction system that lets users manage virtual portfolios, track funds and dividends, and use machine learning to forecast stock prices.</p>
+      <p>The system combines portfolio and fund management, simulated buy/sell transactions, dividend tracking, ML-based price prediction (LSTM and baselines), and admin monitoring and reporting.</p>
+    </section>
+
+    <section class="section">
+      <h2>2. Objectives</h2>
+      <ul>
+        <li><strong>O1 &mdash; Portfolio &amp; Fund Management:</strong> Enable users to maintain customer and company profiles, manage holdings, and track cash and dividends.</li>
+        <li><strong>O2 &mdash; Trading Simulation:</strong> Support safe, simulated buy/sell orders with proper validation and transaction history.</li>
+        <li><strong>O3 &mdash; Prediction Engine:</strong> Integrate ML models (LSTM, regression) for future price forecasts integrated into the UI.</li>
+        <li><strong>O4 &mdash; Reporting &amp; Monitoring:</strong> Provide dashboards, billing, and admin tools for monitoring activity and performance.</li>
+        <li><strong>O5 &mdash; Quality &amp; Robustness:</strong> Deliver a secure, tested, and well-documented application suitable for academic submission and demonstration.</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>3. Scope Summary</h2>
+      <h3>In Scope</h3>
+      <ul>
+        <li>User registration, login, and profile management</li>
+        <li>Company and stock data storage and updates</li>
+        <li>Fund management and virtual wallet</li>
+        <li>Stock buy/sell, portfolio tracking, and dividend payout</li>
+        <li>Price prediction using ML models (LSTM + baselines)</li>
+        <li>Billing, transaction summaries, and basic reporting</li>
+        <li>Broker management and admin monitoring dashboard</li>
+      </ul>
+      <h3>Out of Scope</h3>
+      <ul>
+        <li>Real-money trading and integration with live exchanges</li>
+        <li>Third-party broker/trading APIs</li>
+        <li>Real-time web scraping from external financial sites</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>4. Work Breakdown</h2>
+      <h3>4.1 End-Semester Work (Tasks 1–15)</h3>
+      <p class="gantt-label">Completed (Tasks 1–6)</p>
+      <ul>
+        <li>1. Project setup and database foundation</li>
+        <li>2. Authentication system implementation</li>
+        <li>3. Portfolio management system</li>
+        <li>4. Stock repository and data management</li>
+        <li>5. Transaction engine for buy/sell orders</li>
+        <li>6. ML prediction service integration</li>
+      </ul>
+      <p class="gantt-label">Remaining (Tasks 7–15)</p>
+      <ul>
+        <li>7. Sentiment analysis engine</li>
+        <li>8. Dividend management system</li>
+        <li>9. Admin service and dashboard</li>
+        <li>10. Background jobs and scheduling</li>
+        <li>11. Notification system</li>
+        <li>12. Reporting system</li>
+        <li>13. Clean minimalist UI implementation</li>
+        <li>14. Error handling and validation</li>
+        <li>15. Security implementation</li>
+      </ul>
+
+      <h3>4.2 Final-Semester Work (Tasks 16–30)</h3>
+      <ul>
+        <li>16. Logging and monitoring</li>
+        <li>17. Testing implementation</li>
+        <li>18. Deployment preparation</li>
+        <li>19. Final integration and testing</li>
+        <li>20. Documentation and cleanup</li>
+        <li>21. Comprehensive performance testing</li>
+        <li>22. Comprehensive security testing</li>
+        <li>23. Usability testing</li>
+        <li>24. Compatibility testing</li>
+        <li>25. Accessibility testing</li>
+        <li>26. Regression testing suite</li>
+        <li>27. Recovery and resilience testing</li>
+        <li>28. Acceptance testing</li>
+        <li>29. Test automation and CI/CD integration</li>
+        <li>30. Testing documentation and knowledge transfer</li>
+      </ul>
+    </section>
+
+    <section class="section">
+      <h2>5. Timeline &amp; Gantt Chart</h2>
+      <p>The schedule below is derived directly from the roadmap weekly plan (Weeks 6–21).</p>
+      <div class="legend"><span class="block"></span> Planned work window</div>
+      <table class="gantt-table">
+        <thead>
+          <tr>
+            <th>Task Group</th>
+            <th>W6</th>
+            <th>W7</th>
+            <th>W8</th>
+            <th>W9</th>
+            <th>W10</th>
+            <th>W11</th>
+            <th>W12</th>
+            <th>W13</th>
+            <th>W14</th>
+            <th>W15</th>
+            <th>W16</th>
+            <th>W17</th>
+            <th>W18</th>
+            <th>W19</th>
+            <th>W20</th>
+            <th>W21</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>7–9 Sentiment, Dividend, Admin</td>
+            <td><span class="gantt-block"></span></td>
+            <td><span class="gantt-block"></span></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>10–12 Jobs, Notifications, Reports</td>
+            <td></td>
+            <td></td>
+            <td><span class="gantt-block"></span></td>
+            <td><span class="gantt-block"></span></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>13–15 UI, Error Handling, Security</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><span class="gantt-block"></span></td>
+            <td><span class="gantt-block"></span></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>16–18 Logging, Testing, Deployment Prep</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><span class="gantt-block"></span></td>
+            <td><span class="gantt-block"></span></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>19–21 Integration, Docs, Performance</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><span class="gantt-block"></span></td>
+            <td><span class="gantt-block"></span></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>22–24 Security, Usability, Compatibility</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><span class="gantt-block"></span></td>
+            <td><span class="gantt-block"></span></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>25–27 Accessibility, Regression, Recovery</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><span class="gantt-block"></span></td>
+            <td><span class="gantt-block"></span></td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>28–30 Acceptance, Automation, Documentation</td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><span class="gantt-block"></span></td>
+            <td><span class="gantt-block"></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="section">
+      <h2>6. Milestones &amp; Deliverables</h2>
+      <div class="summary-box">
+        <p><strong>M1 &mdash; End-Semester Completion:</strong> 15/30 tasks (Tasks 1–15) completed by end of semester.</p>
+        <p><strong>M2 &mdash; Final Integration:</strong> Tasks 16–21 completed; full system integrated and documented around Weeks 14–15.</p>
+        <p><strong>M3 &mdash; Quality &amp; Testing Complete:</strong> Tasks 22–30 completed by end of final year (Weeks 20–21 window).</p>
+        <p><strong>Key Deliverables:</strong> functional web app, integrated prediction module, admin dashboard, and full documentation set (user, technical, testing).</p>
+      </div>
+    </section>
+  </div>
+</body>
+</html>

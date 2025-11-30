@@ -1,0 +1,4 @@
+# file: C:\Users\zombo\AppData\Roaming\Python\Python313\site-packages\multiprocess\process.py
+# hypothesis_version: 6.148.2
+
+['-', '/mp', ':', '<%s>', 'BaseProcess', 'MainProcess', 'Process %s:\n', 'SIG', '_', 'active_children', 'authkey', 'closed', 'current_process', 'daemon', 'exitcode=%s', 'initial', 'name=%r', 'parent=%s', 'parent_process', 'pid=%s', 'process not started', 'semprefix', 'started', 'stopped', 'unknown']

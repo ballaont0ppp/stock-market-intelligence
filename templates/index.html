@@ -44,22 +44,22 @@
 
 <nav class="navbar-fixed-top transparrent-bg">
   <div class="container">
-    <div id="menuzord" class="menuzord red"> <a href="http://localhost/www/wordpress-5.6.2/wordpress/" class="menuzord-brand"><img src="{{url_for('static', filename='logo-2.png')}}" />
+    <div id="menuzord" class="menuzord red"> <a href="{{ url_for('index') }}" class="menuzord-brand"><img src="{{url_for('static', filename='logo-2.png')}}" />
 
 </a>
       <ul class="menuzord-menu mp_menu">
-        <li class="active"><a href="http://localhost/www/wordpress-5.6.2/wordpress/">HOME</a>
+        <li class="active"><a href="{{ url_for('index') }}">HOME</a>
         </li>
-        <li><a href="http://localhost/www/wordpress-5.6.2/wordpress/dashboard">DASHBOARD</a>
+        <li><a href="{{ url_for('index') }}">DASHBOARD</a>
           
         </li>
-        <li><a href="http://localhost/www/wordpress-5.6.2/wordpress/know-more/">ABOUT</a>
+        <li><a href="{{ url_for('index') }}">ABOUT</a>
           
         </li>
-        <!-- <li><a href="http://localhost/www/wordpress-5.6.2/wordpress/currency-converter/">CURRENCY CONVERTER</a>
+        <!-- <li><a href="{{ url_for('index') }}">CURRENCY CONVERTER</a>
 
         </li> -->
-        <li><a href="http://localhost/www/wordpress-5.6.2/wordpress/home-2/#contact">CONTACT US</a>
+        <li><a href="{{ url_for('index') }}">CONTACT US</a>
           
         </li>
         
@@ -94,16 +94,16 @@
   <div class="container">
     <div class="log_in_logo text-center"> <img style="height: 250px" src="{{url_for('static', filename='tile7.png')}}" </div>
     <div class="log_in_box">
-      <form class="login" action = "{{ url_for('insertintotable') }}" method = "POST">
+      <form class="login" action = "{{ url_for('predict') }}" method = "POST">
         <div class="login_title">
-          <h2>PLEASE ENTER A STOCK SYMBOL</h2>{% if not_found %}
+          <h2>PLEASE ENTER A STOCK SYMBOL</h2>{% if error %}
           <div class="alert alert-danger" style="color: red;" role="alert">
-  Stock Symbol (Ticker) Not Found. Please Enter a Valid Stock Symbol
+  {{ error }}
 </div>
           {% endif %}
         </div>
         <div class="form-group">
-          <input type="text" class="form-control" name = "nm" placeholder="Company Stock Symbol">
+          <input type="text" class="form-control" name = "symbol" placeholder="Company Stock Symbol">
 
         </div>
         <div class="form-group">
@@ -166,11 +166,11 @@ Churchgate (E) Mumbai, Maharashtra, India </a></li>
         </div>
         <div class="information">
           <ul>
-            <li><a href="http://localhost/www/wordpress-5.6.2/wordpress/"> <i class="fa fa-arrow-right"></i> HOME</a></li>
-            <li><a href="http://localhost/www/wordpress-5.6.2/wordpress/dashboard"> <i class="fa fa-arrow-right"></i> DASHBOARD</a></li>
-            <li><a href="http://localhost/www/wordpress-5.6.2/wordpress/know-more/"> <i class="fa fa-arrow-right"></i> ABOUT</a></li>
-            <!-- <li><a href="http://localhost/www/wordpress-5.6.2/wordpress/currency-converter/"> <i class="fa fa-arrow-right"></i> CURRENCY CONVERTER</a></li> -->
-            <li><a href="http://localhost/www/wordpress-5.6.2/wordpress/home-2/#contact"> <i class="fa fa-arrow-right"></i> CONTACT US</a></li>
+            <li><a href="{{ url_for('index') }}"> <i class="fa fa-arrow-right"></i> HOME</a></li>
+            <li><a href="{{ url_for('index') }}"> <i class="fa fa-arrow-right"></i> DASHBOARD</a></li>
+            <li><a href="{{ url_for('index') }}"> <i class="fa fa-arrow-right"></i> ABOUT</a></li>
+            <!-- <li><a href="{{ url_for('index') }}"> <i class="fa fa-arrow-right"></i> CURRENCY CONVERTER</a></li> -->
+            <li><a href="{{ url_for('index') }}"> <i class="fa fa-arrow-right"></i> CONTACT US</a></li>
 
           </ul>
         </div>
@@ -290,6 +290,6 @@ Churchgate (E) Mumbai, Maharashtra, India </a></li>
 <script type="text/javascript" src="{{url_for('static', filename='menuzord.js')}}"></script> 
 
 <!-- main js --> 
-<script type="text/javascript" src="{{url_for('static', filename='main.js')}}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='main.js')}}"></script>
 </body>
 </html>

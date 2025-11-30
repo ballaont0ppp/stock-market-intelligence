@@ -1,0 +1,4 @@
+# file: C:\Users\zombo\AppData\Roaming\Python\Python313\site-packages\multiprocess\context.py
+# hypothesis_version: 6.148.2
+
+['darwin', 'fork', 'forkserver', 'frozen', 'reduction', 'spawn', 'spawning_popen', 'win32']

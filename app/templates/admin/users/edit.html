@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block title %}Edit User - {{ user.email }}{% endblock %}
+{% block page_title %}Edit User{% endblock %}
+
+{% block page_content %}
+<div class="container-fluid">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Edit User: {{ user.email }}</h2>
+        <a href="{{ url_for('admin.view_user', user_id=user.user_id) }}" class="btn btn-secondary">
+            <i class="lucide-arrow-left me-2"></i>Back
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" 
+                                   value="{{ user.email }}" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="full_name" class="form-label">Full Name</label>
+                            <input type="text" class="form-control" id="full_name" name="full_name" 
+                                   value="{{ user.full_name or '' }}">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="risk_tolerance" class="form-label">Risk Tolerance</label>
+                            <select class="form-select" id="risk_tolerance" name="risk_tolerance">
+                                <option value="conservative" {% if user.risk_tolerance == 'conservative' %}selected{% endif %}>Conservative</option>
+                                <option value="moderate" {% if user.risk_tolerance == 'moderate' %}selected{% endif %}>Moderate</option>
+                                <option value="aggressive" {% if user.risk_tolerance == 'aggressive' %}selected{% endif %}>Aggressive</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="investment_goals" class="form-label">Investment Goals</label>
+                            <textarea class="form-control" id="investment_goals" name="investment_goals" rows="3">{{ user.investment_goals or '' }}</textarea>
+                        </div>
+
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="is_admin" name="is_admin" 
+                                   {% if user.is_admin %}checked{% endif %}>
+                            <label class="form-check-label" for="is_admin">
+                                Admin User
+                            </label>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="lucide-save me-2"></i>Save Changes
+                            </button>
+                            <a href="{{ url_for('admin.view_user', user_id=user.user_id) }}" class="btn btn-secondary">
+                                Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

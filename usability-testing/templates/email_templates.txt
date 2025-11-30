@@ -1,0 +1,291 @@
+EMAIL TEMPLATES FOR USABILITY TESTING
+
+================================================================================
+1. INVITATION EMAIL
+================================================================================
+
+Subject: Invitation to Participate in Usability Testing
+
+Dear [Name],
+
+Thank you for your interest in participating in our usability testing study!
+
+We are testing a new stock portfolio management platform and would love your feedback. Your insights will help us improve the user experience and create a better product.
+
+SESSION DETAILS:
+- Duration: 60 minutes
+- Format: [In-person at our office / Remote via Zoom]
+- Compensation: [$50 Amazon gift card / Voluntary participation]
+
+AVAILABLE TIME SLOTS:
+Please select your preferred time:
+- [Date/Time Option 1]
+- [Date/Time Option 2]
+- [Date/Time Option 3]
+
+WHAT TO EXPECT:
+- Complete tasks on the platform (e.g., register, buy stocks, view portfolio)
+- Share your thoughts as you navigate
+- Answer a brief survey about your experience
+- No preparation needed!
+
+REQUIREMENTS:
+- Computer with internet connection
+- Web browser (Chrome, Firefox, Safari, or Edge)
+- Microphone for audio recording
+[If remote: - Zoom installed and tested]
+
+Please reply to this email with your preferred time slot by [Date].
+
+If you have any questions, feel free to reach out.
+
+Best regards,
+[Your Name]
+[Title]
+[Contact Information]
+
+================================================================================
+2. CONFIRMATION EMAIL
+================================================================================
+
+Subject: Usability Testing Session Confirmed - [Date/Time]
+
+Dear [Name],
+
+Your usability testing session is confirmed!
+
+SESSION DETAILS:
+- Date: [Date]
+- Time: [Time]
+- Duration: 60 minutes
+- Location: [Address / Zoom link below]
+
+[If remote:
+ZOOM MEETING DETAILS:
+Join URL: [Zoom link]
+Meeting ID: [ID]
+Password: [Password]
+]
+
+BEFORE THE SESSION:
+- Ensure you have a stable internet connection
+- Test your microphone and speakers
+[If remote: - Join the Zoom meeting 5 minutes early to test audio/video]
+- Find a quiet location with minimal distractions
+- Have a glass of water nearby
+
+WHAT TO BRING:
+- Just yourself and an open mind!
+- No preparation or prior knowledge needed
+
+REMINDER:
+- We will be recording the session for research purposes
+- You will be asked to sign a consent form
+- You can withdraw at any time
+
+CONTACT:
+If you need to reschedule or have any questions:
+- Email: [Email]
+- Phone: [Phone]
+
+We look forward to meeting you!
+
+Best regards,
+[Your Name]
+
+================================================================================
+3. REMINDER EMAIL (24 HOURS BEFORE)
+================================================================================
+
+Subject: Reminder: Usability Testing Tomorrow at [Time]
+
+Dear [Name],
+
+This is a friendly reminder about your usability testing session tomorrow!
+
+SESSION DETAILS:
+- Date: [Date]
+- Time: [Time]
+- Duration: 60 minutes
+- Location: [Address / Zoom link]
+
+[If remote:
+ZOOM LINK:
+[Zoom link]
+
+Please join 5 minutes early to test your audio and video.
+]
+
+CHECKLIST:
+- [ ] Stable internet connection
+- [ ] Microphone and speakers working
+- [ ] Quiet location prepared
+- [ ] Water/coffee ready
+- [ ] [If remote: Zoom tested]
+
+If you need to reschedule, please let us know as soon as possible.
+
+See you tomorrow!
+
+Best regards,
+[Your Name]
+
+================================================================================
+4. REMINDER EMAIL (2 HOURS BEFORE)
+================================================================================
+
+Subject: Starting Soon: Usability Testing at [Time]
+
+Dear [Name],
+
+Your usability testing session starts in 2 hours!
+
+Time: [Time]
+[If remote: Zoom Link: [Link]]
+
+See you soon!
+
+[Your Name]
+
+================================================================================
+5. THANK YOU EMAIL
+================================================================================
+
+Subject: Thank You for Participating!
+
+Dear [Name],
+
+Thank you so much for participating in our usability testing session today!
+
+Your feedback was incredibly valuable and will help us improve the platform. We truly appreciate the time you took to share your thoughts and experiences with us.
+
+[If applicable:
+COMPENSATION:
+Your $50 Amazon gift card has been sent to this email address. You should receive it within 24 hours. If you don't see it, please check your spam folder or contact us.
+]
+
+FOLLOW-UP:
+We may conduct additional usability testing in the future. Would you be interested in participating again?
+- [ ] Yes, I'd be interested
+- [ ] No, thank you
+
+If you have any additional thoughts or questions, please don't hesitate to reach out.
+
+Thank you again for your valuable contribution!
+
+Best regards,
+[Your Name]
+[Title]
+[Contact Information]
+
+================================================================================
+6. RESCHEDULING EMAIL
+================================================================================
+
+Subject: Rescheduling Your Usability Testing Session
+
+Dear [Name],
+
+Thank you for letting us know you need to reschedule your usability testing session.
+
+No problem at all! Here are some alternative time slots:
+- [Date/Time Option 1]
+- [Date/Time Option 2]
+- [Date/Time Option 3]
+
+Please reply with your preferred time, or suggest another time that works better for you.
+
+Best regards,
+[Your Name]
+
+================================================================================
+7. CANCELLATION EMAIL (FROM PARTICIPANT)
+================================================================================
+
+Subject: Re: Usability Testing Cancellation
+
+Dear [Name],
+
+Thank you for letting us know. We understand that things come up.
+
+If you'd like to participate in the future, please don't hesitate to reach out. We'd love to have your feedback when the timing is better.
+
+Best regards,
+[Your Name]
+
+================================================================================
+8. NO-SHOW FOLLOW-UP
+================================================================================
+
+Subject: Missed Usability Testing Session
+
+Dear [Name],
+
+We noticed you weren't able to make it to your scheduled usability testing session today at [Time].
+
+We understand that things come up! If you're still interested in participating, we'd be happy to reschedule.
+
+Available times:
+- [Date/Time Option 1]
+- [Date/Time Option 2]
+
+Please let us know if you'd like to reschedule.
+
+Best regards,
+[Your Name]
+
+================================================================================
+9. RESULTS SUMMARY EMAIL (OPTIONAL)
+================================================================================
+
+Subject: Usability Testing Results Summary
+
+Dear [Name],
+
+Thank you again for participating in our usability testing!
+
+We wanted to share a brief summary of what we learned from the study:
+
+KEY FINDINGS:
+- [Finding 1]
+- [Finding 2]
+- [Finding 3]
+
+IMPROVEMENTS PLANNED:
+- [Improvement 1]
+- [Improvement 2]
+- [Improvement 3]
+
+Your feedback directly contributed to these improvements. Thank you for helping us create a better product!
+
+If you'd like to see the final product when it launches, we'll send you an update.
+
+Best regards,
+[Your Name]
+
+================================================================================
+10. RECRUITMENT POST (SOCIAL MEDIA)
+================================================================================
+
+🔍 PARTICIPANTS NEEDED for Usability Testing! 🔍
+
+We're testing a new stock portfolio management platform and need YOUR feedback!
+
+📋 What: 60-minute usability testing session
+💰 Compensation: $50 Amazon gift card
+📅 When: [Date range]
+📍 Where: [In-person / Remote via Zoom]
+
+WHO WE'RE LOOKING FOR:
+✅ Ages 18-65
+✅ All experience levels (beginners to experts)
+✅ No preparation needed!
+
+INTERESTED?
+Fill out this quick survey: [Survey link]
+
+Questions? Email: [Email]
+
+#UsabilityTesting #UserResearch #UX #StockTrading
+
+================================================================================

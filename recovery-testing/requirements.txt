@@ -1,0 +1,18 @@
+# Recovery and Resilience Testing Requirements
+
+# Testing Framework
+pytest>=7.4.0
+pytest-html>=3.2.0
+pytest-timeout>=2.1.0
+
+# HTTP Requests
+requests>=2.31.0
+
+# System Monitoring
+psutil>=5.9.5
+
+# Database
+mysql-connector-python>=8.1.0
+
+# Utilities
+python-dotenv>=1.0.0

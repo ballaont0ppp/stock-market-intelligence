@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block title %}Order Details - Stock Portfolio Platform{% endblock %}
+
+{% block page_content %}
+<div class="container py-4">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 class="h3 mb-0">Order Details</h1>
+                <a href="{{ url_for('orders.index') }}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Back to Orders
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="row">
+        <!-- Order Information -->
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Order Information</h5>
+                </div>
+                <div class="card-body">
+                    <table class="table table-borderless">
+                        <tr>
+                            <th width="40%">Order ID:</th>
+                            <td>#{{ order.order_id }}</td>
+                        </tr>
+                        <tr>
+                            <th>Status:</th>
+                            <td>
+                                {% if order.order_status == 'COMPLETED' %}
+                                <span class="badge bg-success">Completed</span>
+                                {% elif order.order_status == 'PENDING' %}
+                                <span class="badge bg-warning">Pending</span>
+                                {% elif order.order_status == 'FAILED' %}
+                                <span class="badge bg-danger">Failed</span>
+                                {% else %}
+                                <span class="badge bg-secondary">{{ order.order_status }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Type:</th>
+                            <td>
+                                {% if order.order_type == 'BUY' %}
+                                <span class="badge bg-success">BUY</span>
+                                {% else %}
+                                <span class="badge bg-danger">SELL</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Stock:</th>
+                            <td>
+                                <strong>{{ order.company.symbol }}</strong> - {{ order.company.company_name }}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th>Quantity:</th>
+                            <td>{{ order.quantity }} shares</td>
+                        </tr>
+                        <tr>
+                            <th>Price per Share:</th>
+                            <td>${{ "%.2f"|format(order.price_per_share) }}</td>
+                        </tr>
+                        <tr>
+                            <th>Commission Fee:</th>
+                            <td>${{ "%.2f"|format(order.commission_fee) }}</td>
+                        </tr>
+                        <tr>
+                            <th>Total Amount:</th>
+                            <td><strong>${{ "%.2f"|format(order.total_amount) }}</strong></td>
+                        </tr>
+                        {% if order.order_type == 'SELL' and order.realized_gain_loss %}
+                        <tr>
+                            <th>Realized Gain/Loss:</th>
+                            <td>
+                                <strong class="{% if order.realized_gain_loss > 0 %}text-success{% else %}text-danger{% endif %}">
+                                    ${{ "%.2f"|format(order.realized_gain_loss) }}
+                                </strong>
+                            </td>
+                        </tr>
+                        {% endif %}
+                        <tr>
+                            <th>Created:</th>
+                            <td>{{ order.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        </tr>
+                        {% if order.executed_at %}
+                        <tr>
+                            <th>Executed:</th>
+                            <td>{{ order.executed_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        </tr>
+                        {% endif %}
+                        {% if order.failure_reason %}
+                        <tr>
+                            <th>Failure Reason:</th>
+                            <td class="text-danger">{{ order.failure_reason }}</td>
+                        </tr>
+                        {% endif %}
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Related Transactions -->
+        <div class="col-md-6">
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5 class="mb-0">Related Transactions</h5>
+                </div>
+                <div class="card-body">
+                    {% if transactions %}
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Amount</th>
+                                    <th>Balance After</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for transaction in transactions %}
+                                <tr>
+                                    <td>
+                                        {% if transaction.transaction_type == 'BUY' %}
+                                        <span class="badge bg-success">BUY</span>
+                                        {% elif transaction.transaction_type == 'SELL' %}
+                                        <span class="badge bg-danger">SELL</span>
+                                        {% elif transaction.transaction_type == 'FEE' %}
+                                        <span class="badge bg-warning">FEE</span>
+                                        {% else %}
+                                        <span class="badge bg-secondary">{{ transaction.transaction_type }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <span class="{% if transaction.amount > 0 %}text-success{% else %}text-danger{% endif %}">
+                                            ${{ "%.2f"|format(transaction.amount) }}
+                                        </span>
+                                    </td>
+                                    <td>${{ "%.2f"|format(transaction.balance_after) }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-muted mb-0">No transactions found for this order.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

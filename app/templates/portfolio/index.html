@@ -1,0 +1,325 @@
+{% extends "base.html" %}
+
+{% block title %}Portfolio{% endblock %}
+
+{% block page_content %}
+<!-- Portfolio Header -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="page-title">My Portfolio</h1>
+        <p class="text-secondary">Track your investments and performance</p>
+    </div>
+    <div class="d-flex gap-2">
+        <a href="{{ url_for('orders.buy') }}" class="btn btn-success">
+            <i data-lucide="plus" width="18" height="18"></i>
+            Buy Stocks
+        </a>
+        <a href="{{ url_for('portfolio.wallet') }}" class="btn btn-primary">
+            <i data-lucide="wallet" width="18" height="18"></i>
+            Manage Wallet
+        </a>
+    </div>
+</div>
+
+<!-- Portfolio Summary Cards -->
+<div class="portfolio-summary">
+    <div class="stat-card">
+        <div class="stat-card-label">
+            <i data-lucide="wallet" width="16" height="16"></i>
+            Wallet Balance
+        </div>
+        <div class="stat-card-value">${{ "{:,.2f}".format(summary.wallet_balance) }}</div>
+        <div class="stat-card-change">
+            Available cash
+        </div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-card-label">
+            <i data-lucide="trending-down" width="16" height="16"></i>
+            Total Invested
+        </div>
+        <div class="stat-card-value">${{ "{:,.2f}".format(summary.total_invested) }}</div>
+        <div class="stat-card-change">
+            Cost basis
+        </div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-card-label">
+            <i data-lucide="trending-up" width="16" height="16"></i>
+            Current Value
+        </div>
+        <div class="stat-card-value">${{ "{:,.2f}".format(summary.total_current_value) }}</div>
+        <div class="stat-card-change">
+            Market value
+        </div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-card-label">
+            <i data-lucide="percent" width="16" height="16"></i>
+            Unrealized Gain/Loss
+        </div>
+        <div class="stat-card-value {{ 'text-success' if summary.total_unrealized_gain >= 0 else 'text-danger' }}">
+            ${{ "{:,.2f}".format(summary.total_unrealized_gain) }}
+        </div>
+        <div class="stat-card-change {{ 'text-success' if summary.total_unrealized_gain >= 0 else 'text-danger' }}">
+            <i data-lucide="{{ 'arrow-up' if summary.total_unrealized_gain >= 0 else 'arrow-down' }}" width="14" height="14"></i>
+            {{ "{:+.2f}".format(summary.total_unrealized_gain_pct) }}%
+        </div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-card-label">
+            <i data-lucide="briefcase" width="16" height="16"></i>
+            Total Portfolio
+        </div>
+        <div class="stat-card-value">${{ "{:,.2f}".format(summary.total_portfolio_value) }}</div>
+        <div class="stat-card-change">
+            Holdings + Cash
+        </div>
+    </div>
+</div>
+
+<!-- Holdings Table -->
+<div class="holdings-table-wrapper">
+    <div class="holdings-table-header">
+        <h3 class="holdings-table-title">
+            <i data-lucide="briefcase" width="24" height="24"></i>
+            Holdings ({{ summary.number_of_holdings }})
+        </h3>
+        <div class="d-flex gap-2">
+            <button class="btn btn-sm btn-outline-secondary" onclick="sortTable('symbol')">
+                <i data-lucide="arrow-up-down" width="16" height="16"></i>
+                Sort
+            </button>
+        </div>
+    </div>
+    <div class="table-responsive">
+        {% if summary.holdings %}
+            <table class="table table-hover" id="holdingsTable">
+                <thead>
+                    <tr>
+                        <th onclick="sortTable('symbol')" style="cursor: pointer;">
+                            Symbol
+                            <i data-lucide="chevron-down" width="14" height="14"></i>
+                        </th>
+                        <th onclick="sortTable('company')" style="cursor: pointer;">
+                            Company
+                            <i data-lucide="chevron-down" width="14" height="14"></i>
+                        </th>
+                        <th onclick="sortTable('sector')" style="cursor: pointer;">
+                            Sector
+                            <i data-lucide="chevron-down" width="14" height="14"></i>
+                        </th>
+                        <th class="text-end" onclick="sortTable('quantity')" style="cursor: pointer;">
+                            Quantity
+                            <i data-lucide="chevron-down" width="14" height="14"></i>
+                        </th>
+                        <th class="text-end" onclick="sortTable('avgPrice')" style="cursor: pointer;">
+                            Avg Price
+                            <i data-lucide="chevron-down" width="14" height="14"></i>
+                        </th>
+                        <th class="text-end" onclick="sortTable('currentPrice')" style="cursor: pointer;">
+                            Current Price
+                            <i data-lucide="chevron-down" width="14" height="14"></i>
+                        </th>
+                        <th class="text-end" onclick="sortTable('value')" style="cursor: pointer;">
+                            Total Value
+                            <i data-lucide="chevron-down" width="14" height="14"></i>
+                        </th>
+                        <th class="text-end" onclick="sortTable('gain')" style="cursor: pointer;">
+                            Gain/Loss
+                            <i data-lucide="chevron-down" width="14" height="14"></i>
+                        </th>
+                        <th class="text-end" onclick="sortTable('return')" style="cursor: pointer;">
+                            Return %
+                            <i data-lucide="chevron-down" width="14" height="14"></i>
+                        </th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for holding in summary.holdings %}
+                    <tr>
+                        <td><strong>{{ holding.symbol }}</strong></td>
+                        <td>{{ holding.company_name }}</td>
+                        <td>
+                            <span class="badge bg-secondary">{{ holding.sector or 'N/A' }}</span>
+                        </td>
+                        <td class="text-end">{{ holding.quantity }}</td>
+                        <td class="text-end">${{ "{:,.2f}".format(holding.average_purchase_price) }}</td>
+                        <td class="text-end">${{ "{:,.2f}".format(holding.current_price) }}</td>
+                        <td class="text-end"><strong>${{ "{:,.2f}".format(holding.current_value) }}</strong></td>
+                        <td class="text-end {{ 'text-success' if holding.unrealized_gain >= 0 else 'text-danger' }}">
+                            <strong>{{ "{:+,.2f}".format(holding.unrealized_gain) }}</strong>
+                        </td>
+                        <td class="text-end {{ 'text-success' if holding.unrealized_gain_pct >= 0 else 'text-danger' }}">
+                            <strong>{{ "{:+.2f}".format(holding.unrealized_gain_pct) }}%</strong>
+                        </td>
+                        <td class="text-end">
+                            <a href="{{ url_for('orders.sell', symbol=holding.symbol) }}" class="btn btn-sm btn-danger">
+                                <i data-lucide="trending-down" width="14" height="14"></i>
+                                Sell
+                            </a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <div class="empty-state">
+                <div class="empty-state-icon">📊</div>
+                <div class="empty-state-title">No Holdings Yet</div>
+                <div class="empty-state-description">Start building your portfolio by placing your first order</div>
+                <a href="{{ url_for('orders.buy') }}" class="btn btn-primary mt-3">
+                    <i data-lucide="plus" width="18" height="18"></i>
+                    Place Order
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Performance Charts -->
+{% if summary.holdings %}
+<div class="portfolio-charts" id="portfolioCharts" data-holdings='{{ summary.holdings | tojson }}'>
+    <div class="chart-card">
+        <h3 class="chart-title">
+            <i data-lucide="pie-chart" width="20" height="20"></i>
+            Sector Allocation
+        </h3>
+        <div id="sectorChart" style="height: 300px;">
+            <canvas id="sectorAllocationChart"></canvas>
+        </div>
+    </div>
+    
+    <div class="chart-card">
+        <h3 class="chart-title">
+            <i data-lucide="line-chart" width="20" height="20"></i>
+            Portfolio Performance
+        </h3>
+        <div id="performanceChart" style="height: 300px;">
+            <canvas id="portfolioPerformanceChart"></canvas>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        lucide.createIcons();
+        
+        // Simple table sorting
+        let sortDirection = {};
+        
+        window.sortTable = function(column) {
+            const table = document.getElementById('holdingsTable');
+            const tbody = table.querySelector('tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            
+            sortDirection[column] = !sortDirection[column];
+            const ascending = sortDirection[column];
+            
+            rows.sort((a, b) => {
+                let aVal, bVal;
+                
+                switch(column) {
+                    case 'symbol':
+                        aVal = a.cells[0].textContent;
+                        bVal = b.cells[0].textContent;
+                        break;
+                    case 'company':
+                        aVal = a.cells[1].textContent;
+                        bVal = b.cells[1].textContent;
+                        break;
+                    case 'sector':
+                        aVal = a.cells[2].textContent;
+                        bVal = b.cells[2].textContent;
+                        break;
+                    case 'quantity':
+                        aVal = parseInt(a.cells[3].textContent);
+                        bVal = parseInt(b.cells[3].textContent);
+                        break;
+                    case 'avgPrice':
+                        aVal = parseFloat(a.cells[4].textContent.replace(/[$,]/g, ''));
+                        bVal = parseFloat(b.cells[4].textContent.replace(/[$,]/g, ''));
+                        break;
+                    case 'currentPrice':
+                        aVal = parseFloat(a.cells[5].textContent.replace(/[$,]/g, ''));
+                        bVal = parseFloat(b.cells[5].textContent.replace(/[$,]/g, ''));
+                        break;
+                    case 'value':
+                        aVal = parseFloat(a.cells[6].textContent.replace(/[$,]/g, ''));
+                        bVal = parseFloat(b.cells[6].textContent.replace(/[$,]/g, ''));
+                        break;
+                    case 'gain':
+                        aVal = parseFloat(a.cells[7].textContent.replace(/[$,+]/g, ''));
+                        bVal = parseFloat(b.cells[7].textContent.replace(/[$,+]/g, ''));
+                        break;
+                    case 'return':
+                        aVal = parseFloat(a.cells[8].textContent.replace(/[%+]/g, ''));
+                        bVal = parseFloat(b.cells[8].textContent.replace(/[%+]/g, ''));
+                        break;
+                }
+                
+                if (ascending) {
+                    return aVal > bVal ? 1 : -1;
+                } else {
+                    return aVal < bVal ? 1 : -1;
+                }
+            });
+            
+            rows.forEach(row => tbody.appendChild(row));
+        };
+        
+        // Initialize charts if holdings exist
+        const chartsContainer = document.getElementById('portfolioCharts');
+        if (chartsContainer) {
+            const holdingsData = JSON.parse(chartsContainer.dataset.holdings || '[]');
+            
+            if (holdingsData.length > 0) {
+                // Sector allocation data
+                const sectorData = {};
+                holdingsData.forEach(holding => {
+                    const sector = holding.sector || 'Other';
+                    const value = holding.current_value;
+                    if (sectorData[sector]) {
+                        sectorData[sector] += value;
+                    } else {
+                        sectorData[sector] = value;
+                    }
+                });
+                
+                // Create sector allocation pie chart
+                const sectorCtx = document.getElementById('sectorAllocationChart');
+                if (sectorCtx && typeof Chart !== 'undefined') {
+                    new Chart(sectorCtx, {
+                        type: 'pie',
+                        data: {
+                            labels: Object.keys(sectorData),
+                            datasets: [{
+                                data: Object.values(sectorData),
+                                backgroundColor: [
+                                    '#2563eb', '#10b981', '#f59e0b', '#ef4444', '#8b5cf6',
+                                    '#ec4899', '#06b6d4', '#84cc16', '#f97316', '#6366f1'
+                                ]
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    position: 'bottom'
+                                }
+                            }
+                        }
+                    });
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}

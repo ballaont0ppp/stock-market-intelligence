@@ -1,0 +1,88 @@
+{
+  "name": "enterprise-testing-suite",
+  "version": "1.0.0",
+  "description": "Comprehensive testing suite for enterprise web applications",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm run test:all",
+    "test:all": "npm run test:unit && npm run test:integration && npm run test:api",
+    "test:unit": "jest unit/**/*.test.js",
+    "test:integration": "jest integration/**/*.test.js",
+    "test:smoke": "node smoke/scripts/smoke.test.js",
+    "test:performance": "node performance/scripts/api-load.test.js",
+    "test:security": "node security/scripts/vulnerability.scan.js",
+    "test:e2e": "HEADLESS=true node e2e/scripts/user-journey.e2e.test.js",
+    "test:e2e:debug": "HEADLESS=false DEBUG=puppeteer:* node e2e/scripts/user-journey.e2e.test.js",
+    "test:e2e:docker": "docker-compose -f docker-compose.puppeteer.yml up --build --abort-on-container-exit",
+    "test:regression": "node regression/scripts/api-regression.test.js",
+    "test:api": "node api/scripts/rest-api.test.js",
+    "test:database": "node database/scripts/data-integrity.test.js",
+    "test:config": "node config/scripts/environment-validation.test.js",
+    "test:accessibility": "node accessibility/scripts/wcag-compliance.test.js",
+    "test:chaos": "node chaos/scripts/failure-simulation.test.js",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:ci": "jest --ci --coverage --maxWorkers=2",
+    "puppeteer:install": "npx puppeteer browsers install chrome",
+    "puppeteer:test": "HEADLESS=true node e2e/scripts/user-journey.e2e.test.js",
+    "puppeteer:debug": "HEADLESS=false DEBUG=puppeteer:* node e2e/scripts/user-journey.e2e.test.js",
+    "clean": "rm -rf testing-suite/results/*",
+    "report": "node scripts/generate-report.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "keywords": [
+    "testing",
+    "microservices",
+    "enterprise",
+    "quality-assurance",
+    "puppeteer",
+    "e2e-testing"
+  ],
+  "author": "Enterprise QA Team",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "supertest": "^6.0.0",
+    "eslint": "^8.0.0",
+    "cypress": "^12.0.0",
+    "puppeteer": "^19.0.0",
+    "puppeteer-core": "^19.0.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-adblocker": "^2.13.6",
+    "axios": "^1.0.0",
+    "chai": "^4.0.0",
+    "mocha": "^10.0.0",
+    "sinon": "^15.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "winston": "^3.0.0",
+    "uuid": "^9.0.0",
+    "lodash": "^4.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "collectCoverageFrom": [
+      "**/*.js",
+      "!**/node_modules/**",
+      "!**/results/**",
+      "!**/docs/**"
+    ],
+    "coverageDirectory": "results/coverage",
+    "coverageReporters": [
+      "text",
+      "html",
+      "json"
+    ],
+    "testMatch": [
+      "**/*.test.js",
+      "**/*.spec.js"
+    ],
+    "verbose": true
+  },
+  "puppeteer": {
+    "browserRevision": "latest",
+    "downloadHost": "https://storage.googleapis.com"
+  }
+}

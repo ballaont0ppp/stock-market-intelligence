@@ -1,0 +1,37 @@
+{
+  "session_id": "session_TEST_P01_20251116_222427",
+  "participant_id": "TEST_P01",
+  "start_time": "2025-11-16T22:24:27.460853",
+  "end_time": "2025-11-16T22:24:27.461555",
+  "demographics": {
+    "age": "25-35",
+    "experience_level": "Intermediate",
+    "technical_proficiency": "Medium"
+  },
+  "tasks": [
+    {
+      "task_id": "TEST-1",
+      "name": "Test Task",
+      "duration": 120,
+      "success": true
+    }
+  ],
+  "errors": [
+    {
+      "timestamp": "2025-11-16T22:24:27.461181",
+      "error": "Test error",
+      "context": "TEST-1"
+    }
+  ],
+  "observations": [
+    {
+      "timestamp": "2025-11-16T22:24:27.461365",
+      "observation": "Test observation",
+      "category": "general"
+    }
+  ],
+  "satisfaction_scores": {
+    "Q1": 5
+  },
+  "feedback": {}
+}

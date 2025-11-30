@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Er Diagram - Stock Portfolio Platform</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: white;
+            color: #111827;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            padding: 40px 60px;
+            border-bottom: 4px solid #1e40af;
+        }
+        
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .company-name {
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.9;
+            margin-bottom: 8px;
+        }
+        
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin: 0;
+            letter-spacing: -0.5px;
+        }
+        
+        .diagram-type {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 12px;
+            letter-spacing: 0.5px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px;
+        }
+        
+        .diagram-container {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 40px;
+            margin: 0;
+            overflow-x: auto;
+        }
+        
+        .footer {
+            margin-top: 60px;
+            padding-top: 30px;
+            border-top: 2px solid #e5e7eb;
+            text-align: center;
+            color: #6b7280;
+            font-size: 13px;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .footer-left {
+            text-align: left;
+        }
+        
+        .footer-right {
+            text-align: right;
+        }
+        
+        .footer strong {
+            color: #2563eb;
+            font-weight: 600;
+        }
+        
+        /* Print styles */
+        @media print {
+            body {
+                background: white;
+            }
+            
+            .header {
+                background: #2563eb;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            
+            .container {
+                padding: 40px 20px;
+            }
+            
+            .diagram-container {
+                border: 2px solid #e5e7eb;
+                page-break-inside: avoid;
+            }
+            
+            .footer {
+                page-break-before: avoid;
+            }
+        }
+        
+        @page {
+            margin: 0.5in;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-content">
+            <div class="company-name">Stock Portfolio Platform</div>
+            <h1>Database Er Diagram</h1>
+            <span class="diagram-type">Database Diagram</span>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="diagram-container">
+            <pre class="mermaid">
+%%{init: {'theme':'neutral'}}%%
+erDiagram
+    User ||--|| Wallet : has
+    User ||--o{ Holding : owns
+    User ||--o{ Order : places
+    Company ||--o{ Holding : "held in"
+    Company ||--o{ Order : "ordered for"
+    Company ||--o{ PriceHistory : "has prices"
+    Order ||--o{ Transaction : "creates"
+    Wallet ||--o{ Transaction : "records"
+    
+    User {
+        int user_id PK
+        string username
+        string email
+        string role
+        datetime created_at
+    }
+    
+    Wallet {
+        int wallet_id PK
+        int user_id FK
+        decimal balance
+        datetime updated_at
+    }
+    
+    Company {
+        int company_id PK
+        string symbol
+        string name
+        string sector
+        decimal current_price
+    }
+    
+    Holding {
+        int holding_id PK
+        int user_id FK
+        int company_id FK
+        int quantity
+        decimal average_price
+        decimal current_value
+    }
+    
+    Order {
+        int order_id PK
+        int user_id FK
+        int company_id FK
+        string order_type
+        int quantity
+        decimal price
+        string status
+        datetime created_at
+    }
+    
+    Transaction {
+        int transaction_id PK
+        int user_id FK
+        int wallet_id FK
+        int order_id FK
+        string type
+        decimal amount
+        datetime created_at
+    }
+    
+    PriceHistory {
+        int price_history_id PK
+        int company_id FK
+        decimal open_price
+        decimal close_price
+        date price_date
+    }
+            </pre>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-content">
+                <div class="footer-left">
+                    <strong>Stock Portfolio Platform</strong><br>
+                    System Architecture Documentation
+                </div>
+                <div class="footer-right">
+                    Document: <strong>Database Er Diagram</strong><br>
+                    Page 1 of 1
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+    </script>
+</body>
+</html>

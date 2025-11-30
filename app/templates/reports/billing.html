@@ -1,0 +1,214 @@
+{% extends "base.html" %}
+
+{% block title %}Billing Report - Stock Portfolio Platform{% endblock %}
+
+{% block page_content %}
+<div class="container-fluid py-4">
+    <div class="row mb-4">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ url_for('reports.index') }}">Reports</a></li>
+                    <li class="breadcrumb-item active">Billing Report</li>
+                </ol>
+            </nav>
+            <h1 class="h3 mb-0">Billing Report</h1>
+        </div>
+    </div>
+
+    <!-- Report Form -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST">
+                        {{ form.hidden_tag() }}
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                {{ form.month.label(class="form-label") }}
+                                {{ form.month(class="form-select") }}
+                                {% if form.month.errors %}
+                                    <div class="text-danger small">{{ form.month.errors[0] }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-4">
+                                {{ form.year.label(class="form-label") }}
+                                {{ form.year(class="form-control") }}
+                                {% if form.year.errors %}
+                                    <div class="text-danger small">{{ form.year.errors[0] }}</div>
+                                {% endif %}
+                            </div>
+                            <div class="col-md-4 d-flex align-items-end">
+                                {{ form.submit(class="btn btn-primary w-100") }}
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if report %}
+    <!-- Report Header -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="alert alert-info">
+                <h5 class="alert-heading"><i class="fas fa-calendar-alt me-2"></i>{{ report.period }}</h5>
+                <p class="mb-0">Billing summary for the selected period</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction Counts -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Transaction Counts</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
+                                <span class="text-muted">Buy Orders</span>
+                                <strong class="h4 mb-0">{{ report.transaction_counts.buy_orders }}</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
+                                <span class="text-muted">Sell Orders</span>
+                                <strong class="h4 mb-0">{{ report.transaction_counts.sell_orders }}</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
+                                <span class="text-muted">Total Orders</span>
+                                <strong class="h4 mb-0">{{ report.transaction_counts.total_orders }}</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
+                                <span class="text-muted">Deposits</span>
+                                <strong class="h4 mb-0">{{ report.transaction_counts.deposits }}</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
+                                <span class="text-muted">Withdrawals</span>
+                                <strong class="h4 mb-0">{{ report.transaction_counts.withdrawals }}</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
+                                <span class="text-muted">Dividends</span>
+                                <strong class="h4 mb-0">{{ report.transaction_counts.dividends }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction Volumes -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Transaction Volumes</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex justify-content-between align-items-center p-3 bg-success bg-opacity-10 rounded">
+                                <span class="text-muted">Buy Volume</span>
+                                <strong class="h4 mb-0 text-success">${{ "%.2f"|format(report.transaction_volumes.buy_volume) }}</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex justify-content-between align-items-center p-3 bg-info bg-opacity-10 rounded">
+                                <span class="text-muted">Sell Volume</span>
+                                <strong class="h4 mb-0 text-info">${{ "%.2f"|format(report.transaction_volumes.sell_volume) }}</strong>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="d-flex justify-content-between align-items-center p-3 bg-primary bg-opacity-10 rounded">
+                                <span class="text-muted">Total Volume</span>
+                                <strong class="h4 mb-0 text-primary">${{ "%.2f"|format(report.transaction_volumes.total_volume) }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fee Breakdown -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0"><i class="fas fa-dollar-sign me-2"></i>Fee Breakdown</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <div class="text-center p-3 border rounded">
+                                <h6 class="text-muted mb-2">Buy Commissions</h6>
+                                <h3 class="text-danger mb-0">${{ "%.2f"|format(report.fee_breakdown.buy_commissions) }}</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="text-center p-3 border rounded">
+                                <h6 class="text-muted mb-2">Sell Commissions</h6>
+                                <h3 class="text-danger mb-0">${{ "%.2f"|format(report.fee_breakdown.sell_commissions) }}</h3>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <div class="text-center p-3 border rounded">
+                                <h6 class="text-muted mb-2">Total Fees</h6>
+                                <h3 class="text-danger mb-0">${{ "%.2f"|format(report.fee_breakdown.total_fees) }}</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Summary -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Summary</h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <p class="mb-2"><strong>Total Transactions:</strong> {{ report.summary.total_transactions }}</p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="mb-2"><strong>Total Fees Paid:</strong> <span class="text-danger">${{ "%.2f"|format(report.summary.total_fees_paid) }}</span></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="mb-2"><strong>Average Fee per Trade:</strong> ${{ "%.2f"|format(report.summary.average_fee_per_trade) }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Button -->
+    <div class="row">
+        <div class="col-12">
+            <a href="{{ url_for('reports.export_billing_csv', month=form.month.data, year=form.year.data) }}" 
+               class="btn btn-success">
+                <i class="fas fa-download me-2"></i>Export to CSV
+            </a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

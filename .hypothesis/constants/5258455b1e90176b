@@ -1,0 +1,4 @@
+# file: D:\projIII\Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis\diagram_generator\core\types.py
+# hypothesis_version: 6.148.2
+
+[0.0, '0.1.0', 'activity', 'aggregation', 'architecture', 'association', 'class_diagram', 'component', 'composition', 'data_flow', 'default', 'deployment', 'detailed', 'er_diagram', 'inheritance', 'many_to_many', 'many_to_one', 'minimal', 'normal', 'one_to_many', 'one_to_one', 'package', 'sequence_diagram', 'state_diagram', 'test_coverage', 'use_case']

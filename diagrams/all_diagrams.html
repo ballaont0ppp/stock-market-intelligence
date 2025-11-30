@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Portfolio Platform - Architecture Diagrams</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1em;
+        }
+        
+        nav {
+            background: white;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+        }
+        
+        nav h2 {
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+        
+        nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        nav a {
+            display: inline-block;
+            padding: 8px 16px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+        
+        nav a:hover {
+            background: #2980b9;
+        }
+        
+        .diagram-section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .diagram-section h2 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+        }
+        
+        .diagram-meta {
+            color: #7f8c8d;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+        }
+        
+        .diagram-content {
+            margin: 20px 0;
+            overflow-x: auto;
+        }
+        
+        .mermaid {
+            text-align: center;
+            background: #fafafa;
+            padding: 20px;
+            border-radius: 4px;
+        }
+        
+        .description {
+            margin-top: 20px;
+            padding: 15px;
+            background: #ecf0f1;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #7f8c8d;
+            background: white;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+        
+        @media print {
+            nav {
+                position: static;
+            }
+            .diagram-section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📊 Stock Portfolio Platform</h1>
+            <p class="subtitle">Complete Architecture Documentation & Diagrams</p>
+            <p class="diagram-meta">Generated: November 19, 2025 | Theme: Neutral</p>
+        </header>
+        
+        <nav>
+            <h2>Quick Navigation</h2>
+            <ul>
+                <li><a href="#architecture">Architecture</a></li>
+                <li><a href="#package">Package</a></li>
+                <li><a href="#database">Database ER</a></li>
+                <li><a href="#class-models">Class: Models</a></li>
+                <li><a href="#class-services">Class: Services</a></li>
+                <li><a href="#seq-registration">Seq: Registration</a></li>
+                <li><a href="#seq-buy">Seq: Buy Order</a></li>
+                <li><a href="#seq-prediction">Seq: Prediction</a></li>
+            </ul>
+        </nav>
+        
+        <!-- Architecture Diagram -->
+        <div class="diagram-section" id="architecture">
+            <h2>1. System Architecture Diagram</h2>
+            <div class="diagram-meta">Complete system architecture showing all 60 source files and dependencies</div>
+            <div class="diagram-content">
+                <pre class="mermaid">
+%%{init: {'theme':'neutral'}}%%
+graph TD
+    cli_commands[cli_commands]
+    config[config]
+    __init__[__init__]
+    routes.admin[routes.admin]
+    routes.api[routes.api]
+    routes.auth[routes.auth]
+    routes.dashboard[routes.dashboard]
+    routes.orders[routes.orders]
+    routes.portfolio[routes.portfolio]
+    services.auth_service[services.auth_service]
+    services.portfolio_service[services.portfolio_service]
+    services.transaction_engine[services.transaction_engine]
+    services.prediction_service[services.prediction_service]
+    services.stock_repository[services.stock_repository]
+    models.user[models.user]
+    models.company[models.company]
+    models.wallet[models.wallet]
+    models.holding[models.holding]
+    models.order[models.order]
+    models.transaction[models.transaction]
+    
+    routes.auth --> services.auth_service
+    routes.portfolio --> services.portfolio_service
+    routes.orders --> services.transaction_engine
+    routes.dashboard --> services.prediction_service
+    
+    services.auth_service --> models.user
+    services.auth_service --> models.wallet
+    services.portfolio_service --> models.holding
+    services.portfolio_service --> models.wallet
+    services.transaction_engine --> models.order
+    services.transaction_engine --> models.transaction
+    services.transaction_engine --> models.wallet
+    services.transaction_engine --> models.holding
+    services.stock_repository --> models.company
+                </pre>
+            </div>
+            <div class="description">
+                <strong>Key Insights:</strong> Layered architecture with clear separation between routes (presentation), services (business logic), and models (data access).
+            </div>
+        </div>
+        
+        <!-- Package Diagram -->
+        <div class="diagram-section" id="package">
+            <h2>2. Package Diagram</h2>
+            <div class="diagram-meta">High-level package organization</div>
+            <div class="diagram-content">
+                <pre class="mermaid">
+%%{init: {'theme':'neutral'}}%%
+graph TD
+    app[app]
+    app_forms[app/forms]
+    app_jobs[app/jobs]
+    app_models[app/models]
+    app_routes[app/routes]
+    app_services[app/services]
+    app_utils[app/utils]
+    
+    app --> app_forms
+    app --> app_jobs
+    app --> app_models
+    app --> app_routes
+    app --> app_services
+    app --> app_utils
+                </pre>
+            </div>
+            <div class="description">
+                <strong>Structure:</strong> Clean modular organization with forms, jobs, models, routes, services, and utilities.
+            </div>
+        </div>
+        
+        <!-- Database ER Diagram -->
+        <div class="diagram-section" id="database">
+            <h2>3. Database Entity-Relationship Diagram</h2>
+            <div class="diagram-meta">All 13 database tables with relationships</div>
+            <div class="diagram-content">
+                <pre class="mermaid">
+%%{init: {'theme':'neutral'}}%%
+erDiagram
+    User ||--o{ Wallet : has
+    User ||--o{ Holding : owns
+    User ||--o{ Order : places
+    User ||--o{ Transaction : makes
+    User ||--o{ Notification : receives
+    
+    Company ||--o{ Holding : "traded in"
+    Company ||--o{ Order : "ordered for"
+    Company ||--o{ Transaction : "transacted in"
+    Company ||--o{ PriceHistory : "has prices"
+    Company ||--o{ Dividend : "pays"
+    
+    Wallet ||--o{ Transaction : records
+    Order ||--o| Transaction : "results in"
+    
+    User {
+        int user_id PK
+        string username
+        string email
+        string password_hash
+        string role
+    }
+    
+    Company {
+        int company_id PK
+        string symbol
+        string name
+        string sector
+        decimal current_price
+    }
+    
+    Wallet {
+        int wallet_id PK
+        int user_id FK
+        decimal balance
+    }
+    
+    Holding {
+        int holding_id PK
+        int user_id FK
+        int company_id FK
+        int quantity
+        decimal average_price
+    }
+    
+    Order {
+        int order_id PK
+        int user_id FK
+        int company_id FK
+        string order_type
+        int quantity
+        decimal price
+        string status
+    }
+    
+    Transaction {
+        int transaction_id PK
+        int user_id FK
+        int wallet_id FK
+        string transaction_type
+        decimal amount
+    }
+    
+    Dividend {
+        int dividend_id PK
+        int company_id FK
+        decimal amount_per_share
+        date payment_date
+    }
+    
+    Notification {
+        int notification_id PK
+        int user_id FK
+        string type
+        string message
+        boolean is_read
+    }
+    
+    PriceHistory {
+        int price_history_id PK
+        int company_id FK
+        decimal close_price
+        date price_date
+    }
+                </pre>
+            </div>
+            <div class="description">
+                <strong>Key Relationships:</strong> User-centric design with wallet, holdings, orders, and transactions. Company data includes price history and dividends.
+            </div>
+        </div>
+        
+        <!-- Class Diagram - Models -->
+        <div class="diagram-section" id="class-models">
+            <h2>4. Class Diagram - Models Layer</h2>
+            <div class="diagram-meta">Database models with methods and relationships</div>
+            <div class="diagram-content">
+                <pre class="mermaid">
+%%{init: {'theme':'neutral'}}%%
+classDiagram
+    class User {
+        +int user_id
+        +string username
+        +string email
+        +string password_hash
+        +check_password()
+        +set_password()
+        +is_admin()
+    }
+    
+    class Company {
+        +int company_id
+        +string symbol
+        +string name
+        +decimal current_price
+        +update_price()
+        +get_price_history()
+    }
+    
+    class Wallet {
+        +int wallet_id
+        +decimal balance
+        +deposit()
+        +withdraw()
+        +has_sufficient_funds()
+    }
+    
+    class Holding {
+        +int holding_id
+        +int quantity
+        +decimal average_price
+        +add_shares()
+        +calculate_gain_loss()
+    }
+    
+    class Order {
+        +int order_id
+        +string order_type
+        +int quantity
+        +decimal price
+        +string status
+        +execute()
+        +cancel()
+    }
+    
+    class Transaction {
+        +int transaction_id
+        +string transaction_type
+        +decimal amount
+        +record()
+    }
+    
+    User "1" --> "1" Wallet
+    User "1" --> "*" Holding
+    User "1" --> "*" Order
+    Company "1" --> "*" Holding
+    Order "1" --> "0..1" Transaction
+                </pre>
+            </div>
+            <div class="description">
+                <strong>Design Pattern:</strong> Active Record pattern with domain logic in models. Calculated fields for P&L and portfolio value.
+            </div>
+        </div>
+        
+        <!-- Class Diagram - Services -->
+        <div class="diagram-section" id="class-services">
+            <h2>5. Class Diagram - Services Layer</h2>
+            <div class="diagram-meta">Business logic services</div>
+            <div class="diagram-content">
+                <pre class="mermaid">
+%%{init: {'theme':'neutral'}}%%
+classDiagram
+    class AuthService {
+        +register_user()
+        +login_user()
+        +update_profile()
+    }
+    
+    class PortfolioService {
+        +get_portfolio_summary()
+        +get_holdings()
+        +calculate_returns()
+    }
+    
+    class TransactionEngine {
+        +execute_buy_order()
+        +execute_sell_order()
+        +validate_order()
+        +update_wallet()
+    }
+    
+    class PredictionService {
+        +predict_stock_price()
+        +get_arima_prediction()
+        +get_lstm_prediction()
+        +get_sentiment_analysis()
+    }
+    
+    class StockRepository {
+        +get_stock_data()
+        +get_current_price()
+        +update_stock_prices()
+    }
+    
+    AuthService ..> User
+    PortfolioService ..> Holding
+    TransactionEngine ..> Order
+    TransactionEngine ..> Transaction
+    PredictionService ..> StockRepository
+                </pre>
+            </div>
+            <div class="description">
+                <strong>Responsibilities:</strong> Each service has a single, well-defined responsibility. Transaction management ensures atomicity.
+            </div>
+        </div>
+        
+        <!-- Sequence: Registration -->
+        <div class="diagram-section" id="seq-registration">
+            <h2>6. Sequence Diagram - User Registration</h2>
+            <div class="diagram-meta">Complete registration flow with security measures</div>
+            <div class="diagram-content">
+                <pre class="mermaid">
+%%{init: {'theme':'neutral'}}%%
+sequenceDiagram
+    actor User
+    participant Browser
+    participant AuthRoute
+    participant AuthService
+    participant UserModel
+    participant WalletModel
+    participant Database
+    
+    User->>Browser: Fill registration form
+    Browser->>AuthRoute: POST /auth/register
+    AuthRoute->>AuthRoute: Validate CSRF token
+    AuthRoute->>AuthRoute: Validate email & password
+    
+    alt Validation Fails
+        AuthRoute-->>Browser: Show errors
+    else Validation Passes
+        AuthRoute->>AuthService: register_user()
+        AuthService->>UserModel: check if exists
+        UserModel->>Database: SELECT user
+        
+        alt User Exists
+            AuthService-->>AuthRoute: UserExistsError
+        else New User
+            AuthService->>Database: BEGIN TRANSACTION
+            AuthService->>UserModel: create user
+            UserModel->>Database: INSERT user
+            AuthService->>WalletModel: create wallet
+            WalletModel->>Database: INSERT wallet
+            AuthService->>Database: COMMIT
+            AuthRoute->>AuthRoute: Auto-login
+            AuthRoute-->>Browser: Redirect to dashboard
+        end
+    end
+                </pre>
+            </div>
+            <div class="description">
+                <strong>Security:</strong> CSRF protection, password hashing with bcrypt, atomic transaction for user + wallet creation.
+            </div>
+        </div>
+        
+        <!-- Sequence: Buy Order -->
+        <div class="diagram-section" id="seq-buy">
+            <h2>7. Sequence Diagram - Buy Order Execution</h2>
+            <div class="diagram-meta">Stock purchase with transaction management</div>
+            <div class="diagram-content">
+                <pre class="mermaid">
+%%{init: {'theme':'neutral'}}%%
+sequenceDiagram
+    actor User
+    participant Browser
+    participant OrderRoute
+    participant TransactionEngine
+    participant StockRepository
+    participant Wallet
+    participant Holding
+    participant Database
+    
+    User->>Browser: Submit buy order
+    Browser->>OrderRoute: POST /orders/buy
+    OrderRoute->>TransactionEngine: execute_buy_order()
+    
+    TransactionEngine->>StockRepository: get_current_price()
+    StockRepository-->>TransactionEngine: price
+    
+    TransactionEngine->>Wallet: has_sufficient_funds()
+    
+    alt Insufficient Funds
+        TransactionEngine-->>OrderRoute: InsufficientFundsError
+    else Sufficient Funds
+        TransactionEngine->>Database: BEGIN TRANSACTION
+        TransactionEngine->>Wallet: deduct_amount()
+        Wallet->>Database: UPDATE wallet
+        TransactionEngine->>Holding: update_or_create()
+        Holding->>Database: INSERT/UPDATE holding
+        TransactionEngine->>Database: COMMIT
+        TransactionEngine-->>OrderRoute: Success
+        OrderRoute-->>Browser: Order executed
+    end
+                </pre>
+            </div>
+            <div class="description">
+                <strong>Atomicity:</strong> Database transaction ensures wallet deduction and holding update happen together or not at all.
+            </div>
+        </div>
+        
+        <!-- Sequence: Prediction -->
+        <div class="diagram-section" id="seq-prediction">
+            <h2>8. Sequence Diagram - Stock Price Prediction</h2>
+            <div class="diagram-meta">ML prediction pipeline with multiple models</div>
+            <div class="diagram-content">
+                <pre class="mermaid">
+%%{init: {'theme':'neutral'}}%%
+sequenceDiagram
+    actor User
+    participant Browser
+    participant DashboardRoute
+    participant PredictionService
+    participant StockRepository
+    participant ARIMAModel
+    participant LSTMModel
+    participant SentimentEngine
+    participant Database
+    
+    User->>Browser: Request prediction
+    Browser->>DashboardRoute: POST /dashboard/predict
+    DashboardRoute->>PredictionService: predict_stock_price()
+    
+    PredictionService->>StockRepository: get_historical_prices()
+    StockRepository->>Database: Query PriceHistory
+    Database-->>StockRepository: Historical data
+    
+    par Parallel Model Execution
+        PredictionService->>ARIMAModel: predict()
+        ARIMAModel-->>PredictionService: ARIMA forecast
+    and
+        PredictionService->>LSTMModel: predict()
+        LSTMModel-->>PredictionService: LSTM forecast
+    end
+    
+    PredictionService->>SentimentEngine: analyze_sentiment()
+    SentimentEngine-->>PredictionService: Sentiment score
+    
+    PredictionService->>PredictionService: combine_predictions()
+    PredictionService-->>DashboardRoute: Final prediction
+    DashboardRoute-->>Browser: Display chart
+                </pre>
+            </div>
+            <div class="description">
+                <strong>ML Pipeline:</strong> Parallel execution of ARIMA and LSTM models, combined with sentiment analysis for final prediction.
+            </div>
+        </div>
+        
+        <footer>
+            <p><strong>Stock Portfolio Platform</strong> - Architecture Documentation</p>
+            <p>Generated: November 19, 2025 | All diagrams use Mermaid with neutral theme</p>
+            <p>View source: <a href="https://github.com/yourusername/stock-portfolio-platform">GitHub Repository</a></p>
+        </footer>
+    </div>
+    
+    <script>
+        // Initialize Mermaid with neutral theme
+        mermaid.initialize({
+            startOnLoad: true,
+            theme: 'neutral',
+            securityLevel: 'loose',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            },
+            sequence: {
+                diagramMarginX: 50,
+                diagramMarginY: 10,
+                actorMargin: 50,
+                width: 150,
+                height: 65,
+                boxMargin: 10,
+                boxTextMargin: 5,
+                noteMargin: 10,
+                messageMargin: 35
+            }
+        });
+        
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        });
+    </script>
+</body>
+</html>

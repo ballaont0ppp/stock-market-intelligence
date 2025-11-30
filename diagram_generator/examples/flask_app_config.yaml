@@ -1,0 +1,33 @@
+# Flask Application Configuration Example
+# Optimized for Flask web applications
+
+diagram_types:
+  - architecture      # Show application structure
+  - er_diagram        # Database schema
+  - sequence_diagram  # API request flows
+  - use_case          # User interactions
+  - component         # Module dependencies
+
+output_dir: ./docs/architecture
+
+# Exclude common Flask patterns
+exclude:
+  - "**/test_*.py"
+  - "**/tests/**"
+  - "**/migrations/**"
+  - "**/__pycache__/**"
+  - "**/static/**"
+  - "**/templates/**"  # Exclude HTML templates
+  - "**/venv/**"
+  - "**/.pytest_cache/**"
+
+detail_level: normal
+
+# Enable incremental updates for faster regeneration
+incremental: true
+
+# Flask-specific settings
+flask:
+  analyze_blueprints: true
+  include_routes: true
+  trace_request_flows: true

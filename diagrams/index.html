@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Portfolio Platform - System Diagrams</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f9fafb;
+            color: #111827;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+            border-bottom: 4px solid #1e40af;
+        }
+        
+        .header h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+        
+        .header p {
+            font-size: 18px;
+            opacity: 0.95;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #111827;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #2563eb;
+        }
+        
+        .diagram-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+        
+        .diagram-card {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 24px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .diagram-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(37, 99, 235, 0.15);
+            border-color: #2563eb;
+        }
+        
+        .diagram-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: #111827;
+            margin-bottom: 12px;
+        }
+        
+        .diagram-card a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .diagram-card a:hover {
+            color: #1d4ed8;
+        }
+        
+        .diagram-card a::after {
+            content: '→';
+            font-size: 16px;
+            transition: transform 0.2s ease;
+        }
+        
+        .diagram-card:hover a::after {
+            transform: translateX(4px);
+        }
+        
+        .category {
+            display: inline-block;
+            background: #dbeafe;
+            color: #1e40af;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-top: 12px;
+            letter-spacing: 0.5px;
+        }
+        
+        .stats {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            margin-top: 40px;
+            padding: 30px;
+            background: white;
+            border-radius: 8px;
+            border: 2px solid #e5e7eb;
+        }
+        
+        .stat {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #2563eb;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #6b7280;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 40px;
+            color: #6b7280;
+            font-size: 14px;
+            border-top: 2px solid #e5e7eb;
+            margin-top: 60px;
+        }
+        
+        .footer strong {
+            color: #2563eb;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>System Architecture Diagrams</h1>
+        <p>Comprehensive visual documentation of the Stock Portfolio Platform</p>
+    </div>
+    
+    <div class="container">
+        <div class="section">
+            <h2 class="section-title">Architecture Diagrams</h2>
+            <div class="diagram-grid">
+            <div class="diagram-card" onclick="window.location.href='architecture.html'">
+                <h3>Architecture</h3>
+                <a href="architecture.html">View Diagram</a>
+                <span class="category">Architecture</span>
+            </div>
+            <div class="diagram-card" onclick="window.location.href='package.html'">
+                <h3>Package</h3>
+                <a href="package.html">View Diagram</a>
+                <span class="category">Architecture</span>
+            </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Database Diagrams</h2>
+            <div class="diagram-grid">
+            <div class="diagram-card" onclick="window.location.href='database_er_diagram.html'">
+                <h3>Database Er Diagram</h3>
+                <a href="database_er_diagram.html">View Diagram</a>
+                <span class="category">Database</span>
+            </div>
+            <div class="diagram-card" onclick="window.location.href='er_diagram.html'">
+                <h3>Er Diagram</h3>
+                <a href="er_diagram.html">View Diagram</a>
+                <span class="category">Database</span>
+            </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Sequence Diagrams</h2>
+            <div class="diagram-grid">
+            <div class="diagram-card" onclick="window.location.href='sequence_buy_order.html'">
+                <h3>Sequence Buy Order</h3>
+                <a href="sequence_buy_order.html">View Diagram</a>
+                <span class="category">Sequence</span>
+            </div>
+            <div class="diagram-card" onclick="window.location.href='sequence_diagram.html'">
+                <h3>Sequence Diagram</h3>
+                <a href="sequence_diagram.html">View Diagram</a>
+                <span class="category">Sequence</span>
+            </div>
+            <div class="diagram-card" onclick="window.location.href='sequence_prediction.html'">
+                <h3>Sequence Prediction</h3>
+                <a href="sequence_prediction.html">View Diagram</a>
+                <span class="category">Sequence</span>
+            </div>
+            <div class="diagram-card" onclick="window.location.href='sequence_user_registration.html'">
+                <h3>Sequence User Registration</h3>
+                <a href="sequence_user_registration.html">View Diagram</a>
+                <span class="category">Sequence</span>
+            </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Data Flow Diagrams</h2>
+            <div class="diagram-grid">
+            <div class="diagram-card" onclick="window.location.href='dfd_level0.html'">
+                <h3>Dfd Level0</h3>
+                <a href="dfd_level0.html">View Diagram</a>
+                <span class="category">Data Flow</span>
+            </div>
+            <div class="diagram-card" onclick="window.location.href='dfd_level1.html'">
+                <h3>Dfd Level1</h3>
+                <a href="dfd_level1.html">View Diagram</a>
+                <span class="category">Data Flow</span>
+            </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">State Diagrams</h2>
+            <div class="diagram-grid">
+            <div class="diagram-card" onclick="window.location.href='state_chart_diagram.html'">
+                <h3>State Chart Diagram</h3>
+                <a href="state_chart_diagram.html">View Diagram</a>
+                <span class="category">State</span>
+            </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2 class="section-title">Use Case Diagrams</h2>
+            <div class="diagram-grid">
+            <div class="diagram-card" onclick="window.location.href='use_case_diagram.html'">
+                <h3>Use Case Diagram</h3>
+                <a href="use_case_diagram.html">View Diagram</a>
+                <span class="category">Use Case</span>
+            </div>
+            </div>
+        </div>
+
+        
+        <div class="stats">
+            <div class="stat">
+                <span class="stat-number">12</span>
+                <span class="stat-label">Total Diagrams</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">6</span>
+                <span class="stat-label">Categories</span>
+            </div>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <strong>Stock Portfolio Platform</strong> - System Architecture Documentation<br>
+        Generated for professional documentation and printing
+    </div>
+</body>
+</html>

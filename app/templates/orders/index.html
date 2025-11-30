@@ -1,0 +1,215 @@
+{% extends "base.html" %}
+
+{% block title %}Order History{% endblock %}
+
+{% block page_content %}
+<!-- Page Header -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="page-title">Order History</h1>
+        <p class="text-secondary">View and manage your stock orders</p>
+    </div>
+    <div class="d-flex gap-2">
+        <a href="{{ url_for('orders.buy') }}" class="btn btn-success">
+            <i data-lucide="shopping-cart" width="18" height="18"></i>
+            Buy Stocks
+        </a>
+        <a href="{{ url_for('orders.sell') }}" class="btn btn-danger">
+            <i data-lucide="trending-down" width="18" height="18"></i>
+            Sell Stocks
+        </a>
+    </div>
+</div>
+
+<!-- Filter Form -->
+<div class="order-history-filters">
+    <h5 class="mb-3">
+        <i data-lucide="filter" width="20" height="20"></i>
+        Filter Orders
+    </h5>
+    <form method="GET" action="{{ url_for('orders.index') }}">
+        <div class="filter-row">
+            <div class="form-group">
+                {{ filter_form.order_type.label(class="form-label") }}
+                {{ filter_form.order_type(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ filter_form.status.label(class="form-label") }}
+                {{ filter_form.status(class="form-control") }}
+            </div>
+            <div class="form-group">
+                {{ filter_form.symbol.label(class="form-label") }}
+                {{ filter_form.symbol(class="form-control", placeholder="Enter symbol") }}
+            </div>
+            <div class="form-group d-flex align-items-end gap-2">
+                <button type="submit" class="btn btn-primary">
+                    <i data-lucide="search" width="18" height="18"></i>
+                    Filter
+                </button>
+                <a href="{{ url_for('orders.index') }}" class="btn btn-outline-secondary">
+                    <i data-lucide="x" width="18" height="18"></i>
+                    Clear
+                </a>
+            </div>
+        </div>
+    </form>
+</div>
+    
+<!-- Orders Table -->
+<div class="data-table-wrapper">
+    <div class="data-table-header">
+        <h3 class="data-table-title">
+            <i data-lucide="list" width="24" height="24"></i>
+            Orders ({{ total }} total)
+        </h3>
+    </div>
+    
+    {% if orders %}
+    <div class="table-responsive">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Symbol</th>
+                    <th>Type</th>
+                    <th class="text-end">Quantity</th>
+                    <th class="text-end">Price/Share</th>
+                    <th class="text-end">Commission</th>
+                    <th class="text-end">Total</th>
+                    <th>Status</th>
+                    <th class="text-end">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in orders %}
+                <tr>
+                    <td>
+                        <div>{{ order.created_at.strftime('%b %d, %Y') }}</div>
+                        <small class="text-secondary">{{ order.created_at.strftime('%I:%M %p') }}</small>
+                    </td>
+                    <td>
+                        <div><strong>{{ order.company.symbol }}</strong></div>
+                        <small class="text-secondary">{{ order.company.company_name }}</small>
+                    </td>
+                    <td>
+                        {% if order.order_type.value == 'BUY' %}
+                        <span class="badge bg-success">
+                            <i data-lucide="arrow-down-circle" width="14" height="14"></i>
+                            BUY
+                        </span>
+                        {% else %}
+                        <span class="badge bg-danger">
+                            <i data-lucide="arrow-up-circle" width="14" height="14"></i>
+                            SELL
+                        </span>
+                        {% endif %}
+                    </td>
+                    <td class="text-end">{{ order.quantity }}</td>
+                    <td class="text-end">${{ "{:,.2f}".format(order.price_per_share) }}</td>
+                    <td class="text-end">${{ "{:,.2f}".format(order.commission_fee) }}</td>
+                    <td class="text-end">
+                        <strong>${{ "{:,.2f}".format(order.total_amount) }}</strong>
+                        {% if order.order_type.value == 'SELL' and order.realized_gain_loss %}
+                        <br>
+                        <small class="{{ 'text-success' if order.realized_gain_loss > 0 else 'text-danger' }}">
+                            {{ "{:+,.2f}".format(order.realized_gain_loss) }}
+                        </small>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if order.order_status.value == 'COMPLETED' %}
+                        <span class="badge bg-success">
+                            <i data-lucide="check-circle" width="14" height="14"></i>
+                            Completed
+                        </span>
+                        {% elif order.order_status.value == 'PENDING' %}
+                        <span class="badge bg-warning">
+                            <i data-lucide="clock" width="14" height="14"></i>
+                            Pending
+                        </span>
+                        {% elif order.order_status.value == 'FAILED' %}
+                        <span class="badge bg-danger">
+                            <i data-lucide="x-circle" width="14" height="14"></i>
+                            Failed
+                        </span>
+                        {% else %}
+                        <span class="badge bg-secondary">{{ order.order_status.value }}</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-end">
+                        <a href="{{ url_for('orders.view_order', order_id=order.order_id) }}" 
+                           class="btn btn-sm btn-outline-primary">
+                            <i data-lucide="eye" width="14" height="14"></i>
+                            View
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    
+    <!-- Pagination -->
+    {% if total_pages > 1 %}
+    <div class="d-flex justify-content-center mt-4">
+        <nav aria-label="Order history pagination">
+            <ul class="pagination">
+                <li class="page-item {{ 'disabled' if page == 1 else '' }}">
+                    <a class="page-link" href="{{ url_for('orders.index', page=page-1, **request.args) }}">
+                        <i data-lucide="chevron-left" width="16" height="16"></i>
+                        Previous
+                    </a>
+                </li>
+                
+                {% for p in range(1, total_pages + 1) %}
+                {% if p == page %}
+                <li class="page-item active">
+                    <span class="page-link">{{ p }}</span>
+                </li>
+                {% elif p <= 3 or p > total_pages - 3 or (p >= page - 1 and p <= page + 1) %}
+                <li class="page-item">
+                    <a class="page-link" href="{{ url_for('orders.index', page=p, **request.args) }}">{{ p }}</a>
+                </li>
+                {% elif p == 4 or p == total_pages - 3 %}
+                <li class="page-item disabled">
+                    <span class="page-link">...</span>
+                </li>
+                {% endif %}
+                {% endfor %}
+                
+                <li class="page-item {{ 'disabled' if page == total_pages else '' }}">
+                    <a class="page-link" href="{{ url_for('orders.index', page=page+1, **request.args) }}">
+                        Next
+                        <i data-lucide="chevron-right" width="16" height="16"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+    
+    {% else %}
+    <div class="empty-state">
+        <div class="empty-state-icon">📋</div>
+        <div class="empty-state-title">No Orders Found</div>
+        <div class="empty-state-description">
+            {% if request.args %}
+            No orders match your filter criteria. Try adjusting your filters.
+            {% else %}
+            You haven't placed any orders yet. Start trading to see your order history here.
+            {% endif %}
+        </div>
+        <a href="{{ url_for('orders.buy') }}" class="btn btn-primary mt-3">
+            <i data-lucide="plus" width="18" height="18"></i>
+            Place Your First Order
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        lucide.createIcons();
+    });
+</script>
+{% endblock %}

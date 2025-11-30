@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block title %}Sell Stocks - Stock Portfolio Platform{% endblock %}
+
+{% block page_content %}
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h4 class="mb-0"><i class="bi bi-cart-dash"></i> Sell Stocks</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{{ url_for('orders.sell') }}" id="sellOrderForm">
+                        {{ form.hidden_tag() }}
+                        
+                        <div class="mb-3">
+                            {{ form.symbol.label(class="form-label") }}
+                            {{ form.symbol(class="form-control stock-symbol-input") }}
+                            {% if form.symbol.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.symbol.errors %}
+                                {{ error }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <small class="form-text text-muted">Enter the stock symbol you want to sell</small>
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form.quantity.label(class="form-label") }}
+                            {{ form.quantity(class="form-control", id="quantity") }}
+                            {% if form.quantity.errors %}
+                            <div class="invalid-feedback d-block">
+                                {% for error in form.quantity.errors %}
+                                {{ error }}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            <small class="form-text text-muted">Number of shares to sell</small>
+                        </div>
+                        
+                        <!-- Price Preview -->
+                        <div id="pricePreview" class="alert alert-info d-none">
+                            <h5>Order Preview</h5>
+                            <div class="row">
+                                <div class="col-6">
+                                    <p class="mb-1"><strong>Symbol:</strong> <span id="previewSymbol">-</span></p>
+                                    <p class="mb-1"><strong>Price per share:</strong> $<span id="previewPrice">0.00</span></p>
+                                    <p class="mb-1"><strong>Quantity:</strong> <span id="previewQuantity">0</span></p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="mb-1"><strong>Gross proceeds:</strong> $<span id="previewGross">0.00</span></p>
+                                    <p class="mb-1"><strong>Commission (0.1%):</strong> $<span id="previewCommission">0.00</span></p>
+                                    <p class="mb-1"><strong class="text-success">Net Proceeds:</strong> <strong class="text-success">$<span id="previewNet">0.00</span></strong></p>
+                                </div>
+                            </div>
+                            <div id="pricePreviewError" class="alert alert-danger mt-2 d-none"></div>
+                        </div>
+                        
+                        <div class="d-grid gap-2">
+                            {{ form.submit(class="btn btn-danger btn-lg") }}
+                            <a href="{{ url_for('orders.index') }}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Current Holdings Info -->
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h5 class="card-title">Your Holdings</h5>
+                    {% if current_user.holdings %}
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                                <tr>
+                                    <th>Symbol</th>
+                                    <th>Quantity</th>
+                                    <th>Avg Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for holding in current_user.holdings %}
+                                <tr>
+                                    <td><strong>{{ holding.company.symbol }}</strong></td>
+                                    <td>{{ holding.quantity }}</td>
+                                    <td>${{ "%.2f"|format(holding.average_purchase_price) }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-muted mb-0">You don't own any stocks yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Real-time price preview
+let pricePreviewTimeout;
+
+function updatePricePreview() {
+    const symbol = document.getElementById('symbol').value.trim().toUpperCase();
+    const quantity = parseInt(document.getElementById('quantity').value) || 0;
+    
+    if (!symbol || quantity <= 0) {
+        document.getElementById('pricePreview').classList.add('d-none');
+        return;
+    }
+    
+    // Show loading state
+    document.getElementById('pricePreview').classList.remove('d-none');
+    document.getElementById('pricePreviewError').classList.add('d-none');
+    
+    // Fetch price preview
+    fetch(`{{ url_for('orders.price_preview') }}?symbol=${symbol}&quantity=${quantity}&type=SELL`)
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                document.getElementById('pricePreviewError').textContent = data.error;
+                document.getElementById('pricePreviewError').classList.remove('d-none');
+            } else {
+                document.getElementById('previewSymbol').textContent = data.symbol;
+                document.getElementById('previewPrice').textContent = data.price_per_share.toFixed(2);
+                document.getElementById('previewQuantity').textContent = data.quantity;
+                document.getElementById('previewGross').textContent = data.gross_proceeds.toFixed(2);
+                document.getElementById('previewCommission').textContent = data.commission.toFixed(2);
+                document.getElementById('previewNet').textContent = data.net_proceeds.toFixed(2);
+            }
+        })
+        .catch(error => {
+            document.getElementById('pricePreviewError').textContent = 'Failed to fetch price preview';
+            document.getElementById('pricePreviewError').classList.remove('d-none');
+        });
+}
+
+// Debounced price preview update
+function debouncedPricePreview() {
+    clearTimeout(pricePreviewTimeout);
+    pricePreviewTimeout = setTimeout(updatePricePreview, 500);
+}
+
+// Attach event listeners
+document.getElementById('symbol').addEventListener('input', debouncedPricePreview);
+document.getElementById('quantity').addEventListener('input', debouncedPricePreview);
+</script>
+{% endblock %}

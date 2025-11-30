@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}Wallet Management{% endblock %}
+
+{% block page_content %}
+<div class="row mb-4">
+    <div class="col">
+        <h1>Wallet Management</h1>
+    </div>
+    <div class="col-auto">
+        <a href="{{ url_for('portfolio.index') }}" class="btn btn-secondary">Back to Portfolio</a>
+    </div>
+</div>
+
+<!-- Current Balance -->
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card bg-primary text-white">
+            <div class="card-body text-center">
+                <h6 class="card-subtitle mb-2">Current Balance</h6>
+                <h1 class="display-4">${{ "%.2f"|format(balance) }}</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Deposit and Withdrawal Forms -->
+<div class="row">
+    <!-- Deposit Form -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">Deposit Funds</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('portfolio.wallet') }}">
+                    {{ deposit_form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        {{ deposit_form.amount.label(class="form-label") }}
+                        {{ deposit_form.amount(class="form-control" + (" is-invalid" if deposit_form.amount.errors else ""), placeholder="0.00") }}
+                        {% if deposit_form.amount.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in deposit_form.amount.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ deposit_form.description.label(class="form-label") }}
+                        {{ deposit_form.description(class="form-control", rows="3", placeholder="Optional description") }}
+                    </div>
+                    
+                    {{ deposit_form.submit(class="btn btn-success w-100", name="deposit") }}
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Withdrawal Form -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-danger text-white">
+                <h5 class="mb-0">Withdraw Funds</h5>
+            </div>
+            <div class="card-body">
+                <form method="POST" action="{{ url_for('portfolio.wallet') }}">
+                    {{ withdraw_form.hidden_tag() }}
+                    
+                    <div class="mb-3">
+                        {{ withdraw_form.amount.label(class="form-label") }}
+                        {{ withdraw_form.amount(class="form-control" + (" is-invalid" if withdraw_form.amount.errors else ""), placeholder="0.00") }}
+                        {% if withdraw_form.amount.errors %}
+                            <div class="invalid-feedback">
+                                {% for error in withdraw_form.amount.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                        <small class="form-text text-muted">Available: ${{ "%.2f"|format(balance) }}</small>
+                    </div>
+                    
+                    <div class="mb-3">
+                        {{ withdraw_form.description.label(class="form-label") }}
+                        {{ withdraw_form.description(class="form-control", rows="3", placeholder="Optional description") }}
+                    </div>
+                    
+                    {{ withdraw_form.submit(class="btn btn-danger w-100", name="withdraw") }}
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Information -->
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Wallet Information</h5>
+                <ul>
+                    <li>Deposits are instant and can be used immediately for trading</li>
+                    <li>Withdrawals are processed instantly</li>
+                    <li>All transactions are recorded in your transaction history</li>
+                    <li>Minimum deposit/withdrawal amount: $0.01</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

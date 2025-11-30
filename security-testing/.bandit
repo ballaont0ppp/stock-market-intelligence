@@ -1,0 +1,27 @@
+# Bandit Configuration File
+
+[bandit]
+exclude_dirs = [
+    '/venv/',
+    '/stock_market_venv/',
+    '/node_modules/',
+    '/__pycache__/',
+    '/migrations/',
+    '/.git/',
+    '/htmlcov/',
+    '/testing-suite/',
+    '/performance-testing/',
+    '/security-testing/'
+]
+
+# Test IDs to skip
+skips = []
+
+# Test IDs to run (empty means run all)
+tests = []
+
+# Severity level: low, medium, high
+severity = low
+
+# Confidence level: low, medium, high
+confidence = low

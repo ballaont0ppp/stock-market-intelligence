@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Portfolio{% endblock %} | Stock Portfolio Platform</title>
+    
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/design-system.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pages.css') }}">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="{% if not current_user.is_authenticated %}auth-page{% endif %}">
+    {% if current_user.is_authenticated %}
+    <!-- Sidebar Overlay for Mobile -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    
+    <!-- App Wrapper -->
+    <div class="app-wrapper">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <!-- Sidebar Header -->
+            <div class="sidebar-header">
+                <a href="{{ url_for('dashboard.index') }}" class="sidebar-logo">
+                    <div class="sidebar-logo-icon">📈</div>
+                    <span>Portfolio</span>
+                </a>
+            </div>
+            
+            <!-- Sidebar Navigation -->
+            <nav class="sidebar-nav">
+                <div class="sidebar-nav-section">
+                    <div class="sidebar-nav-title">Main</div>
+                    <a href="{{ url_for('dashboard.index') }}" class="sidebar-nav-item {% if request.endpoint == 'dashboard.index' %}active{% endif %}">
+                        <i data-lucide="layout-dashboard" class="sidebar-nav-icon"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="{{ url_for('portfolio.index') }}" class="sidebar-nav-item {% if request.endpoint and request.endpoint.startswith('portfolio.') %}active{% endif %}">
+                        <i data-lucide="briefcase" class="sidebar-nav-icon"></i>
+                        <span>Portfolio</span>
+                    </a>
+                    <a href="{{ url_for('orders.index') }}" class="sidebar-nav-item {% if request.endpoint and request.endpoint.startswith('orders.') %}active{% endif %}">
+                        <i data-lucide="shopping-cart" class="sidebar-nav-icon"></i>
+                        <span>Orders</span>
+                    </a>
+                    <a href="{{ url_for('reports.index') }}" class="sidebar-nav-item {% if request.endpoint and request.endpoint.startswith('reports.') %}active{% endif %}">
+                        <i data-lucide="file-text" class="sidebar-nav-icon"></i>
+                        <span>Reports</span>
+                    </a>
+                    <a href="{{ url_for('notifications.index') }}" class="sidebar-nav-item {% if request.endpoint and request.endpoint.startswith('notifications.') %}active{% endif %}">
+                        <i data-lucide="bell" class="sidebar-nav-icon"></i>
+                        <span>Notifications</span>
+                    </a>
+                </div>
+                
+                {% if current_user.is_admin %}
+                <div class="sidebar-nav-section">
+                    <div class="sidebar-nav-title">Administration</div>
+                    <a href="{{ url_for('admin.index') }}" class="sidebar-nav-item {% if request.endpoint == 'admin.index' %}active{% endif %}">
+                        <i data-lucide="gauge" class="sidebar-nav-icon"></i>
+                        <span>Admin Dashboard</span>
+                    </a>
+                    <a href="{{ url_for('admin.users') }}" class="sidebar-nav-item {% if request.endpoint == 'admin.users' or request.endpoint == 'admin.view_user' or request.endpoint == 'admin.edit_user' %}active{% endif %}">
+                        <i data-lucide="users" class="sidebar-nav-icon"></i>
+                        <span>Users</span>
+                    </a>
+                    <a href="{{ url_for('admin.companies') }}" class="sidebar-nav-item {% if request.endpoint and 'companies' in request.endpoint %}active{% endif %}">
+                        <i data-lucide="building-2" class="sidebar-nav-icon"></i>
+                        <span>Companies</span>
+                    </a>
+                    <a href="{{ url_for('admin.brokers') }}" class="sidebar-nav-item {% if request.endpoint and 'brokers' in request.endpoint %}active{% endif %}">
+                        <i data-lucide="user-check" class="sidebar-nav-icon"></i>
+                        <span>Brokers</span>
+                    </a>
+                    <a href="{{ url_for('admin.dividends') }}" class="sidebar-nav-item {% if request.endpoint and 'dividends' in request.endpoint %}active{% endif %}">
+                        <i data-lucide="dollar-sign" class="sidebar-nav-icon"></i>
+                        <span>Dividends</span>
+                    </a>
+                    <a href="{{ url_for('admin.monitoring') }}" class="sidebar-nav-item {% if request.endpoint == 'admin.monitoring' %}active{% endif %}">
+                        <i data-lucide="activity" class="sidebar-nav-icon"></i>
+                        <span>Monitoring</span>
+                    </a>
+                </div>
+                {% endif %}
+            </nav>
+            
+            <!-- Sidebar Footer -->
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <div class="sidebar-user-avatar">
+                        {{ current_user.full_name[0] if current_user.full_name else current_user.email[0] }}
+                    </div>
+                    <div class="sidebar-user-info">
+                        <div class="sidebar-user-name">{{ current_user.full_name or current_user.email }}</div>
+                        <div class="sidebar-user-role">{{ 'Admin' if current_user.is_admin else 'User' }}</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Bar -->
+            <header class="topbar">
+                <div class="topbar-left">
+                    <button class="topbar-menu-toggle" id="menuToggle">
+                        <i data-lucide="menu" width="24" height="24"></i>
+                    </button>
+                    <div class="topbar-search">
+                        <i data-lucide="search" class="topbar-search-icon"></i>
+                        <input type="text" class="form-control" placeholder="Search stocks..." id="topbarSearch">
+                    </div>
+                </div>
+                <div class="topbar-right">
+                    <button class="topbar-notification" id="notificationButton">
+                        <i data-lucide="bell" width="20" height="20"></i>
+                        <span class="topbar-notification-badge" id="notification-badge" style="display: none;">0</span>
+                    </button>
+                    <a href="{{ url_for('auth.profile') }}" class="btn btn-ghost btn-sm">
+                        <i data-lucide="user" width="20" height="20"></i>
+                    </a>
+                    <a href="{{ url_for('auth.logout') }}" class="btn btn-ghost btn-sm">
+                        <i data-lucide="log-out" width="20" height="20"></i>
+                    </a>
+                </div>
+            </header>
+            
+            <!-- Flash Messages -->
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="page-content">
+                        {% for category, message in messages %}
+                            <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show flash-message" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+            
+            <!-- Page Content -->
+            <div class="page-content">
+                {% block page_content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <!-- Public Layout (Not Authenticated) -->
+    <div class="auth-wrapper">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div style="position: fixed; top: 1rem; right: 1rem; z-index: 9999; max-width: 400px;">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show flash-message" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+        
+        {% block auth_content %}{% endblock %}
+    </div>
+    {% endif %}
+
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Chart.js for data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    
+    <!-- Stock Autocomplete -->
+    <script src="{{ url_for('static', filename='js/stock-autocomplete.js') }}"></script>
+    
+    <!-- Main Application JS -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
+    <!-- Initialize Lucide Icons -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+        });
+    </script>
+    
+    {% if current_user.is_authenticated %}
+    <!-- Sidebar and UI Interactions -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const menuToggle = document.getElementById('menuToggle');
+            const sidebar = document.getElementById('sidebar');
+            const sidebarOverlay = document.getElementById('sidebarOverlay');
+            
+            if (menuToggle) {
+                menuToggle.addEventListener('click', function() {
+                    sidebar.classList.toggle('open');
+                    sidebarOverlay.classList.toggle('open');
+                });
+            }
+            
+            if (sidebarOverlay) {
+                sidebarOverlay.addEventListener('click', function() {
+                    sidebar.classList.remove('open');
+                    sidebarOverlay.classList.remove('open');
+                });
+            }
+            
+            // Auto-dismiss flash messages after 5 seconds
+            const flashMessages = document.querySelectorAll('.flash-message');
+            flashMessages.forEach(function(message) {
+                setTimeout(function() {
+                    const bsAlert = new bootstrap.Alert(message);
+                    bsAlert.close();
+                }, 5000);
+            });
+            
+            // Load notifications
+            loadNotifications();
+            
+            // Reload notifications every 60 seconds
+            setInterval(loadNotifications, 60000);
+        });
+        
+        function loadNotifications() {
+            fetch('/api/notifications?limit=10')
+                .then(response => response.json())
+                .then(data => {
+                    updateNotificationBadge(data.unread_count);
+                })
+                .catch(error => {
+                    console.error('Error loading notifications:', error);
+                });
+        }
+        
+        function updateNotificationBadge(count) {
+            const badge = document.getElementById('notification-badge');
+            if (badge) {
+                if (count > 0) {
+                    badge.textContent = count > 99 ? '99+' : count;
+                    badge.style.display = 'inline-block';
+                } else {
+                    badge.style.display = 'none';
+                }
+            }
+        }
+    </script>
+    {% else %}
+    <!-- Auto-dismiss flash messages for public pages -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const flashMessages = document.querySelectorAll('.flash-message');
+            flashMessages.forEach(function(message) {
+                setTimeout(function() {
+                    const bsAlert = new bootstrap.Alert(message);
+                    bsAlert.close();
+                }, 5000);
+            });
+        });
+    </script>
+    {% endif %}
+    
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

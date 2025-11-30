@@ -10,7 +10,7 @@ Install Git GUI
 
 Guide - https://git-scm.com/downloads/guis/
 
-Project Overview - https://github.com/kaushikjadhav01/Stock-Market-Prediction-Web-App-using-Machine-Learning-And-Sentiment-Analysis/blob/main/README.md
+Project Overview - See README.md for project details
 
 **Types of code changes and contributions we accept**
 

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Market Prediction Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e9f7ef;
+            border-radius: 5px;
+        }
+        .stock-data {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .data-card {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .data-card h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+        }
+        .data-card p {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📈 Stock Market Prediction Demo</h1>
+        
+        <form method="POST" action="/predict">
+            <div class="form-group">
+                <label for="symbol">Enter Stock Symbol:</label>
+                <input type="text" id="symbol" name="symbol" placeholder="e.g., AAPL, GOOGL, MSFT" value="{{ symbol or '' }}">
+            </div>
+            <button type="submit">Predict the Future</button>
+        </form>
+        
+        {% if symbol %}
+        <div class="results">
+            <h2>🔮 Prediction Results for {{ symbol }}</h2>
+            
+            <div class="stock-data">
+                <div class="data-card">
+                    <h3>Open</h3>
+                    <p>{{ open_s }}</p>
+                </div>
+                <div class="data-card">
+                    <h3>High</h3>
+                    <p>{{ high_s }}</p>
+                </div>
+                <div class="data-card">
+                    <h3>Low</h3>
+                    <p>{{ low_s }}</p>
+                </div>
+                <div class="data-card">
+                    <h3>Close</h3>
+                    <p>{{ close_s }}</p>
+                </div>
+                <div class="data-card">
+                    <h3>Volume</h3>
+                    <p>{{ vol }}</p>
+                </div>
+                <div class="data-card">
+                    <h3>Sentiment</h3>
+                    <p>{{ tw_pol }}</p>
+                </div>
+            </div>
+            
+            <h3>🤖 Machine Learning Predictions</h3>
+            <div class="stock-data">
+                <div class="data-card">
+                    <h3>ARIMA</h3>
+                    <p>${{ arima_pred }}</p>
+                    <small>RMSE: {{ error_arima }}</small>
+                </div>
+                <div class="data-card">
+                    <h3>LSTM</h3>
+                    <p>${{ lstm_pred }}</p>
+                    <small>RMSE: {{ error_lstm }}</small>
+                </div>
+                <div class="data-card">
+                    <h3>Linear Regression</h3>
+                    <p>${{ lr_pred }}</p>
+                    <small>RMSE: {{ error_lr }}</small>
+                </div>
+            </div>
+            
+            <h3>💡 Investment Recommendation</h3>
+            <div class="data-card">
+                <h3>{{ idea }} → {{ decision }}</h3>
+                <p>Based on ML predictions and sentiment analysis</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

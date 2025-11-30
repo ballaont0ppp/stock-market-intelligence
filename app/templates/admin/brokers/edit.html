@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Edit Broker{% endblock %}
+{% block page_title %}Edit Broker - {{ broker.broker_name }}{% endblock %}
+{% block page_content %}
+<div class="container-fluid">
+    <h2 class="mb-4">Edit Broker: {{ broker.broker_name }}</h2>
+    <div class="card">
+        <div class="card-body">
+            <form method="POST">
+                <div class="mb-3">
+                    <label class="form-label">Broker Name</label>
+                    <input type="text" class="form-control" name="broker_name" value="{{ broker.broker_name }}" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">License Number</label>
+                    <input type="text" class="form-control" name="license_number" value="{{ broker.license_number or '' }}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Phone</label>
+                    <input type="tel" class="form-control" name="phone" value="{{ broker.phone or '' }}">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" class="form-control" name="email" value="{{ broker.email }}">
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+                <a href="{{ url_for('admin.brokers') }}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,10 @@
+# Minimal Configuration Example
+# Generate only essential diagrams
+
+diagram_types:
+  - architecture
+  - er_diagram
+
+output_dir: ./diagrams
+
+detail_level: minimal
