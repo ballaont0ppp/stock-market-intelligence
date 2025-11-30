@@ -1,6 +1,7 @@
 """
 Authentication Forms
 WTForms for user authentication and profile management
+Mobile-optimized with proper input types for mobile keyboards
 """
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, TextAreaField, SelectField, SelectMultipleField
@@ -15,22 +16,40 @@ class RegistrationForm(FlaskForm):
         DataRequired(message='Email is required'),
         Email(message='Invalid email address'),
         Length(max=255, message='Email must be less than 255 characters')
-    ])
+    ], render_kw={
+        'type': 'email',
+        'class': 'form-control',
+        'placeholder': 'your@email.com',
+        'autocomplete': 'email',
+        'inputmode': 'email'
+    })
     
     password = PasswordField('Password', validators=[
         DataRequired(message='Password is required'),
         Length(min=8, max=128, message='Password must be between 8 and 128 characters')
-    ])
+    ], render_kw={
+        'class': 'form-control',
+        'placeholder': 'At least 8 characters',
+        'autocomplete': 'new-password'
+    })
     
     confirm_password = PasswordField('Confirm Password', validators=[
         DataRequired(message='Please confirm your password'),
         EqualTo('password', message='Passwords must match')
-    ])
+    ], render_kw={
+        'class': 'form-control',
+        'placeholder': 'Confirm your password',
+        'autocomplete': 'new-password'
+    })
     
     full_name = StringField('Full Name', validators=[
         DataRequired(message='Full name is required'),
         Length(min=2, max=255, message='Full name must be between 2 and 255 characters')
-    ])
+    ], render_kw={
+        'class': 'form-control',
+        'placeholder': 'Your full name',
+        'autocomplete': 'name'
+    })
     
     def validate_email(self, field):
         """Check if email is already registered"""
@@ -60,13 +79,25 @@ class LoginForm(FlaskForm):
     email = StringField('Email', validators=[
         DataRequired(message='Email is required'),
         Email(message='Invalid email address')
-    ])
+    ], render_kw={
+        'type': 'email',
+        'class': 'form-control',
+        'placeholder': 'your@email.com',
+        'autocomplete': 'email',
+        'inputmode': 'email'
+    })
     
     password = PasswordField('Password', validators=[
         DataRequired(message='Password is required')
-    ])
+    ], render_kw={
+        'class': 'form-control',
+        'placeholder': 'Your password',
+        'autocomplete': 'current-password'
+    })
     
-    remember_me = BooleanField('Remember Me')
+    remember_me = BooleanField('Remember Me', render_kw={
+        'class': 'form-check-input'
+    })
 
 
 class ProfileForm(FlaskForm):
@@ -75,7 +106,11 @@ class ProfileForm(FlaskForm):
     full_name = StringField('Full Name', validators=[
         DataRequired(message='Full name is required'),
         Length(min=2, max=255, message='Full name must be between 2 and 255 characters')
-    ])
+    ], render_kw={
+        'class': 'form-control',
+        'placeholder': 'Your full name',
+        'autocomplete': 'name'
+    })
     
     risk_tolerance = SelectField('Risk Tolerance', 
         choices=[
@@ -83,13 +118,20 @@ class ProfileForm(FlaskForm):
             ('moderate', 'Moderate'),
             ('aggressive', 'Aggressive')
         ],
-        validators=[DataRequired(message='Please select your risk tolerance')]
+        validators=[DataRequired(message='Please select your risk tolerance')],
+        render_kw={
+            'class': 'form-select'
+        }
     )
     
     investment_goals = TextAreaField('Investment Goals', validators=[
         Optional(),
         Length(max=1000, message='Investment goals must be less than 1000 characters')
-    ])
+    ], render_kw={
+        'class': 'form-control',
+        'placeholder': 'Describe your investment goals',
+        'rows': '4'
+    })
     
     preferred_sectors = SelectMultipleField('Preferred Sectors',
         choices=[
@@ -102,13 +144,30 @@ class ProfileForm(FlaskForm):
             ('Real Estate', 'Real Estate'),
             ('Utilities', 'Utilities')
         ],
-        validators=[Optional()]
+        validators=[Optional()],
+        render_kw={
+            'class': 'form-select'
+        }
     )
     
     # Notification preferences
-    notify_dividends = BooleanField('Notify me about dividend payments')
-    notify_price_changes = BooleanField('Notify me about significant price movements (>5%)')
-    notify_weekly_summary = BooleanField('Send weekly portfolio summary')
+    notify_dividends = BooleanField('Notify me about dividend payments', render_kw={
+        'class': 'form-check-input'
+    })
+    notify_price_changes = BooleanField('Notify me about significant price movements (>5%)', render_kw={
+        'class': 'form-check-input'
+    })
+    notify_weekly_summary = BooleanField('Send weekly portfolio summary', render_kw={
+        'class': 'form-check-input'
+    })
+
+
+class NotificationPreferencesForm(FlaskForm):
+    """Notification preferences form"""
+    
+    email_notifications = BooleanField('Email Notifications')
+    dividend_alerts = BooleanField('Dividend Alerts')
+    price_alerts = BooleanField('Price Alerts')
 
 
 class PasswordChangeForm(FlaskForm):
@@ -116,17 +175,29 @@ class PasswordChangeForm(FlaskForm):
     
     current_password = PasswordField('Current Password', validators=[
         DataRequired(message='Current password is required')
-    ])
+    ], render_kw={
+        'class': 'form-control',
+        'placeholder': 'Your current password',
+        'autocomplete': 'current-password'
+    })
     
     new_password = PasswordField('New Password', validators=[
         DataRequired(message='New password is required'),
         Length(min=8, max=128, message='Password must be between 8 and 128 characters')
-    ])
+    ], render_kw={
+        'class': 'form-control',
+        'placeholder': 'At least 8 characters',
+        'autocomplete': 'new-password'
+    })
     
     confirm_new_password = PasswordField('Confirm New Password', validators=[
         DataRequired(message='Please confirm your new password'),
         EqualTo('new_password', message='Passwords must match')
-    ])
+    ], render_kw={
+        'class': 'form-control',
+        'placeholder': 'Confirm your new password',
+        'autocomplete': 'new-password'
+    })
     
     def validate_new_password(self, field):
         """Validate new password strength"""

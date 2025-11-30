@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offline | Stock Portfolio Platform</title>
+    
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/design-system.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
+    
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .offline-container {
+            text-align: center;
+            background: white;
+            border-radius: 12px;
+            padding: 3rem 2rem;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .offline-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            color: #667eea;
+        }
+
+        .offline-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 0.5rem;
+        }
+
+        .offline-subtitle {
+            font-size: 1rem;
+            color: #6b7280;
+            margin-bottom: 1.5rem;
+        }
+
+        .offline-message {
+            font-size: 0.95rem;
+            color: #6b7280;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .offline-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .offline-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .offline-btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .offline-btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+        }
+
+        .offline-btn-secondary {
+            background: #e5e7eb;
+            color: #1f2937;
+        }
+
+        .offline-btn-secondary:hover {
+            background: #d1d5db;
+            transform: translateY(-2px);
+        }
+
+        .offline-features {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e5e7eb;
+            text-align: left;
+        }
+
+        .offline-features-title {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #6b7280;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .offline-feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-bottom: 0.75rem;
+        }
+
+        .offline-feature-icon {
+            width: 20px;
+            height: 20px;
+            color: #667eea;
+            flex-shrink: 0;
+        }
+
+        .offline-status {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            border-radius: 4px;
+            text-align: left;
+        }
+
+        .offline-status-title {
+            font-weight: 600;
+            color: #92400e;
+            font-size: 0.9rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .offline-status-message {
+            font-size: 0.85rem;
+            color: #b45309;
+        }
+
+        @media (max-width: 576px) {
+            .offline-container {
+                padding: 2rem 1.5rem;
+                margin: 1rem;
+            }
+
+            .offline-title {
+                font-size: 1.5rem;
+            }
+
+            .offline-actions {
+                flex-direction: column;
+            }
+
+            .offline-btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <!-- Offline Icon -->
+        <div class="offline-icon">
+            <i data-lucide="wifi-off" width="80" height="80"></i>
+        </div>
+
+        <!-- Title and Subtitle -->
+        <h1 class="offline-title">You're Offline</h1>
+        <p class="offline-subtitle">No internet connection detected</p>
+
+        <!-- Message -->
+        <p class="offline-message">
+            You can still view your cached portfolio data and navigate the app. Some features that require internet will be unavailable.
+        </p>
+
+        <!-- Actions -->
+        <div class="offline-actions">
+            <button class="offline-btn offline-btn-primary" onclick="location.reload()">
+                Try Again
+            </button>
+            <button class="offline-btn offline-btn-secondary" onclick="goToDashboard()">
+                View Dashboard
+            </button>
+        </div>
+
+        <!-- Available Features -->
+        <div class="offline-features">
+            <div class="offline-features-title">Available Offline</div>
+            <div class="offline-feature-item">
+                <i class="offline-feature-icon" data-lucide="check-circle"></i>
+                <span>View cached portfolio data</span>
+            </div>
+            <div class="offline-feature-item">
+                <i class="offline-feature-icon" data-lucide="check-circle"></i>
+                <span>Navigate the app</span>
+            </div>
+            <div class="offline-feature-item">
+                <i class="offline-feature-icon" data-lucide="check-circle"></i>
+                <span>View transaction history</span>
+            </div>
+            <div class="offline-feature-item">
+                <i class="offline-feature-icon" data-lucide="alert-circle"></i>
+                <span>Real-time data unavailable</span>
+            </div>
+        </div>
+
+        <!-- Status -->
+        <div class="offline-status">
+            <div class="offline-status-title">Connection Status</div>
+            <div class="offline-status-message">
+                Waiting for internet connection to restore...
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Initialize Lucide Icons -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            lucide.createIcons();
+        });
+    </script>
+
+    <!-- Offline Page Script -->
+    <script>
+        /**
+         * Navigate to dashboard
+         */
+        function goToDashboard() {
+            window.location.href = '/dashboard';
+        }
+
+        /**
+         * Monitor connection status
+         */
+        window.addEventListener('online', function() {
+            console.log('[Offline Page] Connection restored');
+            // Reload page when connection is restored
+            location.reload();
+        });
+
+        window.addEventListener('offline', function() {
+            console.log('[Offline Page] Connection lost');
+        });
+
+        // Check initial connection status
+        if (navigator.onLine) {
+            console.log('[Offline Page] Online');
+        } else {
+            console.log('[Offline Page] Offline');
+        }
+    </script>
+</body>
+</html>

@@ -1,6 +1,7 @@
 """
 Dividend Forms
 Forms for dividend management
+Mobile-optimized with proper input types for mobile keyboards and date pickers
 """
 from flask_wtf import FlaskForm
 from wtforms import StringField, DecimalField, DateField, SelectField, SubmitField
@@ -14,7 +15,12 @@ class DividendForm(FlaskForm):
     company_symbol = StringField(
         'Company Symbol',
         validators=[DataRequired()],
-        render_kw={'placeholder': 'e.g., AAPL'}
+        render_kw={
+            'placeholder': 'e.g., AAPL',
+            'class': 'form-control',
+            'inputmode': 'text',
+            'pattern': '[A-Z]{1,10}'
+        }
     )
     
     dividend_per_share = DecimalField(
@@ -24,36 +30,64 @@ class DividendForm(FlaskForm):
             NumberRange(min=0.0001, message='Dividend must be greater than 0')
         ],
         places=4,
-        render_kw={'placeholder': '0.0000', 'step': '0.0001'}
+        render_kw={
+            'placeholder': '0.0000',
+            'step': '0.0001',
+            'class': 'form-control',
+            'inputmode': 'decimal',
+            'type': 'number',
+            'min': '0.0001'
+        }
     )
     
     ex_dividend_date = DateField(
         'Ex-Dividend Date',
         validators=[DataRequired()],
-        format='%Y-%m-%d'
+        format='%Y-%m-%d',
+        render_kw={
+            'class': 'form-control',
+            'type': 'date',
+            'inputmode': 'none'
+        }
     )
     
     record_date = DateField(
         'Record Date',
         validators=[DataRequired()],
-        format='%Y-%m-%d'
+        format='%Y-%m-%d',
+        render_kw={
+            'class': 'form-control',
+            'type': 'date',
+            'inputmode': 'none'
+        }
     )
     
     payment_date = DateField(
         'Payment Date',
         validators=[DataRequired()],
-        format='%Y-%m-%d'
+        format='%Y-%m-%d',
+        render_kw={
+            'class': 'form-control',
+            'type': 'date',
+            'inputmode': 'none'
+        }
     )
     
     announcement_date = DateField(
         'Announcement Date (Optional)',
-        format='%Y-%m-%d'
+        format='%Y-%m-%d',
+        render_kw={
+            'class': 'form-control',
+            'type': 'date',
+            'inputmode': 'none'
+        }
     )
     
     dividend_type = SelectField(
         'Dividend Type',
         choices=[('REGULAR', 'Regular'), ('SPECIAL', 'Special')],
-        default='REGULAR'
+        default='REGULAR',
+        render_kw={'class': 'form-select', 'aria-label': 'Select dividend type'}
     )
     
     submit = SubmitField('Save Dividend')

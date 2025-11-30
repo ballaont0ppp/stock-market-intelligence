@@ -776,3 +776,869 @@ textarea.form-control {
   color: var(--text-secondary);
   margin-bottom: 1.5rem;
 }
+
+
+/* ============================================
+   RESPONSIVE CSS FRAMEWORK
+   ============================================ */
+
+/* Mobile-First Breakpoints:
+   - Mobile: 0px - 575px (default)
+   - Tablet: 576px - 767px
+   - Small Desktop: 768px - 991px
+   - Desktop: 992px - 1199px
+   - Large Desktop: 1200px+
+*/
+
+/* ============================================
+   FLEXIBLE GRID SYSTEM
+   ============================================ */
+
+.grid-container {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+}
+
+/* Mobile-first: 1 column */
+.grid-container {
+  grid-template-columns: 1fr;
+}
+
+/* Tablet: 2 columns */
+@media (min-width: 576px) {
+  .grid-container.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Small Desktop: 3 columns */
+@media (min-width: 768px) {
+  .grid-container.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .grid-container.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop: 4 columns */
+@media (min-width: 992px) {
+  .grid-container.grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  
+  .grid-container.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Large Desktop: 6 columns */
+@media (min-width: 1200px) {
+  .grid-container.grid-6 {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  
+  .grid-container.grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Auto-fit grid for responsive layouts */
+.grid-auto {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+@media (min-width: 576px) {
+  .grid-auto {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+@media (min-width: 768px) {
+  .grid-auto {
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+@media (min-width: 992px) {
+  .grid-auto {
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  }
+}
+
+/* ============================================
+   RESPONSIVE TYPOGRAPHY
+   ============================================ */
+
+/* Mobile-first typography scaling */
+h1 {
+  font-size: 1.75rem; /* 28px on mobile */
+  line-height: 1.2;
+}
+
+h2 {
+  font-size: 1.5rem; /* 24px on mobile */
+  line-height: 1.3;
+}
+
+h3 {
+  font-size: 1.25rem; /* 20px on mobile */
+  line-height: 1.3;
+}
+
+h4 {
+  font-size: 1.125rem; /* 18px on mobile */
+  line-height: 1.4;
+}
+
+h5 {
+  font-size: 1rem; /* 16px on mobile */
+  line-height: 1.4;
+}
+
+h6 {
+  font-size: 0.875rem; /* 14px on mobile */
+  line-height: 1.5;
+}
+
+body {
+  font-size: 14px; /* 14px on mobile */
+  line-height: 1.6;
+}
+
+/* Tablet typography */
+@media (min-width: 576px) {
+  h1 {
+    font-size: 2rem; /* 32px */
+  }
+  
+  h2 {
+    font-size: 1.75rem; /* 28px */
+  }
+  
+  h3 {
+    font-size: 1.5rem; /* 24px */
+  }
+  
+  h4 {
+    font-size: 1.25rem; /* 20px */
+  }
+  
+  body {
+    font-size: 15px;
+  }
+}
+
+/* Small Desktop typography */
+@media (min-width: 768px) {
+  h1 {
+    font-size: 2.25rem; /* 36px */
+  }
+  
+  h2 {
+    font-size: 1.875rem; /* 30px */
+  }
+  
+  h3 {
+    font-size: 1.5rem; /* 24px */
+  }
+  
+  body {
+    font-size: 16px;
+  }
+}
+
+/* Desktop typography */
+@media (min-width: 992px) {
+  h1 {
+    font-size: 2.5rem; /* 40px */
+  }
+  
+  h2 {
+    font-size: 2rem; /* 32px */
+  }
+}
+
+/* ============================================
+   RESPONSIVE SPACING UTILITIES
+   ============================================ */
+
+/* Mobile-first padding */
+.p-responsive {
+  padding: 1rem;
+}
+
+.px-responsive {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.py-responsive {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+/* Mobile-first margin */
+.m-responsive {
+  margin: 1rem;
+}
+
+.mx-responsive {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.my-responsive {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Tablet spacing */
+@media (min-width: 576px) {
+  .p-responsive {
+    padding: 1.25rem;
+  }
+  
+  .px-responsive {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+  
+  .py-responsive {
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+  }
+  
+  .m-responsive {
+    margin: 1.25rem;
+  }
+  
+  .mx-responsive {
+    margin-left: 1.25rem;
+    margin-right: 1.25rem;
+  }
+  
+  .my-responsive {
+    margin-top: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+}
+
+/* Small Desktop spacing */
+@media (min-width: 768px) {
+  .p-responsive {
+    padding: 1.5rem;
+  }
+  
+  .px-responsive {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+  
+  .py-responsive {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+  }
+  
+  .m-responsive {
+    margin: 1.5rem;
+  }
+  
+  .mx-responsive {
+    margin-left: 1.5rem;
+    margin-right: 1.5rem;
+  }
+  
+  .my-responsive {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Desktop spacing */
+@media (min-width: 992px) {
+  .p-responsive {
+    padding: 2rem;
+  }
+  
+  .px-responsive {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+  
+  .py-responsive {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+  
+  .m-responsive {
+    margin: 2rem;
+  }
+  
+  .mx-responsive {
+    margin-left: 2rem;
+    margin-right: 2rem;
+  }
+  
+  .my-responsive {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+}
+
+/* ============================================
+   RESPONSIVE DISPLAY UTILITIES
+   ============================================ */
+
+/* Mobile-first: show by default */
+.show-mobile {
+  display: block;
+}
+
+.hide-mobile {
+  display: none;
+}
+
+.show-tablet {
+  display: none;
+}
+
+.show-desktop {
+  display: none;
+}
+
+/* Tablet breakpoint */
+@media (min-width: 576px) {
+  .show-mobile {
+    display: none;
+  }
+  
+  .hide-mobile {
+    display: block;
+  }
+  
+  .show-tablet {
+    display: block;
+  }
+}
+
+/* Small Desktop breakpoint */
+@media (min-width: 768px) {
+  .show-tablet {
+    display: none;
+  }
+  
+  .show-desktop {
+    display: block;
+  }
+}
+
+/* ============================================
+   RESPONSIVE FLEXBOX UTILITIES
+   ============================================ */
+
+/* Mobile-first: stack vertically */
+.flex-responsive {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.flex-responsive-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Tablet: horizontal layout */
+@media (min-width: 576px) {
+  .flex-responsive-row {
+    flex-direction: row;
+    gap: 1.25rem;
+  }
+}
+
+/* Small Desktop: adjust gap */
+@media (min-width: 768px) {
+  .flex-responsive {
+    gap: 1.5rem;
+  }
+  
+  .flex-responsive-row {
+    gap: 1.5rem;
+  }
+}
+
+/* Desktop: larger gap */
+@media (min-width: 992px) {
+  .flex-responsive {
+    gap: 2rem;
+  }
+  
+  .flex-responsive-row {
+    gap: 2rem;
+  }
+}
+
+/* ============================================
+   RESPONSIVE CONTAINER UTILITIES
+   ============================================ */
+
+.container-responsive {
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Tablet container */
+@media (min-width: 576px) {
+  .container-responsive {
+    max-width: 540px;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+  }
+}
+
+/* Small Desktop container */
+@media (min-width: 768px) {
+  .container-responsive {
+    max-width: 720px;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+/* Desktop container */
+@media (min-width: 992px) {
+  .container-responsive {
+    max-width: 960px;
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
+
+/* Large Desktop container */
+@media (min-width: 1200px) {
+  .container-responsive {
+    max-width: 1140px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE CARD UTILITIES
+   ============================================ */
+
+.card-responsive {
+  background-color: var(--bg-primary);
+  border: 1px solid var(--border-light);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Tablet card padding */
+@media (min-width: 576px) {
+  .card-responsive {
+    padding: 1.25rem;
+  }
+}
+
+/* Small Desktop card padding */
+@media (min-width: 768px) {
+  .card-responsive {
+    padding: 1.5rem;
+  }
+}
+
+/* Desktop card padding */
+@media (min-width: 992px) {
+  .card-responsive {
+    padding: 2rem;
+  }
+}
+
+/* ============================================
+   RESPONSIVE BUTTON UTILITIES
+   ============================================ */
+
+.btn-responsive {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.5;
+  border-radius: 0.375rem;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  white-space: nowrap;
+  min-height: 44px;
+  width: 100%;
+}
+
+/* Tablet button */
+@media (min-width: 576px) {
+  .btn-responsive {
+    width: auto;
+    padding: 0.625rem 1.25rem;
+  }
+}
+
+/* ============================================
+   RESPONSIVE IMAGE UTILITIES
+   ============================================ */
+
+.img-responsive {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Fluid canvases for responsive charts */
+canvas {
+  max-width: 100%;
+  display: block;
+}
+
+/* ============================================
+   RESPONSIVE TABLE UTILITIES
+   ============================================ */
+
+.table-responsive-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 768px) {
+  .table-responsive-wrapper {
+    overflow-x: visible;
+  }
+}
+
+.table-responsive {
+  width: 100%;
+  min-width: 500px;
+}
+
+@media (min-width: 768px) {
+  .table-responsive {
+    min-width: auto;
+  }
+}
+
+/* ============================================
+   RESPONSIVE FORM UTILITIES
+   ============================================ */
+
+.form-group-responsive {
+  margin-bottom: 1rem;
+}
+
+.form-row-responsive {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Tablet form row */
+@media (min-width: 576px) {
+  .form-row-responsive {
+    flex-direction: row;
+    gap: 1.25rem;
+  }
+  
+  .form-row-responsive .form-group-responsive {
+    flex: 1;
+  }
+}
+
+/* Small Desktop form row */
+@media (min-width: 768px) {
+  .form-row-responsive {
+    gap: 1.5rem;
+  }
+}
+
+/* Desktop form row */
+@media (min-width: 992px) {
+  .form-row-responsive {
+    gap: 2rem;
+  }
+}
+
+/* ============================================
+   RESPONSIVE MODAL/DIALOG UTILITIES
+   ============================================ */
+
+.modal-responsive {
+  width: 100%;
+  max-width: 90vw;
+  margin: 1rem auto;
+}
+
+/* Tablet modal */
+@media (min-width: 576px) {
+  .modal-responsive {
+    max-width: 500px;
+  }
+}
+
+/* Small Desktop modal */
+@media (min-width: 768px) {
+  .modal-responsive {
+    max-width: 600px;
+  }
+}
+
+/* Desktop modal */
+@media (min-width: 992px) {
+  .modal-responsive {
+    max-width: 800px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE SIDEBAR UTILITIES
+   ============================================ */
+
+.sidebar-responsive {
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Tablet sidebar */
+@media (min-width: 576px) {
+  .sidebar-responsive {
+    width: 250px;
+    max-width: 250px;
+  }
+}
+
+/* Small Desktop sidebar */
+@media (min-width: 768px) {
+  .sidebar-responsive {
+    width: 280px;
+    max-width: 280px;
+  }
+}
+
+/* Desktop sidebar */
+@media (min-width: 992px) {
+  .sidebar-responsive {
+    width: 300px;
+    max-width: 300px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE BREAKPOINT HELPERS
+   ============================================ */
+
+/* Breakpoint-specific utilities */
+@media (max-width: 575px) {
+  .mobile-only {
+    display: block !important;
+  }
+  
+  .tablet-up {
+    display: none !important;
+  }
+}
+
+@media (min-width: 576px) and (max-width: 767px) {
+  .tablet-only {
+    display: block !important;
+  }
+  
+  .mobile-only {
+    display: none !important;
+  }
+  
+  .desktop-up {
+    display: none !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .desktop-up {
+    display: block !important;
+  }
+  
+  .tablet-only {
+    display: none !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .large-desktop-only {
+    display: block !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .xl-desktop-only {
+    display: block !important;
+  }
+}
+
+/* ============================================
+   RESPONSIVE ASPECT RATIO UTILITIES
+   ============================================ */
+
+.aspect-ratio-container {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.aspect-ratio-16-9 {
+  padding-bottom: 56.25%;
+}
+
+.aspect-ratio-4-3 {
+  padding-bottom: 75%;
+}
+
+.aspect-ratio-1-1 {
+  padding-bottom: 100%;
+}
+
+.aspect-ratio-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ============================================
+   RESPONSIVE SCROLL UTILITIES
+   ============================================ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Momentum scrolling for mobile */
+.scroll-smooth-mobile {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ============================================
+   RESPONSIVE TOUCH UTILITIES
+   ============================================ */
+
+/* Ensure touch targets are at least 44x44px */
+.touch-target {
+  min-width: 44px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Disable tap highlight on mobile */
+.no-tap-highlight {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ============================================
+   RESPONSIVE PRINT UTILITIES
+   ============================================ */
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .print-only {
+    display: block !important;
+  }
+  
+  body {
+    background-color: white;
+    color: black;
+  }
+}
+
+
+/* ============================================
+   PROFILE AVATAR
+   ============================================ */
+
+.profile-avatar-large {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 767px) {
+  .profile-avatar-large {
+    width: 64px;
+    height: 64px;
+    font-size: 1.5rem;
+  }
+}
+
+
+/* ============================================
+   PROFILE PAGE ENHANCEMENTS
+   ============================================ */
+
+.card.shadow-sm {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  transition: box-shadow 0.2s ease;
+}
+
+.card.shadow-sm:hover {
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+}
+
+.card-header.bg-white {
+  background-color: #fff;
+}
+
+.card-header.border-bottom {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.text-sm {
+  font-size: 0.875rem;
+}
+
+.fw-medium {
+  font-weight: 500;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.gap-3 {
+  gap: 1rem;
+}

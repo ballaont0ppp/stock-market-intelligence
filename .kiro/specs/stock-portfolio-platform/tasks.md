@@ -117,6 +117,50 @@ This document outlines the implementation tasks for building the Stock Portfolio
   - Display appropriate error messages
   - _Requirements: 18_
 
+- [x] 2.7 Enhanced profile form and route handlers
+
+  - Create ProfileForm class in app/forms/auth_forms.py with validation
+  - Add enhanced profile GET/POST routes to app/routes/auth.py
+  - Implement profile update logic with comprehensive error handling
+  - _Requirements: 1.1, 1.2, 1.3, 1.4, 4_
+
+- [x] 2.8 Profile template implementation
+
+  - Create app/templates/auth/profile.html extending base template
+  - Add form fields for name, email, preferences with validation display
+  - Include update button and success/error message areas
+  - _Requirements: 1.1, 1.2, 1.4, 19_
+
+- [x] 2.9 Enhanced logout functionality
+
+  - Add logout route to app/routes/auth.py using Flask-Login logout_user()
+  - Add enhanced session clearing and redirect logic
+  - Test logout clears all session data and cache
+  - _Requirements: 2.1, 2.2, 2.3_
+
+- [x] 2.10 Navigation updates with profile and logout links
+
+  - Add profile and logout buttons to topbar in app/templates/base.html
+  - Use appropriate icons (user icon for profile, log-out for logout)
+  - Ensure mobile responsiveness and proper styling
+  - _Requirements: 3.1, 3.2, 3.3, 19A_
+
+- [x] 2.11 Enhanced access control and error handling
+
+  - Ensure profile routes require authentication
+  - Add proper error messages and redirects
+  - Test unauthorized access redirects to login
+  - Implement proper role-based access control
+  - _Requirements: 2.4, 1.1, 18_
+
+- [x] 2.12 Profile and logout testing
+
+  - Test profile form validation and submission
+  - Test logout session termination
+  - Test access control on profile routes
+  - Test navigation functionality
+  - _Requirements: 1.3, 2.1, 2.3, 2.4, Testing_
+
 
 - [x] 3. Portfolio management system
 

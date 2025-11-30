@@ -67,6 +67,7 @@ def create_app(config_name='default'):
     from app.routes.admin import bp as admin_bp
     from app.routes.api import bp as api_bp
     from app.routes.notifications import bp as notifications_bp
+    from app.routes.pwa import bp as pwa_bp
     
     app.register_blueprint(auth_bp)
     app.register_blueprint(dashboard_bp)
@@ -76,6 +77,7 @@ def create_app(config_name='default'):
     app.register_blueprint(admin_bp)
     app.register_blueprint(api_bp)
     app.register_blueprint(notifications_bp)
+    app.register_blueprint(pwa_bp)
     
     # Register error handlers
     from app.utils import error_handlers
